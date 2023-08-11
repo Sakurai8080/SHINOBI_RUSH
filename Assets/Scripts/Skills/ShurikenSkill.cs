@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ShurikenSkill : SkillBase
 {
@@ -13,9 +14,6 @@ public class ShurikenSkill : SkillBase
 
     [SerializeField]
     private Transform _playerTransform = default;
-
-    [SerializeField]
-    private Transform _testTrans = default;
     #endregion
 
     #region private
@@ -40,12 +38,11 @@ public class ShurikenSkill : SkillBase
     {
         StartCoroutine(SkillActionCroutine());
         transform.SetParent(_playerTransform);
-        _enemies.Add(_testTrans.GetComponent<Transform>());
     }
 
     private void Update()
     {
-
+        Debug.Log(_enemies.Count);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,7 +58,8 @@ public class ShurikenSkill : SkillBase
     #region public method
     public override void OnSkillAction()
     {
-
+        _isSkillActive = true;
+        transform.SetParent(_playerTransform);
     }
 
     public override void SkillUp()
@@ -75,22 +73,43 @@ public class ShurikenSkill : SkillBase
     #endregion
 
     #region private method
+    private Vector3 SetTarget(Vector3 targetDir)
+    {
+        Transform nearestEnemy = _enemies.First();
+        float distance = float.MaxValue;
+
+        foreach (Transform enemyTransform in _enemies)
+        {
+            float currentDistance = Vector3.Distance(transform.position, enemyTransform.position);
+            if (currentDistance < distance)
+            {
+                nearestEnemy = enemyTransform;
+                distance = currentDistance;
+            }
+        }
+        return targetDir = (nearestEnemy.position - transform.position).normalized;
+    }
     #endregion
 
     #region coroutine method
     protected override IEnumerator SkillActionCroutine()
     {
-        GameObject shuriken = Instantiate(_shuriken.gameObject, _playerTransform);
-
-        while (true)
+        if (_enemies?.Count > 0)
         {
-            if (_enemies?.Count > 0)
-            {
-                Debug.Log("起動");
+            GameObject shuriken = Instantiate(_shuriken.gameObject, _playerTransform);
 
-                shuriken.transform.position = Vector3.MoveTowards(shuriken.transform.position , _testTrans.position, _moveSpeed * Time.deltaTime);
+            while (_isSkillActive)
+            {
+                Vector3 currentTransform = SetTarget(Vector3.zero);
+
+                if (_enemies?.Count > 0)
+                {
+                    Debug.Log("起動");
+
+                    shuriken.transform.position = Vector3.MoveTowards(shuriken.transform.position, currentTransform, _moveSpeed * Time.deltaTime);
+                }
+                yield return null;
             }
-            yield return null;
         }
 
     }
