@@ -38,6 +38,12 @@ public class ShurikenSkill : SkillBase
     {
         transform.SetParent(_playerTransform);
         _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
+        OnSkillAction();
+    }
+
+    private void Update()
+    {
+       Debug.Log(_enemies.Count());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,6 +67,7 @@ public class ShurikenSkill : SkillBase
     #region public method
     public override void OnSkillAction()
     {
+        Debug.Log($"{SkillType}スキル発動");
         _isSkillActive = true;
         transform.SetParent(_playerTransform);
         _currentCoroutine = StartCoroutine(SkillActionCroutine());
@@ -69,6 +76,7 @@ public class ShurikenSkill : SkillBase
 
     public override void SkillUp()
     {
+
     }
 
     public override void AttackUpAmount(float coefficient)

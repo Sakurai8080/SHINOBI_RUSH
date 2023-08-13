@@ -21,6 +21,7 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable
     private float _currentMaxHP;
     private float _currentAttackAmount;
     private Coroutine _actionCroutine;
+    private Vector3 _initialPosition = default;
     #endregion
 
     #region protected
@@ -42,11 +43,23 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable
         _currentHP = _currentMaxHP;
         _currentAttackAmount = _enemyData.AttackAmount;
         _playerTransform = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
+
+        _initialPosition = transform.position;
     }
 
     protected virtual void Start()
     {
         _actionCroutine = StartCoroutine(OnActionCoroutine());
+    }
+
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        transform.position = _initialPosition;
     }
     #endregion
 
