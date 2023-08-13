@@ -20,6 +20,10 @@ public class ShurikenSkill : SkillBase
     private List<Transform> _enemies = new List<Transform>();
 
     private Vector3 _spawnPosition;
+
+    private float _waitTime = 3.0f;
+
+    private float attackCoefficient = 2.0f;
     #endregion
 
     #region Constant
@@ -59,6 +63,7 @@ public class ShurikenSkill : SkillBase
     {
         if (other.CompareTag(GameTag.Enemy))
         {
+            Debug.Log("出た");
             _enemies.Remove(other.GetComponent<Transform>());
         }
     }
@@ -76,7 +81,17 @@ public class ShurikenSkill : SkillBase
 
     public override void SkillUp()
     {
+        if (_currentSkillLevel >= MAX_LEVEL)
+        {
+            Debug.Log($"{SkillType}はレベル上限");
+            return;
+        }
 
+
+        Debug.Log($"{SkillType}レベルアップ");
+        _currentSkillLevel++;
+        AttackUpAmount(attackCoefficient);
+        _waitTime -= 0.6f;
     }
 
     public override void AttackUpAmount(float coefficient)
@@ -121,10 +136,9 @@ public class ShurikenSkill : SkillBase
                 shuriken.SetVelocity(currentTransform);
                 shuriken.SetAttackAmount(_currentAttackAmount);
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(_waitTime);
             Debug.Log("コルーチンエンド");
         }
     }
     #endregion
-
 }
