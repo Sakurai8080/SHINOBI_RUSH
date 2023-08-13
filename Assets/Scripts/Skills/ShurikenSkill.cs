@@ -36,21 +36,20 @@ public class ShurikenSkill : SkillBase
 
     private void Start()
     {
-        StartCoroutine(SkillActionCroutine());
         transform.SetParent(_playerTransform);
     }
 
     private void Update()
     {
-        Debug.Log(_enemies.Count);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(GameTag.Enemy))
         {
-            Debug.Log("エネミー入った");
             _enemies.Add(other.GetComponent<Transform>());
+            _isSkillActive = true;
+            _currentCoroutine = StartCoroutine(SkillActionCroutine());
         }
     }
     #endregion
@@ -87,31 +86,28 @@ public class ShurikenSkill : SkillBase
                 distance = currentDistance;
             }
         }
-        return targetDir = (nearestEnemy.position - transform.position).normalized;
+        return targetDir = (nearestEnemy.position - transform.position);
     }
     #endregion
 
     #region coroutine method
     protected override IEnumerator SkillActionCroutine()
     {
-        if (_enemies?.Count > 0)
+        Vector3 targetDir = Vector3.zero;
+        while (_isSkillActive)
         {
-            GameObject shuriken = Instantiate(_shuriken.gameObject, _playerTransform);
-
-            while (_isSkillActive)
+            Debug.Log("コルーチンスタート");
+            if (_enemies?.Count > 0)
             {
-                Vector3 currentTransform = SetTarget(Vector3.zero);
-
-                if (_enemies?.Count > 0)
-                {
-                    Debug.Log("起動");
-
-                    shuriken.transform.position = Vector3.MoveTowards(shuriken.transform.position, currentTransform, _moveSpeed * Time.deltaTime);
-                }
-                yield return null;
+                Debug.Log("起動");
+                Shuriken shuriken = Instantiate(_shuriken, _playerTransform);
+                Vector3 currentTransform = SetTarget(targetDir);
+                Debug.Log(currentTransform);
+                shuriken.SetVelocity(currentTransform);
             }
+            yield return new WaitForSeconds(3f);
+            Debug.Log("コルーチンエンド");
         }
-
     }
     #endregion
 

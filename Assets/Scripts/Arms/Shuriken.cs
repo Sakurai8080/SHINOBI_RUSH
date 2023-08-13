@@ -17,6 +17,9 @@ public class Shuriken : MonoBehaviour
     #endregion
 
     #region private
+    private Rigidbody _rb;
+
+    private float _moveSpeed = 1.0f;
     #endregion
 
     #region Constant
@@ -28,7 +31,7 @@ public class Shuriken : MonoBehaviour
     #region unity methods
     private void Awake()
     {
-        
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -45,6 +48,10 @@ public class Shuriken : MonoBehaviour
     #endregion
 
     #region public method
+    public void SetVelocity(Vector3 enemyDir)
+    {
+        _rb.velocity = enemyDir * _moveSpeed;
+    }
     #endregion
 
     #region private method
