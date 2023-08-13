@@ -19,7 +19,7 @@ public class Shuriken : MonoBehaviour
     #region private
     private Rigidbody _rb;
 
-    private float _moveSpeed = 1.0f;
+    private float _moveSpeed = 0.5f;
     #endregion
 
     #region Constant
