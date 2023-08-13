@@ -50,7 +50,10 @@ public class SkillManager : MonoBehaviour
         {
             skill.OnSkillAction();
         }
-      
+        else
+        {
+            skill.SkillUp();
+        }
     }
     #endregion
 
