@@ -19,7 +19,9 @@ public class Shuriken : MonoBehaviour
     #region private
     private Rigidbody _rb;
 
-    private float _moveSpeed = 1.0f;
+    private float _moveSpeed = 0.5f;
+
+    private float _currentAttackAmount = 1.0f;
     #endregion
 
     #region Constant
@@ -45,9 +47,24 @@ public class Shuriken : MonoBehaviour
     {
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(GameTag.Enemy))
+        {
+            IDamagable target = other.GetComponent<IDamagable>();
+            target.Damage(_currentAttackAmount);
+            gameObject.SetActive(false);
+        }
+    }
     #endregion
 
     #region public method
+    public void SetAttackAmount(float amount)
+    {
+        _currentAttackAmount += amount;
+    }
+
     public void SetVelocity(Vector3 enemyDir)
     {
         _rb.velocity = enemyDir * _moveSpeed;

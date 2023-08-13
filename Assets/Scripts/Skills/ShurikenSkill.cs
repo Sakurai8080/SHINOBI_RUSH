@@ -19,7 +19,7 @@ public class ShurikenSkill : SkillBase
     #region private
     private List<Transform> _enemies = new List<Transform>();
 
-    private float _moveSpeed = 1.0f;
+    private Vector3 _spawnPosition;
     #endregion
 
     #region Constant
@@ -37,10 +37,7 @@ public class ShurikenSkill : SkillBase
     private void Start()
     {
         transform.SetParent(_playerTransform);
-    }
-
-    private void Update()
-    {
+        _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,7 +46,14 @@ public class ShurikenSkill : SkillBase
         {
             _enemies.Add(other.GetComponent<Transform>());
             _isSkillActive = true;
-            _currentCoroutine = StartCoroutine(SkillActionCroutine());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(GameTag.Enemy))
+        {
+            _enemies.Remove(other.GetComponent<Transform>());
         }
     }
     #endregion
@@ -59,6 +63,8 @@ public class ShurikenSkill : SkillBase
     {
         _isSkillActive = true;
         transform.SetParent(_playerTransform);
+        _currentCoroutine = StartCoroutine(SkillActionCroutine());
+
     }
 
     public override void SkillUp()
@@ -100,10 +106,12 @@ public class ShurikenSkill : SkillBase
             if (_enemies?.Count > 0)
             {
                 Debug.Log("起動");
-                Shuriken shuriken = Instantiate(_shuriken, _playerTransform);
+
+                Shuriken shuriken = Instantiate(_shuriken, _spawnPosition,Quaternion.identity);
                 Vector3 currentTransform = SetTarget(targetDir);
                 Debug.Log(currentTransform);
                 shuriken.SetVelocity(currentTransform);
+                shuriken.SetAttackAmount(_currentAttackAmount);
             }
             yield return new WaitForSeconds(3f);
             Debug.Log("コルーチンエンド");
