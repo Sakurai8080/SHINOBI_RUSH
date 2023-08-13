@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
-using UniRx.Triggers;
+using System.Linq;
 
-public class SkillTest : MonoBehaviour
+public class SkillManager : MonoBehaviour
 {
     #region property
+    public static SkillManager Instance { get; private set; }
+    public SkillBase[] Skills => _skills;
     #endregion
 
     #region serialize
+    [SerializeField]
+    private SkillBase[] _skills = default;
     #endregion
 
     #region private
@@ -24,20 +27,12 @@ public class SkillTest : MonoBehaviour
     #region unity methods
     private void Awake()
     {
-
+        Instance = this;
     }
 
     private void Start()
     {
-        this.UpdateAsObservable()
-            .TakeUntilDestroy(this)
-            .Subscribe(_ =>
-            {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    SkillManager.Instance.SetSkill(SkillType.Shuriken);
-                }
-            });
+
     }
 
     private void Update()
@@ -47,6 +42,16 @@ public class SkillTest : MonoBehaviour
     #endregion
 
     #region public method
+    public void SetSkill(SkillType type)
+    {
+        SkillBase skill = _skills.FirstOrDefault(x => x.SkillType == type);
+
+        if (!skill.IsSkillActived)
+        {
+            skill.OnSkillAction();
+        }
+      
+    }
     #endregion
 
     #region private method
