@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 全ての敵の共通機能を管理する基底クラス
 /// </summary>
-public abstract class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviour , IDamagable
 {
     #region property
     #endregion
@@ -18,11 +18,14 @@ public abstract class EnemyBase : MonoBehaviour
     #endregion
 
     #region private
+    private float _currentMaxHP;
+    private float _currentAttackAmount;
     private Coroutine _actionCroutine;
     #endregion
 
     #region protected
     protected Transform _playerTransform;
+    protected float _currentHP;
     #endregion
 
     #region Constant
@@ -35,6 +38,9 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void Awake()
     {
+        _currentMaxHP = _enemyData.HP;
+        _currentHP = _currentMaxHP;
+        _currentAttackAmount = _enemyData.AttackAmount;
         _playerTransform = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
     }
 
@@ -42,14 +48,19 @@ public abstract class EnemyBase : MonoBehaviour
     {
         _actionCroutine = StartCoroutine(OnActionCoroutine());
     }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
+    public virtual void Damage(float amount)
+    {
+        _currentHP -= amount;
+        Debug.Log(_currentHP);
+
+        if (_currentHP <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
     #endregion
 
     #region private method

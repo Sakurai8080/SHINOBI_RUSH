@@ -46,7 +46,14 @@ public class ShurikenSkill : SkillBase
         {
             _enemies.Add(other.GetComponent<Transform>());
             _isSkillActive = true;
-            _currentCoroutine = StartCoroutine(SkillActionCroutine());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(GameTag.Enemy))
+        {
+            _enemies.Remove(other.GetComponent<Transform>());
         }
     }
     #endregion
@@ -104,6 +111,7 @@ public class ShurikenSkill : SkillBase
                 Vector3 currentTransform = SetTarget(targetDir);
                 Debug.Log(currentTransform);
                 shuriken.SetVelocity(currentTransform);
+                shuriken.SetAttackAmount(_currentAttackAmount);
             }
             yield return new WaitForSeconds(3f);
             Debug.Log("コルーチンエンド");
