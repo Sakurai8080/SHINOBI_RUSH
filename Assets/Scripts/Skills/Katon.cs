@@ -4,15 +4,18 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
-public class SkillTest : MonoBehaviour
+public class Katon : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
+    [SerializeField]
+    private float _moveSpeed = 1.0f;
     #endregion
 
     #region private
+    private float _currentAttackAmount = 1.0f;
     #endregion
 
     #region Constant
@@ -33,15 +36,7 @@ public class SkillTest : MonoBehaviour
             .TakeUntilDestroy(this)
             .Subscribe(_ =>
             {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    SkillManager.Instance.SetSkill(SkillType.Shuriken);
-                }
-
-                if (Input.GetKeyDown(KeyCode.G))
-                {
-                    SkillManager.Instance.SetSkill(SkillType.Katon);
-                }
+                transform.position = Vector3.forward;
             });
     }
 
@@ -52,6 +47,15 @@ public class SkillTest : MonoBehaviour
     #endregion
 
     #region public method
+    public void SetAttackAmount(float amount)
+    {
+        _currentAttackAmount += amount;
+    }
+
+    public void SizeChange(float amount)
+    {
+        transform.localScale = new Vector3(transform.localScale.x * amount,transform.localScale.y * amount,transform.localScale.z* amount);
+    }
     #endregion
 
     #region private method
