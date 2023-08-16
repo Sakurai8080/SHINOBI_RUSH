@@ -11,10 +11,11 @@ public class Katon : MonoBehaviour
 
     #region serialize
     [SerializeField]
-    private float _moveSpeed = 1.0f;
+    private float _moveSpeed = 0.5f;
     #endregion
 
     #region private
+    private float _currentScale = 1.0f;
     private float _currentAttackAmount = 1.0f;
     #endregion
 
@@ -36,7 +37,7 @@ public class Katon : MonoBehaviour
             .TakeUntilDestroy(this)
             .Subscribe(_ =>
             {
-                transform.position = Vector3.forward;
+                transform.Translate(0, 0, _moveSpeed);
             });
     }
 
@@ -54,7 +55,8 @@ public class Katon : MonoBehaviour
 
     public void SizeChange(float amount)
     {
-        transform.localScale = new Vector3(transform.localScale.x * amount,transform.localScale.y * amount,transform.localScale.z* amount);
+        _currentScale *= amount;
+        transform.localScale = new Vector3(_currentScale, _currentScale, _currentScale);
     }
     #endregion
 
