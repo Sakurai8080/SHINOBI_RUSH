@@ -22,7 +22,9 @@ public class KatonSkill : SkillBase
 
     private float _waitTime = 3.0f;
 
-    private float attackCoefficient = 2.0f;
+    private float _attackCoefficient = 2.0f;
+
+    private float _sizeChangeAmount = 2.0f;
     #endregion
 
     #region Constant
@@ -41,11 +43,6 @@ public class KatonSkill : SkillBase
     {
         transform.SetParent(_playerTransform);
         _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
-        OnSkillAction();
-    }
-
-    private void Update()
-    {
     }
     #endregion
 
@@ -67,11 +64,10 @@ public class KatonSkill : SkillBase
             return;
         }
 
-
         Debug.Log($"{SkillType}レベルアップ");
         _currentSkillLevel++;
-        AttackUpAmount(attackCoefficient);
-        _waitTime -= 0.6f;
+        _katon.SizeChange(_sizeChangeAmount);
+        AttackUpAmount(_attackCoefficient);
     }
 
     public override void AttackUpAmount(float coefficient)
@@ -90,7 +86,7 @@ public class KatonSkill : SkillBase
         {
             Debug.Log("コルーチンスタート");
             Katon fire = Instantiate(_katon, _spawnPosition, Quaternion.identity);
-            _katon.SetAttackAmount(_currentAttackAmount);
+            fire.SetAttackAmount(_currentAttackAmount);
             yield return new WaitForSeconds(_waitTime);
             Debug.Log("コルーチンエンド");
         }
