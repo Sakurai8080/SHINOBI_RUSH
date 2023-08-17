@@ -15,8 +15,9 @@ public class Katon : MonoBehaviour
     #endregion
 
     #region private
-    private float _currentScale = 1.0f;
     private float _currentAttackAmount = 1.0f;
+    private Vector3 _initialScale;
+    private Vector3 _currentScale;
     #endregion
 
     #region Constant
@@ -28,6 +29,10 @@ public class Katon : MonoBehaviour
     #region unity methods
     private void Awake()
     {
+        _initialScale = transform.localScale;
+
+        _currentScale = _initialScale;
+        Debug.Log($"_initialScaleは{_initialScale}");
 
     }
 
@@ -41,10 +46,16 @@ public class Katon : MonoBehaviour
             });
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-
+        if (other.CompareTag(GameTag.Enemy))
+        {
+            Debug.Log("火遁があたった");
+            IDamagable target = other.GetComponent<IDamagable>();
+            target.Damage(_currentAttackAmount);
+        }
     }
+
     #endregion
 
     #region public method
@@ -56,7 +67,8 @@ public class Katon : MonoBehaviour
     public void SizeChange(float amount)
     {
         _currentScale *= amount;
-        transform.localScale = new Vector3(_currentScale, _currentScale, _currentScale);
+        Debug.Log($"Size変更は{_currentScale}");
+        transform.localScale = _currentScale;
     }
     #endregion
 

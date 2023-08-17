@@ -17,7 +17,6 @@ public class KatonSkill : SkillBase
     #endregion
 
     #region private
-
     private Vector3 _spawnPosition;
 
     private float _waitTime = 3.0f;
@@ -25,6 +24,8 @@ public class KatonSkill : SkillBase
     private float _attackCoefficient = 2.0f;
 
     private float _sizeChangeAmount = 2.0f;
+    private float _scaleCoefficient = 1.0f;
+    private Katon _fire = default;
     #endregion
 
     #region Constant
@@ -53,7 +54,6 @@ public class KatonSkill : SkillBase
         _isSkillActive = true;
         transform.SetParent(_playerTransform);
         _currentCoroutine = StartCoroutine(SkillActionCroutine());
-
     }
 
     public override void SkillUp()
@@ -66,7 +66,7 @@ public class KatonSkill : SkillBase
 
         Debug.Log($"{SkillType}レベルアップ");
         _currentSkillLevel++;
-        _katon.SizeChange(_sizeChangeAmount);
+        _scaleCoefficient++;
         AttackUpAmount(_attackCoefficient);
     }
 
@@ -85,8 +85,9 @@ public class KatonSkill : SkillBase
         while (_isSkillActive)
         {
             Debug.Log("コルーチンスタート");
-            Katon fire = Instantiate(_katon, _spawnPosition, Quaternion.identity);
-            fire.SetAttackAmount(_currentAttackAmount);
+            _fire = Instantiate(_katon, _spawnPosition, Quaternion.identity);
+            _fire.SetAttackAmount(_currentAttackAmount);
+            _fire.SizeChange(_scaleCoefficient);
             yield return new WaitForSeconds(_waitTime);
             Debug.Log("コルーチンエンド");
         }
