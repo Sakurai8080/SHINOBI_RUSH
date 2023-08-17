@@ -2788,7 +2788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillData: {fileID: 11400000, guid: d3f297e3141864bdaae3e19b9acf62de, type: 2}
-  _katon: {fileID: 8322315404588541181, guid: 4ec78be845874419f958a8a32d544264, type: 3}
+  _katon: {fileID: 287699228385904212, guid: 1ead53fac714c485e9555f7efc5756aa, type: 3}
   _playerTransform: {fileID: 717833857}
 --- !u!4 &486077196 stripped
 Transform:
