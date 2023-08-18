@@ -65,7 +65,7 @@ public class SkillData : ScriptableObject
 public enum SkillType
 {
     Shuriken,
-    ShadowBall,
+    Katon,
     Kagebunsin,
-    Katon
+    Windball
 }
