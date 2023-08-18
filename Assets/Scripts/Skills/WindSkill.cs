@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class ShurikenSkill : SkillBase
+public class WindSkill : SkillBase
 {
     #region property
     #endregion
 
     #region serialize
     [SerializeField]
-    private Shuriken _shuriken = default;
+    private Wind _wind = default;
 
     [SerializeField]
     private Transform _playerTransform = default;
-
     #endregion
 
     #region private
@@ -22,12 +21,9 @@ public class ShurikenSkill : SkillBase
 
     private Vector3 _spawnPosition;
 
-    private float _waitTime = 3.0f;
+    private float _waitTime = 5.0f;
 
-    private float attackCoefficient = 2.0f;
-
-    private Vector3 _playerV3 = default;
-
+    private float _attackCoefficient = 5.0f;
     #endregion
 
     #region Constant
@@ -45,13 +41,13 @@ public class ShurikenSkill : SkillBase
     private void Start()
     {
         transform.position = _playerTransform.position;
-        _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
+        _spawnPosition = _playerTransform.position + new Vector3(-0.2f, 0.3f, 0.1f);
         OnSkillAction();
     }
 
     private void Update()
     {
-       Debug.Log(_enemies.Count());
+        Debug.Log(_enemies.Count());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -93,8 +89,7 @@ public class ShurikenSkill : SkillBase
 
         Debug.Log($"{SkillType}レベルアップ");
         _currentSkillLevel++;
-        AttackUpAmount(attackCoefficient);
-        _waitTime -= 0.6f;
+        AttackUpAmount(_attackCoefficient);
     }
 
     public override void AttackUpAmount(float coefficient)
@@ -128,18 +123,14 @@ public class ShurikenSkill : SkillBase
         Vector3 targetDir = Vector3.zero;
         while (_isSkillActive)
         {
-            Debug.Log("コルーチンスタート");
-            if (_enemies?.Count > 0)
-            {
-                Debug.Log("起動");
-
-                Shuriken shuriken = Instantiate(_shuriken, _spawnPosition,Quaternion.identity);
-                Vector3 currentTransform = SetTarget(targetDir);
-                Debug.Log(currentTransform);
-                shuriken.SetVelocity(currentTransform);
-                shuriken.SetAttackAmount(_currentAttackAmount);
-            }
             yield return new WaitForSeconds(_waitTime);
+            Debug.Log("コルーチンスタート");
+            Wind wind = Instantiate(_wind, _spawnPosition, Quaternion.identity);
+            yield return new WaitUntil(() => _enemies?.Count() >= 1);
+            Vector3 currentTransform = SetTarget(targetDir);
+            wind.SetAttackAmount(_currentAttackAmount);
+            wind.SetVelocity(currentTransform);
+            Debug.Log(currentTransform);
             Debug.Log("コルーチンエンド");
         }
     }
