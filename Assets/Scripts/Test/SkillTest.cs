@@ -37,10 +37,13 @@ public class SkillTest : MonoBehaviour
                 {
                     SkillManager.Instance.SetSkill(SkillType.Shuriken);
                 }
-
                 if (Input.GetKeyDown(KeyCode.G))
                 {
                     SkillManager.Instance.SetSkill(SkillType.Katon);
+                }
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    SkillManager.Instance.SetSkill(SkillType.Windball);
                 }
             });
     }

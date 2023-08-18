@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b216f415ec5e42739d5790c1c712edd, type: 3}
   m_Name: Katon
   m_EditorClassIdentifier: 
-  _skillType: 3
+  _skillType: 1
   _attackAmount: 20
   _correctionValue: 1

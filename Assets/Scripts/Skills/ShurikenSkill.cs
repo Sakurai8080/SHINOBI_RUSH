@@ -14,6 +14,7 @@ public class ShurikenSkill : SkillBase
 
     [SerializeField]
     private Transform _playerTransform = default;
+
     #endregion
 
     #region private
@@ -24,6 +25,9 @@ public class ShurikenSkill : SkillBase
     private float _waitTime = 3.0f;
 
     private float attackCoefficient = 2.0f;
+
+    private Vector3 _playerV3 = default;
+
     #endregion
 
     #region Constant
@@ -40,7 +44,7 @@ public class ShurikenSkill : SkillBase
 
     private void Start()
     {
-        transform.SetParent(_playerTransform);
+        transform.position = _playerTransform.position;
         _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
         OnSkillAction();
     }
@@ -55,7 +59,6 @@ public class ShurikenSkill : SkillBase
         if (other.CompareTag(GameTag.Enemy))
         {
             _enemies.Add(other.GetComponent<Transform>());
-            _isSkillActive = true;
         }
     }
 
