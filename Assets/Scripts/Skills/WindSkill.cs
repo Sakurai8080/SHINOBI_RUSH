@@ -13,6 +13,9 @@ public class WindSkill : SkillBase
     private Wind _wind = default;
 
     [SerializeField]
+    private Wind _maxWind = default;
+
+    [SerializeField]
     private Transform _playerTransform = default;
     #endregion
 
@@ -24,6 +27,8 @@ public class WindSkill : SkillBase
     private float _waitTime = 5.0f;
 
     private float _attackCoefficient = 5.0f;
+
+    private Wind currentWind = default;
     #endregion
 
     #region Constant
@@ -75,7 +80,7 @@ public class WindSkill : SkillBase
         _isSkillActive = true;
         transform.SetParent(_playerTransform);
         _currentCoroutine = StartCoroutine(SkillActionCroutine());
-
+        currentWind = _wind;
     }
 
     public override void SkillUp()
@@ -85,10 +90,12 @@ public class WindSkill : SkillBase
             Debug.Log($"{SkillType}はレベル上限");
             return;
         }
+        Debug.Log($"{SkillType}は{_currentSkillLevel}");
+        _currentSkillLevel++;
 
+        currentWind = (_currentSkillLevel >= 5) ? _maxWind : _wind; 
 
         Debug.Log($"{SkillType}レベルアップ");
-        _currentSkillLevel++;
         AttackUpAmount(_attackCoefficient);
     }
 
@@ -125,7 +132,7 @@ public class WindSkill : SkillBase
         {
             yield return new WaitForSeconds(_waitTime);
             Debug.Log("コルーチンスタート");
-            Wind wind = Instantiate(_wind, _spawnPosition, Quaternion.identity);
+            Wind wind = Instantiate(currentWind, _spawnPosition, Quaternion.identity);
             yield return new WaitUntil(() => _enemies?.Count() >= 1);
             Vector3 currentTransform = SetTarget(targetDir);
             wind.SetAttackAmount(_currentAttackAmount);
