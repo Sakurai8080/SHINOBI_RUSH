@@ -8,6 +8,8 @@ public class Wind : MonoBehaviour
     #endregion
 
     #region serialize
+    [SerializeField]
+    private float _scaleChangeAmount = 1.0f;
     #endregion
 
     #region private
@@ -16,6 +18,10 @@ public class Wind : MonoBehaviour
     private float _moveSpeed = 0.5f;
 
     private float _currentAttackAmount = 1.0f;
+
+    private Coroutine currentCoroutine = default;
+
+    private Vector3 _initialScale;
     #endregion
 
     #region Constant
@@ -32,7 +38,7 @@ public class Wind : MonoBehaviour
 
     private void Start()
     {
-       
+        _initialScale = transform.localScale;
     }
 
     private void Update()
@@ -46,7 +52,7 @@ public class Wind : MonoBehaviour
         {
             IDamagable target = other.GetComponent<IDamagable>();
             target.Damage(_currentAttackAmount);
-            gameObject.SetActive(false);
+            currentCoroutine = StartCoroutine(ExplosionCoroutine());
         }
     }
     #endregion
@@ -64,5 +70,24 @@ public class Wind : MonoBehaviour
     #endregion
 
     #region private method
+    #endregion
+
+
+    #region coroutine method
+    private IEnumerator ExplosionCoroutine()
+    {
+        Debug.Log("爆発コルーチンスタート");
+        Vector3 currentScale = _initialScale;
+        float targetScaleMagnitude = _initialScale.magnitude * 10; 
+
+        while(currentScale.magnitude <= targetScaleMagnitude)
+        {
+            currentScale += _initialScale * _scaleChangeAmount * Time.deltaTime;
+            transform.localScale = currentScale;
+        }
+        yield return null;
+        gameObject.SetActive(false);
+        transform.localScale = _initialScale;
+    }
     #endregion
 }
