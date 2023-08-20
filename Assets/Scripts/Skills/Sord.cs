@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
-using UniRx.Triggers;
 
-public class Rope : MonoBehaviour
+public class Sord : MonoBehaviour
 {
     #region property
     #endregion
@@ -13,7 +11,6 @@ public class Rope : MonoBehaviour
     #endregion
 
     #region private
-    private float _rotateSpeed = 5.0f;
     #endregion
 
     #region Constant
@@ -30,12 +27,7 @@ public class Rope : MonoBehaviour
 
     private void Start()
     {
-        this.UpdateAsObservable()
-            .TakeUntilDestroy(this)
-            .Subscribe(_ =>
-            {
-                transform.Rotate(-_rotateSpeed, 0, 0);
-            });
+
     }
 
     private void Update()

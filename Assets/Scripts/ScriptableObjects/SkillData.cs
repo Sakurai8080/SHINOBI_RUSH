@@ -66,6 +66,7 @@ public enum SkillType
 {
     Shuriken,
     Katon,
-    Kagebunsin,
-    Windball
+    Suiton,
+    Windball,
+    Sord
 }
