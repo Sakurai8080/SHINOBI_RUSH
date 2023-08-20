@@ -45,6 +45,10 @@ public class SkillTest : MonoBehaviour
                 {
                     SkillManager.Instance.SetSkill(SkillType.Windball);
                 }
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    SkillManager.Instance.SetSkill(SkillType.Sord);
+                }
             });
     }
 
