@@ -13,10 +13,15 @@ public class SordSkill : SkillBase
 
     [SerializeField]
     private Transform _sordParent = default;
+
+    [SerializeField]
+    private Transform _player = default;
     #endregion
 
     #region private
     private float _attackCoefficient = 2.0f;
+
+    private Animator _anim = default;
     #endregion
 
     #region Constant
@@ -33,12 +38,21 @@ public class SordSkill : SkillBase
 
     private void Start()
     {
-        
+        transform.position = _player.position;
     }
 
     private void Update()
     {
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(GameTag.Enemy))
+        {
+            _anim = _player.GetComponent<Animator>();
+            _anim.SetTrigger("Attack");
+        }
     }
     #endregion
 
@@ -47,6 +61,7 @@ public class SordSkill : SkillBase
     {
         Debug.Log($"{SkillType}を発動");
         _isSkillActive = true;
+        transform.SetParent(_player);
 
         Sord sord = Instantiate(_sord, _sordParent);
     }
