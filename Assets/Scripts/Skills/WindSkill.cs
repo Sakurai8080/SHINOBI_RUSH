@@ -132,7 +132,7 @@ public class WindSkill : SkillBase
         {
             yield return new WaitForSeconds(_waitTime);
             Debug.Log("コルーチンスタート");
-            Wind wind = Instantiate(currentWind, _spawnPosition, Quaternion.identity);
+            Wind wind = Instantiate(currentWind, _spawnPosition, Quaternion.identity,_playerTransform);
             yield return new WaitUntil(() => _enemies?.Count() >= 1);
             Vector3 currentTransform = SetTarget(targetDir);
             wind.SetAttackAmount(_currentAttackAmount);

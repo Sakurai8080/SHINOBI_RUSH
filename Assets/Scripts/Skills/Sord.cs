@@ -11,6 +11,7 @@ public class Sord : MonoBehaviour
     #endregion
 
     #region private
+    private float _currentAttackAmount = 2.0f;
     #endregion
 
     #region Constant
@@ -34,9 +35,22 @@ public class Sord : MonoBehaviour
     {
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(GameTag.Enemy))
+        {
+            IDamagable target = other.GetComponent<IDamagable>();
+            target.Damage(_currentAttackAmount);
+        }
+    }
     #endregion
 
     #region public method
+    public void SetAttackAmount(float amount)
+    {
+        _currentAttackAmount += amount;
+    }
     #endregion
 
     #region private method
