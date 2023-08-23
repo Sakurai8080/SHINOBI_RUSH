@@ -49,6 +49,10 @@ public class SkillTest : MonoBehaviour
                 {
                     SkillManager.Instance.SetSkill(SkillType.Sord);
                 }
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    SkillManager.Instance.SetSkill(SkillType.Suiton);
+                }
             });
     }
 
