@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 全ての敵の共通機能を管理する基底クラス
 /// </summary>
-public abstract class EnemyBase : MonoBehaviour , IDamagable
+public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
 {
     #region property
     #endregion
@@ -85,5 +85,10 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable
     /// </summary>
     protected abstract IEnumerator OnActionCoroutine();
     #endregion
+
+    public void ReturnPool()
+    {
+        gameObject.SetActive(false);
+    }
 
 }
