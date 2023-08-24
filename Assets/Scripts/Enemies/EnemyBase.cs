@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 /// <summary>
 /// 全ての敵の共通機能を管理する基底クラス
@@ -8,6 +11,7 @@ using UnityEngine;
 public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
 {
     #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region serialize
@@ -33,6 +37,8 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
     #endregion
 
     #region Event
+    /// <summary>非アクティブとなった時に通知を発行するSubject</summary>
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -59,7 +65,7 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
 
     private void OnDisable()
     {
-        transform.position = _initialPosition;
+        _inactiveSubject.OnNext(Unit.Default);
     }
     #endregion
 
