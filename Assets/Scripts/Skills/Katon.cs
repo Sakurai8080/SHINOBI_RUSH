@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
-public class Katon : MonoBehaviour
+public class Katon : MonoBehaviour , IPoolable
 {
     #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region serialize
@@ -18,12 +20,15 @@ public class Katon : MonoBehaviour
     private float _currentAttackAmount = 1.0f;
     private Vector3 _initialScale;
     private Vector3 _currentScale;
+    private Coroutine _currentCoroutine;
+    private float _lifeTime = 5.0f;
     #endregion
 
     #region Constant
     #endregion
 
     #region Event
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -33,7 +38,23 @@ public class Katon : MonoBehaviour
 
         _currentScale = _initialScale;
         Debug.Log($"_initialScaleは{_initialScale}");
+    }
 
+    private void OnEnable()
+    {
+        _currentCoroutine = StartCoroutine(InActiveCoroutine());
+        _currentScale = _initialScale;
+    }
+
+    private void OnDisable()
+    {
+        if (_currentCoroutine!= null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+        transform.localPosition = Vector3.zero;
+        _inactiveSubject.OnNext(Unit.Default);
     }
 
     private void Start()
@@ -66,12 +87,25 @@ public class Katon : MonoBehaviour
 
     public void SizeChange(float amount)
     {
-        _currentScale *= amount;
-        Debug.Log($"Size変更は{_currentScale}");
-        transform.localScale = _currentScale;
+         _currentScale *= amount;
+         Debug.Log($"Size変更は{_currentScale}");
+         transform.localScale = _currentScale;
+    }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 
     #region private method
+    #endregion
+
+    #region Coroutine method
+    private IEnumerator InActiveCoroutine()
+    {
+        yield return new WaitForSeconds(_lifeTime);
+        gameObject.SetActive(false);
+    }
     #endregion
 }

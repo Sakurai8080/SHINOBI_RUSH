@@ -26,6 +26,8 @@ public class KatonSkill : SkillBase
     private float _sizeChangeAmount = 2.0f;
     private float _scaleCoefficient = 1.0f;
     private Katon _fire = default;
+
+    private KatonGenerator _katonGenerator;
     #endregion
 
     #region Constant
@@ -38,6 +40,8 @@ public class KatonSkill : SkillBase
     protected override void Awake()
     {
         base.Awake();
+
+        _katonGenerator = GetComponent<KatonGenerator>();
     }
 
     private void Start()
@@ -84,12 +88,17 @@ public class KatonSkill : SkillBase
     {
         while (_isSkillActive)
         {
-            Debug.Log("コルーチンスタート");
-            _fire = Instantiate(_katon, _spawnPosition, Quaternion.identity);
-            _fire.SetAttackAmount(_currentAttackAmount);
-            _fire.SizeChange(_scaleCoefficient);
-            yield return new WaitForSeconds(_waitTime);
-            Debug.Log("コルーチンエンド");
+            Katon ktnObj = _katonGenerator.KatonPool.Rent();
+
+            if (ktnObj != null)
+            {
+                ktnObj.transform.position = transform.position;
+                ktnObj.gameObject.SetActive(true);
+                ktnObj.SetAttackAmount(_currentAttackAmount);
+                ktnObj.SizeChange(_scaleCoefficient);
+                yield return new WaitForSeconds(_waitTime);
+                Debug.Log("コルーチンエンド");
+            }
         }
     }
     #endregion

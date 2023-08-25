@@ -74,9 +74,8 @@ public class Objectpool<T> where T : Object
             }
             finally
             {
-                Debug.LogError($"インターフェースが継承されていません。オブジェクト名:{obj.name}");
+                //Debug.LogError($"インターフェースが継承されていません。オブジェクト名:{obj.name}");
             }
-
             return obj;
         }
     }

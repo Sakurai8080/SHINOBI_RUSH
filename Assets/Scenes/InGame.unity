@@ -3004,6 +3004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 483092532}
   - component: {fileID: 483092533}
+  - component: {fileID: 483092534}
   m_Layer: 0
   m_Name: KatonSkill
   m_TagString: Untagged
@@ -3040,6 +3041,21 @@ MonoBehaviour:
   _skillData: {fileID: 11400000, guid: d3f297e3141864bdaae3e19b9acf62de, type: 2}
   _katon: {fileID: 287699228385904212, guid: 1ead53fac714c485e9555f7efc5756aa, type: 3}
   _playerTransform: {fileID: 543450652990513557}
+--- !u!114 &483092534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483092531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e221c65c7e24f9e983b77b8e139275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _katonPrefab: {fileID: 287699228385904212, guid: 1ead53fac714c485e9555f7efc5756aa,
+    type: 3}
+  _parant: {fileID: 483092532}
 --- !u!4 &486077196 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5222019156869184448, guid: d5fc8dfde08a7bd47846064b630033fb,
@@ -6939,7 +6955,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.008566318, y: -0.003426818, z: 0.000029356466, w: 0.99995744}
+  m_LocalRotation: {x: 0.008566317, y: -0.0034268189, z: 0.00002935647, w: 0.99995744}
   m_LocalPosition: {x: 0, y: 0.5, z: -0.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8601,7 +8617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1334829322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.407351, y: -30.647617, z: 78.969376}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1785894744}
