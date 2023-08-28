@@ -25,6 +25,38 @@ MonoBehaviour:
       type: 3}
     m_TargetAsset: {fileID: 919132149155446097, guid: b3ec796dd50e241159a1fab289f58a73,
       type: 3}
+  - m_GUID: 1ead53fac714c485e9555f7efc5756aa
+    m_Address: Fire
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2164138981295843509, guid: 1ead53fac714c485e9555f7efc5756aa,
+      type: 3}
+    m_TargetAsset: {fileID: 2164138981295843509, guid: 1ead53fac714c485e9555f7efc5756aa,
+      type: 3}
+  - m_GUID: 0798b3dfb4a2d4dbca00ddf5ad5ea3b2
+    m_Address: Water
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5630689043040317798, guid: 0798b3dfb4a2d4dbca00ddf5ad5ea3b2,
+      type: 3}
+    m_TargetAsset: {fileID: 5630689043040317798, guid: 0798b3dfb4a2d4dbca00ddf5ad5ea3b2,
+      type: 3}
+  - m_GUID: 1caa97eb2344c4e70874893c014509b7
+    m_Address: WindPar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4466765814650772777, guid: 1caa97eb2344c4e70874893c014509b7,
+      type: 3}
+    m_TargetAsset: {fileID: 4466765814650772777, guid: 1caa97eb2344c4e70874893c014509b7,
+      type: 3}
+  - m_GUID: 292b412c2681d47c8ad48a5d8cab465e
+    m_Address: WindParMax
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4466765814650772777, guid: 292b412c2681d47c8ad48a5d8cab465e,
+      type: 3}
+    m_TargetAsset: {fileID: 4466765814650772777, guid: 292b412c2681d47c8ad48a5d8cab465e,
+      type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6cae935dc3d554a1da71f5aed91e9cd6, type: 2}
   m_SchemaSet:
