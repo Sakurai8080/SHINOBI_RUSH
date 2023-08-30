@@ -97,7 +97,6 @@ public class KatonSkill : SkillBase
                 ktnObj.SetAttackAmount(_currentAttackAmount);
                 ktnObj.SizeChange(_scaleCoefficient);
                 yield return new WaitForSeconds(_waitTime);
-                Debug.Log("コルーチンエンド");
             }
         }
     }

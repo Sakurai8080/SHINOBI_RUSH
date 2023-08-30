@@ -28,6 +28,7 @@ public class ShurikenSkill : SkillBase
 
     private Vector3 _playerV3 = default;
 
+    private ShurikenGenerator _shurikenGenerator;
     #endregion
 
     #region Constant
@@ -40,18 +41,18 @@ public class ShurikenSkill : SkillBase
     protected override void Awake()
     {
         base.Awake();
+        _shurikenGenerator = GetComponent<ShurikenGenerator>();
     }
 
     private void Start()
     {
         transform.position = _playerTransform.position;
         _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
-        OnSkillAction();
     }
 
     private void Update()
     {
-       Debug.Log(_enemies.Count());
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,6 +60,11 @@ public class ShurikenSkill : SkillBase
         if (other.CompareTag(GameTag.Enemy))
         {
             _enemies.Add(other.GetComponent<Transform>());
+            Debug.Log($"手裏剣スキルの射程圏内{_enemies.Count()}匹");
+            if (!_isSkillActive)
+            {
+                OnSkillAction();
+            }
         }
     }
 
@@ -66,8 +72,8 @@ public class ShurikenSkill : SkillBase
     {
         if (other.CompareTag(GameTag.Enemy))
         {
-            Debug.Log("出た");
             _enemies.Remove(other.GetComponent<Transform>());
+            Debug.Log($"射程内残{_enemies.Count()}匹(手裏剣)");
         }
     }
     #endregion
@@ -128,19 +134,16 @@ public class ShurikenSkill : SkillBase
         Vector3 targetDir = Vector3.zero;
         while (_isSkillActive)
         {
-            Debug.Log("コルーチンスタート");
-            if (_enemies?.Count > 0)
+            Shuriken srknObj = _shurikenGenerator.ShurikanPool.Rent();
+            if (_enemies?.Count > 0 && srknObj != null)
             {
-                Debug.Log("起動");
-
-                Shuriken shuriken = Instantiate(_shuriken, _spawnPosition,Quaternion.identity);
                 Vector3 currentTransform = SetTarget(targetDir);
-                Debug.Log(currentTransform);
-                shuriken.SetVelocity(currentTransform);
-                shuriken.SetAttackAmount(_currentAttackAmount);
+                srknObj.transform.position = transform.position;
+                srknObj.gameObject.SetActive(true);
+                srknObj.SetVelocity(currentTransform);
+                srknObj.SetAttackAmount(_currentAttackAmount);
             }
             yield return new WaitForSeconds(_waitTime);
-            Debug.Log("コルーチンエンド");
         }
     }
     #endregion

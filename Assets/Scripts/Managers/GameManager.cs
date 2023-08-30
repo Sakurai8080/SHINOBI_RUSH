@@ -1,35 +1,33 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
-public class WaterGenerator : MonoBehaviour
+public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     #region property
-    public Objectpool<Water> WaterPool => _waterPool;
+    public IObservable<Unit> GameStartObserver => _gameStartSubject;
     #endregion
 
     #region serialize
-    [SerializeField]
-    private Water _waterPrefab = default;
-
-    [SerializeField]
-    private Transform _parent = default;
     #endregion
 
     #region private
-    private Objectpool<Water> _waterPool;
     #endregion
 
     #region Constant
     #endregion
 
     #region Event
+    Subject<Unit> _gameStartSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
     private void Awake()
     {
-        _waterPool = new Objectpool<Water>(_waterPrefab, _parent); 
+        
     }
 
     private void Start()
@@ -44,6 +42,10 @@ public class WaterGenerator : MonoBehaviour
     #endregion
 
     #region public method
+    public void OnGameStart()
+    {
+        _gameStartSubject.OnNext(Unit.Default);
+    }
     #endregion
 
     #region private method

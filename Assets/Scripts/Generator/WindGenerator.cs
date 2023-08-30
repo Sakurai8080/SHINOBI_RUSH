@@ -5,40 +5,26 @@ using UnityEngine;
 public class WindGenerator : MonoBehaviour
 {
     #region property
+    public Objectpool<Wind> WindPool => _windPool;
     #endregion
 
     #region serialize
+    [SerializeField]
+    private Wind _windPrefab = default;
+
+
+    [SerializeField]
+    private Transform _parent = default;
     #endregion
 
     #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
+    private Objectpool<Wind> _windPool;
     #endregion
 
     #region unity methods
     private void Awake()
     {
-
+        _windPool = new Objectpool<Wind>(_windPrefab, _parent);
     }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
     #endregion
 }
