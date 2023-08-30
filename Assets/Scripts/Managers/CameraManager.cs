@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UniRx;
+using UniRx.Triggers;
 
 public class CameraManager : MonoBehaviour
 {
@@ -32,7 +33,6 @@ public class CameraManager : MonoBehaviour
     #endregion
 
     #region Event
-    private Action gameStartAction;
     #endregion
 
     #region unity methods
@@ -46,7 +46,13 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        gameStartAction += GameStartCameraChenge;
+        this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
+            .Subscribe(_ =>
+            {
+                SecondCameraChange();
+            });
+
         SignalManager.Instance.CameraMoveObserver
                               .TakeUntilDestroy(this)
                               .Subscribe(_ =>
@@ -54,6 +60,13 @@ public class CameraManager : MonoBehaviour
                                   TimeLineCamera();
                                   Debug.Log("カメラマネージャーサブスクライブ");
                               });
+        GameManager.Instance.GameStartObserver
+                            .TakeUntilDestroy(this)
+                            .Subscribe(_ =>
+                            {
+                                GameStartCameraChenge();
+                            });
+        
     }
 
     private void Update()
@@ -89,6 +102,19 @@ public class CameraManager : MonoBehaviour
     {
         CameraChange(CameraType.CvCamera1);
     }
+
+    private void SecondCameraChange()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            CameraChange(CameraType.CvCamera2);
+            
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            CameraChange(CameraType.CvCamera1);
+        }
+    }
     #endregion
 
     #region coroutine method
@@ -107,11 +133,10 @@ public class CameraManager : MonoBehaviour
         }
 
         Debug.Log("ドリーチェンジ完了");
-        gameStartAction.Invoke();
+        GameManager.Instance.OnGameStart();
         //CameraChange(CameraType.CvCamera1);
     }
     #endregion
-
 }
 
 [System.Serializable]

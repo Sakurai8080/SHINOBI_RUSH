@@ -66,6 +66,7 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
     private void OnDisable()
     {
         _inactiveSubject.OnNext(Unit.Default);
+        transform.position = _initialPosition;
     }
     #endregion
 

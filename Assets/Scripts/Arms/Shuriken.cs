@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
-public class Shuriken : MonoBehaviour
+public class Shuriken : MonoBehaviour , IPoolable
 {
     #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region serialize
@@ -22,12 +24,15 @@ public class Shuriken : MonoBehaviour
     private float _moveSpeed = 0.5f;
 
     private float _currentAttackAmount = 1.0f;
+    private float _lifeTime = 5.0f;
+    private Coroutine _currentCoroutine;
     #endregion
 
     #region Constant
     #endregion
 
     #region Event
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -43,9 +48,20 @@ public class Shuriken : MonoBehaviour
             .Subscribe(_ => transform.Rotate(0, _rotateSpeed * Time.deltaTime, 0));
     }
 
-    private void Update()
+    private void OnEnable()
     {
+        _currentCoroutine = StartCoroutine(InActiveCoroutine());
+    }
 
+    private void OnDisable()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+        transform.localPosition = Vector3.zero;
+        _inactiveSubject.OnNext(Unit.Default);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,8 +85,21 @@ public class Shuriken : MonoBehaviour
     {
         _rb.velocity = enemyDir * _moveSpeed;
     }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 
     #region private method
+    #endregion
+
+    #region Coroutine method
+    private IEnumerator InActiveCoroutine()
+    {
+        yield return new WaitForSeconds(_lifeTime);
+        gameObject.SetActive(false);
+    }
     #endregion
 }
