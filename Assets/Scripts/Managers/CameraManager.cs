@@ -23,8 +23,7 @@ public class CameraManager : MonoBehaviour
     private CinemachineTrackedDolly dolly;
     private float PathPositionMax;
     private float PathPositionMin;
-    private CameraType initialCamera = CameraType.startCamera;
-    private CameraType currentCamera;
+    private Coroutine _currentCoroutine;
 
     #endregion
 
@@ -33,6 +32,7 @@ public class CameraManager : MonoBehaviour
     #endregion
 
     #region Event
+    private Action gameStartAction;
     #endregion
 
     #region unity methods
@@ -46,12 +46,13 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        currentCamera = initialCamera;
+        gameStartAction += GameStartCameraChenge;
         SignalManager.Instance.CameraMoveObserver
                               .TakeUntilDestroy(this)
                               .Subscribe(_ =>
                               {
                                   TimeLineCamera();
+                                  Debug.Log("カメラマネージャーサブスクライブ");
                               });
     }
 
@@ -71,23 +72,43 @@ public class CameraManager : MonoBehaviour
             camera.Value.Priority = _initialPriority;
         }
         _cameraDic[cameraType].Priority = PriorityAmount;
-        currentCamera = cameraType;
     }
     #endregion
 
     #region private method
     private void TimeLineCamera()
     {
-        dolly = _cameraDic[CameraType.startCamera].GetComponent<CinemachineTrackedDolly>();
-        DollyChangeCoroutin(PathPositionMax);
+        Debug.Log("TimeLine開始");
+        dolly = _cameraDic[CameraType.startCamera].GetCinemachineComponent<CinemachineTrackedDolly>();
+        PathPositionMax = dolly.m_Path.MaxPos;
+        PathPositionMin = dolly.m_Path.MinPos;
+        _currentCoroutine = StartCoroutine(DollyChangeCoroutin(dolly));
+    }
+
+    private void GameStartCameraChenge()
+    {
         CameraChange(CameraType.CvCamera1);
     }
     #endregion
 
     #region coroutine method
-    IEnumerator DollyChangeCoroutin(float target)
+    IEnumerator DollyChangeCoroutin(CinemachineTrackedDolly dolly)
     {
-        yield return null;
+        Debug.Log("ドリーチェンジ開始");
+        float elapsedTime = 0f;
+        float duration = 1.0f;
+
+        while (elapsedTime < duration)
+        {
+            float time = elapsedTime / duration;
+            dolly.m_PathPosition = Mathf.Lerp(PathPositionMin, PathPositionMax, time);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Debug.Log("ドリーチェンジ完了");
+        gameStartAction.Invoke();
+        //CameraChange(CameraType.CvCamera1);
     }
     #endregion
 
