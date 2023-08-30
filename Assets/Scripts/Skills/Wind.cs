@@ -1,10 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
-public class Wind : MonoBehaviour
+public class Wind : MonoBehaviour , IPoolable
 {
     #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region serialize
@@ -14,13 +18,9 @@ public class Wind : MonoBehaviour
 
     #region private
     private Rigidbody _rb;
-
     private float _moveSpeed = 0.5f;
-
     private float _currentAttackAmount = 1.0f;
-
-    private Coroutine currentCoroutine = default;
-
+    private Coroutine _currentCoroutine = default;
     private Vector3 _initialScale;
     #endregion
 
@@ -28,6 +28,7 @@ public class Wind : MonoBehaviour
     #endregion
 
     #region Event
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -41,9 +42,20 @@ public class Wind : MonoBehaviour
         _initialScale = transform.localScale;
     }
 
-    private void Update()
+    private void OnEnable()
     {
+        _currentCoroutine = StartCoroutine(InActiveCoroutine());
+    }
 
+    private void OnDisable()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+        transform.localPosition = Vector3.zero;
+        _inactiveSubject.OnNext(Unit.Default);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,7 +64,8 @@ public class Wind : MonoBehaviour
         {
             IDamagable target = other.GetComponent<IDamagable>();
             target.Damage(_currentAttackAmount);
-            currentCoroutine = StartCoroutine(ExplosionCoroutine());
+            _currentCoroutine = StartCoroutine(ExplosionCoroutine());
+            StartCoroutine(InActiveCoroutine());
         }
     }
     #endregion
@@ -67,16 +80,19 @@ public class Wind : MonoBehaviour
     {
         _rb.velocity = enemyDir * _moveSpeed;
     }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 
     #region private method
     #endregion
 
-
     #region coroutine method
     private IEnumerator ExplosionCoroutine()
     {
-        Debug.Log("爆発コルーチンスタート");
         Vector3 currentScale = _initialScale;
         float targetScaleMagnitude = _initialScale.magnitude * 10; 
 
@@ -88,6 +104,11 @@ public class Wind : MonoBehaviour
         yield return null;
         gameObject.SetActive(false);
         transform.localScale = _initialScale;
+    }
+
+    private IEnumerator InActiveCoroutine()
+    {
+        yield return null;
     }
     #endregion
 }

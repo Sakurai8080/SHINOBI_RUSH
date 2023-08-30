@@ -23,6 +23,7 @@ public class WaterSkill : SkillBase
     private float _attackCoefficient = 2.0f;
 
     private Water _waterball = default;
+    private WaterGenerator _waterGenerator;
     #endregion
 
     #region Constant
@@ -35,6 +36,8 @@ public class WaterSkill : SkillBase
     protected override void Awake()
     {
         base.Awake();
+
+        _waterGenerator = GetComponent<WaterGenerator>();
     }
 
     private void Start()
@@ -80,14 +83,18 @@ public class WaterSkill : SkillBase
     {
         while (_isSkillActive)
         {
-            float randomPosX = Random.Range(-3f, 3f);
-            float randomPosY = Random.Range(0f, 2f);
-            _randomPosition = new Vector3(randomPosX, randomPosY, 0);
-            Debug.Log("コルーチンスタート");
-            _waterball = Instantiate(_water, _randomPosition, Quaternion.identity);
-            _waterball.SetAttackAmount(_currentAttackAmount);
-            yield return new WaitForSeconds(_waitTime);
-            Debug.Log("コルーチンエンド");
+            Water waterObj = _waterGenerator.WaterPool.Rent();
+
+            if (waterObj != null)
+            {
+                float randomPosX = Random.Range(-3f, 3f);
+                float randomPosY = Random.Range(0f, 2f);
+                _randomPosition = new Vector3(randomPosX, randomPosY, 0);
+                waterObj.transform.position = _randomPosition;
+                waterObj.gameObject.SetActive(true);
+                waterObj.SetAttackAmount(_currentAttackAmount);
+                yield return new WaitForSeconds(_waitTime);
+            }
         }
     }
     #endregion

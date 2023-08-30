@@ -29,6 +29,8 @@ public class WindSkill : SkillBase
     private float _attackCoefficient = 5.0f;
 
     private Wind currentWind = default;
+
+    private WindGenerator _windGenerator;
     #endregion
 
     #region Constant
@@ -47,16 +49,13 @@ public class WindSkill : SkillBase
     {
         transform.position = _playerTransform.position;
         _spawnPosition = _playerTransform.position + new Vector3(-0.2f, 0.3f, 0.1f);
+        _windGenerator = GetComponent<WindGenerator>();
         OnSkillAction();
-    }
-
-    private void Update()
-    {
-        Debug.Log(_enemies.Count());
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(_enemies.Count());
         if (other.CompareTag(GameTag.Enemy))
         {
             _enemies.Add(other.GetComponent<Transform>());
@@ -65,6 +64,7 @@ public class WindSkill : SkillBase
 
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log(_enemies.Count());
         if (other.CompareTag(GameTag.Enemy))
         {
             Debug.Log("出た");
@@ -127,18 +127,21 @@ public class WindSkill : SkillBase
     #region coroutine method
     protected override IEnumerator SkillActionCroutine()
     {
-        Vector3 targetDir = Vector3.zero;
         while (_isSkillActive)
         {
-            yield return new WaitForSeconds(_waitTime);
-            Debug.Log("コルーチンスタート");
-            Wind wind = Instantiate(currentWind, _spawnPosition, Quaternion.identity,_playerTransform);
-            yield return new WaitUntil(() => _enemies?.Count() >= 1);
-            Vector3 currentTransform = SetTarget(targetDir);
-            wind.SetAttackAmount(_currentAttackAmount);
-            wind.SetVelocity(currentTransform);
-            Debug.Log(currentTransform);
-            Debug.Log("コルーチンエンド");
+            Vector3 targetDir = Vector3.zero;
+            Wind windObj = _windGenerator.WindPool.Rent();
+
+            if (windObj != null)
+            {
+                windObj.transform.position = _spawnPosition;
+                yield return new WaitForSeconds(_waitTime);
+                windObj.gameObject.SetActive(true);
+                yield return new WaitUntil(() => _enemies?.Count() >= 1);
+                Vector3 currentTransform = SetTarget(targetDir);
+                windObj.SetAttackAmount(_currentAttackAmount);
+                windObj.SetVelocity(currentTransform);
+            }
         }
     }
     #endregion
