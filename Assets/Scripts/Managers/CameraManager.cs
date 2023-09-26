@@ -60,13 +60,13 @@ public class CameraManager : MonoBehaviour
                                   TimeLineCamera();
                                   Debug.Log("カメラマネージャーサブスクライブ");
                               });
+
         GameManager.Instance.GameStartObserver
                             .TakeUntilDestroy(this)
                             .Subscribe(_ =>
                             {
                                 GameStartCameraChenge();
                             });
-        
     }
 
     private void Update()
@@ -134,7 +134,6 @@ public class CameraManager : MonoBehaviour
 
         Debug.Log("ドリーチェンジ完了");
         GameManager.Instance.OnGameStart();
-        //CameraChange(CameraType.CvCamera1);
     }
     #endregion
 }
