@@ -35,6 +35,12 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     private void Start()
     {
+        GameManager.Instance.GameStartObserver
+                   .TakeUntilDestroy(this)
+                   .Subscribe(_enemyGenerator=>
+                   {
+                      OnGenerateEnemies(EnemyWaveType.Wave_1);
+                   });
 
     }
 

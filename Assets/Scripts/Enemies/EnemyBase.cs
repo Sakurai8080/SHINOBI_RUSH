@@ -11,6 +11,7 @@ using UniRx.Triggers;
 public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
 {
     #region property
+    public EnemyType EnemyType => _enemyData.EnemyType;
     public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
