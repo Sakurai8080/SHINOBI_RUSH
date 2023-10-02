@@ -18,7 +18,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private CameraType _type;
     #endregion
-
+    
     #region private
     private Dictionary<CameraType, CinemachineVirtualCamera> _cameraDic = new Dictionary<CameraType, CinemachineVirtualCamera>();
     private CinemachineTrackedDolly dolly;
@@ -58,15 +58,14 @@ public class CameraManager : MonoBehaviour
                               .Subscribe(_ =>
                               {
                                   TimeLineCamera();
-                                  Debug.Log("カメラマネージャーサブスクライブ");
                               });
+
         GameManager.Instance.GameStartObserver
                             .TakeUntilDestroy(this)
                             .Subscribe(_ =>
                             {
                                 GameStartCameraChenge();
                             });
-        
     }
 
     private void Update()
@@ -91,7 +90,6 @@ public class CameraManager : MonoBehaviour
     #region private method
     private void TimeLineCamera()
     {
-        Debug.Log("TimeLine開始");
         dolly = _cameraDic[CameraType.startCamera].GetCinemachineComponent<CinemachineTrackedDolly>();
         PathPositionMax = dolly.m_Path.MaxPos;
         PathPositionMin = dolly.m_Path.MinPos;
@@ -120,7 +118,6 @@ public class CameraManager : MonoBehaviour
     #region coroutine method
     IEnumerator DollyChangeCoroutin(CinemachineTrackedDolly dolly)
     {
-        Debug.Log("ドリーチェンジ開始");
         float elapsedTime = 0f;
         float duration = 1.0f;
 
@@ -131,10 +128,7 @@ public class CameraManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        Debug.Log("ドリーチェンジ完了");
         GameManager.Instance.OnGameStart();
-        //CameraChange(CameraType.CvCamera1);
     }
     #endregion
 }

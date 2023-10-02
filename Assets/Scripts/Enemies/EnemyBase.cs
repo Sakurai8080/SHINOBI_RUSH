@@ -11,6 +11,7 @@ using UniRx.Triggers;
 public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
 {
     #region property
+    public EnemyType EnemyType => _enemyData.EnemyType;
     public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
@@ -24,7 +25,7 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
     #region private
     private float _currentMaxHP;
     private float _currentAttackAmount;
-    private Coroutine _actionCroutine;
+    private Coroutine _actionCoroutine;
     private Vector3 _initialPosition = default;
     #endregion
 
@@ -55,7 +56,7 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
 
     protected virtual void Start()
     {
-        _actionCroutine = StartCoroutine(OnActionCoroutine());
+        _actionCoroutine = StartCoroutine(OnActionCoroutine());
     }
 
     private void OnEnable()

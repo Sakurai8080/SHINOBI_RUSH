@@ -26,13 +26,13 @@ public class SignalManager : SingletonMonoBehaviour<SignalManager>
 
     #region unity methods
     private void Awake()
-    {
+    { 
 
     }
 
     private void Start()
     {
-
+        
     }
 
     private void Update()
@@ -45,6 +45,11 @@ public class SignalManager : SingletonMonoBehaviour<SignalManager>
     public void CameraMoveChange()
     {
         _cameraMoveSubject.OnNext(Unit.Default);
+    }
+
+    public void GameStartSignal()
+    {
+        GameManager.Instance.OnGameStart();
     }
     #endregion
 
