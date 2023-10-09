@@ -64,13 +64,8 @@ public class CameraManager : MonoBehaviour
                             .TakeUntilDestroy(this)
                             .Subscribe(_ =>
                             {
-                                GameStartCameraChenge();
+                                CameraChange(CameraType.CvCamera1);
                             });
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 
@@ -94,11 +89,6 @@ public class CameraManager : MonoBehaviour
         PathPositionMax = dolly.m_Path.MaxPos;
         PathPositionMin = dolly.m_Path.MinPos;
         _currentCoroutine = StartCoroutine(DollyChangeCoroutin(dolly));
-    }
-
-    private void GameStartCameraChenge()
-    {
-        CameraChange(CameraType.CvCamera1);
     }
 
     private void SecondCameraChange()
