@@ -102,8 +102,8 @@ public class EnemyGenerator : MonoBehaviour
                 {
                     enemy.gameObject.SetActive(true);
 
-                    float randomX = UnityEngine.Random.Range(-5, 5);
-                    float randomY = UnityEngine.Random.Range(-5, 5);
+                    float randomX = UnityEngine.Random.Range(-3, 3);
+                    float randomY = UnityEngine.Random.Range(-3, 3);
 
                     Vector3 generatePos = new Vector3(randomX,randomY, _playerTrans.transform.position.z+20);
                     enemy.transform.position = generatePos;

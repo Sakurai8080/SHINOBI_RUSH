@@ -21,12 +21,13 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
     [SerializeField]
     private EnemyData _enemyData = default;
     #endregion
-
+    
     #region private
     private float _currentMaxHP;
     private float _currentAttackAmount;
     private Coroutine _actionCoroutine;
     private Vector3 _initialPosition = default;
+    private IDamagable _target;
     #endregion
 
     #region protected
@@ -57,6 +58,20 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
     protected virtual void Start()
     {
         _actionCoroutine = StartCoroutine(OnActionCoroutine());
+
+        this.OnTriggerEnterAsObservable()
+            .TakeUntilDestroy(this)
+            .Where(x => x.CompareTag(GameTag.Player))
+            //一度接触していればGetCompenentを行わないようにする
+            .Select(x => _target ?? (_target = x.gameObject.GetComponent<IDamagable>()))
+            .Subscribe(x =>
+            {
+                //プレイヤーがダメージを受けない状態ではない場合
+                //if ()
+                {
+                    x.Damage(_currentAttackAmount);
+                }
+            });
     }
 
     private void OnEnable()

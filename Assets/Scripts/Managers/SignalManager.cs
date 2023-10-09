@@ -47,10 +47,6 @@ public class SignalManager : SingletonMonoBehaviour<SignalManager>
         _cameraMoveSubject.OnNext(Unit.Default);
     }
 
-    public void GameStartSignal()
-    {
-        GameManager.Instance.OnGameStart();
-    }
     #endregion
 
     #region private method

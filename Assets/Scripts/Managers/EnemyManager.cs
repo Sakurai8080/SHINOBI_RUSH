@@ -12,6 +12,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 {
     #region property
     public static EnemyManager Instance { get; private set; }
+
+    public ReactiveProperty<uint> DefeatAmount => _defeatAmountProperty;
     #endregion
 
     #region serialize
@@ -25,6 +27,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #endregion
 
     #region Event
+    private ReactiveProperty<uint> _defeatAmountProperty = new ReactiveProperty<uint>();
     #endregion
 
     #region unity methods
