@@ -92,6 +92,7 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
         _currentHP -= amount;
         Debug.Log(_currentHP);
 
+        EnemyManager.Instance.DefeatAmount.Value++;
         if (_currentHP <= 0)
         {
             gameObject.SetActive(false);
