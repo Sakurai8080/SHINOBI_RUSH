@@ -18,9 +18,6 @@ public class PlayerStatusUI : MonoBehaviour
 
     [SerializeField]
     private Image _currentHPFillArea = default;
-
-    [SerializeField]
-    private Image _playerHpImageBackGround;
     #endregion
 
     #region private
@@ -67,8 +64,7 @@ public class PlayerStatusUI : MonoBehaviour
 
     public void PlayerHpAnimation()
     {
-        AnimateHp(_currentHPFillArea.transform);
-        AnimateHp(_playerHpImageBackGround.transform);;
+        AnimateHp(_playerStatusGroup);
     }
     #endregion
 
@@ -79,15 +75,9 @@ public class PlayerStatusUI : MonoBehaviour
         _currentHPFillArea.fillAmount = amount;
     }
 
-    private void AnimateHp(Transform target)
+    private void AnimateHp(CanvasGroup targetCanvasGroup)
     {
-        target.transform.DOScale(Vector3.one, 0.15f)
-                                               .SetEase(Ease.InOutBounce)
-                                               .SetUpdate(true)
-                                               .OnComplete(() =>
-                                               {
-                                                    //ChangeActivePanelView(false);
-                                               });
+        _currentTween =  targetCanvasGroup.DOFade(1f, 3.5f).From(0f);
     }
     #endregion
 }

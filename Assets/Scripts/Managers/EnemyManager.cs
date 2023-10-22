@@ -14,6 +14,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     public static EnemyManager Instance { get; private set; }
 
     public ReactiveProperty<uint> DefeatAmount => _defeatAmountProperty;
+    public IObservable<uint> DefeatedEnemyAmountViewObserver => _defeatedEnemyAmountViewSubject;
     #endregion
 
     #region serialize
@@ -28,16 +29,23 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     #region Event
     private ReactiveProperty<uint> _defeatAmountProperty = new ReactiveProperty<uint>();
+    private Subject<uint> _defeatedEnemyAmountViewSubject = new Subject<uint>();
     #endregion
 
     #region unity methods
     private void Awake()
     {
+        Instance = this;
         _enemyGenerator = GetComponent<EnemyGenerator>();
     }
 
     private void Start()
     {
+        _defeatAmountProperty.TakeUntilDestroy(this)
+                             .Subscribe(value =>
+                             {
+                                 _defeatedEnemyAmountViewSubject.OnNext(value);
+                             });
         GameManager.Instance.GameStartObserver
                    .TakeUntilDestroy(this)
                    .Subscribe(_enemyGenerator=>

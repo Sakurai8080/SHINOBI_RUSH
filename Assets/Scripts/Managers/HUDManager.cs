@@ -1,20 +1,26 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UniRx;
 
 
 [RequireComponent(typeof(PlayerStatusUI))]
+[RequireComponent(typeof(GameStatusUI))]
 public class HUDManager : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
+    private CanvasGroup _playerStatusGroup = default;
     #endregion
 
     #region private
     private PlayerStatusUI _playerStatus;
+    private GameStatusUI _gameStatus;
+    private List<CanvasGroup> _canvasGroups;
     #endregion
 
     #region Constant
@@ -27,6 +33,7 @@ public class HUDManager : MonoBehaviour
     private void Awake()
     {
         _playerStatus = GetComponent<PlayerStatusUI>();
+        _gameStatus = GetComponent<GameStatusUI>();
     }
 
     private void Start()
@@ -35,14 +42,9 @@ public class HUDManager : MonoBehaviour
                             .TakeUntilDestroy(this)
                             .Subscribe(_ =>
                             {
-                                ChangeHUDPanelActive(true);
                                 _playerStatus.PlayerHpAnimation();
+                                _gameStatus.GameStatusUIAnimation();
                             });
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 
@@ -50,9 +52,6 @@ public class HUDManager : MonoBehaviour
     #endregion
 
     #region private method
-    private void ChangeHUDPanelActive(bool value)
-    {
-        //_playerStatus.ChangeActivePanelView(value);
-    }
+    
     #endregion
 }
