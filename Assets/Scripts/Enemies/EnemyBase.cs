@@ -67,7 +67,6 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
             .Subscribe(x =>
             {
                 //プレイヤーがダメージを受けない状態ではない場合
-                //if ()
                 {
                     x.Damage(_currentAttackAmount);
                 }

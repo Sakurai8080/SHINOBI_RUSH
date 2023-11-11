@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,9 @@ using Cysharp.Threading.Tasks;
 public class TimeManager : SingletonMonoBehaviour<TimeManager>
 {
     #region property
-    public static TimeManager Instance { get; set; }
+    public IObservable<uint> EnemyEventObserver => _enemyEventSubject;
     #endregion
-
+    
     #region serialize
     [Header("Variacles")]
     [Tooltip("制限時間(分)")]
@@ -22,6 +23,8 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
     [SerializeField]
     private TextMeshProUGUI _limitTimeTMP = default;
 
+    [SerializeField]
+    private EnemyChangeEvent[] _enemyEvents;
     #endregion
 
     #region private
@@ -34,9 +37,9 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
 
     #region Event
     private IObservable<long> _currentTimeEvent;
-    private Coroutine _currentCoroutine;
+    private Subject<uint> _enemyEventSubject = new Subject<uint>(); 
     #endregion
-
+    
     #region unity methods
     private void Awake()
     {
@@ -45,9 +48,9 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
 
     private void Start()
     {
-         GameManager.Instance.GameStartObserver
-                             .TakeUntilDestroy(this)
-                             .Subscribe(_ => OnLimitTimerAsync());
+        GameManager.Instance.GameStartObserver
+                            .TakeUntilDestroy(this)
+                            .Subscribe(_ => OnLimitAndEventTimer());
 
         _currentLimitTime.TakeUntilDestroy(this)
                          .Where(value => value >= 0)
@@ -61,16 +64,29 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
                          });
     }
 
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
     #endregion
 
     #region private method
+    private void OnLimitAndEventTimer()
+    {
+        _currentTimeEvent = _enemyEvents.Select(e => Observable.Timer(TimeSpan.FromSeconds(e.InvokeTime)))
+                                        .Merge();
+
+        uint currentEnemyEventIndex = 1;
+
+        _currentTimeEvent.TakeUntilDestroy(this)
+                         .Subscribe(_ =>
+                         {
+                             _enemyEventSubject.OnNext(currentEnemyEventIndex);
+                             currentEnemyEventIndex++;
+                         });
+
+        OnLimitTimerAsync().Forget();
+    }
+
     private async UniTaskVoid OnLimitTimerAsync()
     {
         Debug.Log("タイムカウント開始");
@@ -83,4 +99,11 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
         }
     }
     #endregion
+}
+
+[Serializable]
+public struct EnemyChangeEvent
+{
+    public string WaveName;
+    public uint InvokeTime;
 }

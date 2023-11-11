@@ -21,6 +21,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #endregion
 
     #region private
+    private EnemyWaveType _currentEnemyWave = EnemyWaveType.Wave_1;
     private EnemyGenerator _enemyGenerator;
     #endregion
 
@@ -46,6 +47,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
                              {
                                  _defeatedEnemyAmountViewSubject.OnNext(value);
                              });
+
         GameManager.Instance.GameStartObserver
                    .TakeUntilDestroy(this)
                    .Subscribe(_enemyGenerator=>
@@ -53,15 +55,20 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
                       OnGenerateEnemies(EnemyWaveType.Wave_1);
                    });
 
-    }
-
-    private void Update()
-    {
+        TimeManager.Instance.EnemyEventObserver
+                            .TakeUntilDestroy(this)
+                            .Subscribe(value => EnemySwitching(value));
 
     }
     #endregion
 
     #region public method
+    public void EnemySwitching(uint enemyTypeAmount)
+    {
+        uint currentWave = enemyTypeAmount;
+        _currentEnemyWave = (EnemyWaveType)currentWave;
+        OnGenerateEnemies(_currentEnemyWave);
+    }
     #endregion
 
     #region private method

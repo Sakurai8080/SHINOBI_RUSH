@@ -86,7 +86,7 @@ public class EnemyGenerator : MonoBehaviour
     #region coroutine method
     private IEnumerator GenerateCoroutine(EnemyType type)
     {
-        Debug.Log("ジェネレートコルーチン開始");
+        Debug.Log($"{type}ジェネレート開始");
         WaitForSeconds interval = new WaitForSeconds(_generateInterval);
         int count = 0;
 
@@ -103,7 +103,7 @@ public class EnemyGenerator : MonoBehaviour
                     enemy.gameObject.SetActive(true);
 
                     float randomX = UnityEngine.Random.Range(-3, 3);
-                    float randomY = UnityEngine.Random.Range(-3, 3);
+                    float randomY = UnityEngine.Random.Range(2, 5);
 
                     Vector3 generatePos = new Vector3(randomX,randomY, _playerTrans.transform.position.z+20);
                     enemy.transform.position = generatePos;
