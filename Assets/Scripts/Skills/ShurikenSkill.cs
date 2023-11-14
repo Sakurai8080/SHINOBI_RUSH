@@ -21,13 +21,10 @@ public class ShurikenSkill : SkillBase
     private List<Transform> _enemies = new List<Transform>();
 
     private Vector3 _spawnPosition;
-
-    private float _waitTime = 3.0f;
-
-    private float attackCoefficient = 2.0f;
-
     private Vector3 _playerV3 = default;
-
+    private float _waitTime = 3.0f;
+    private float attackCoefficient = 2.0f;
+    private Coroutine _currentCoroutine;
     private ShurikenGenerator _shurikenGenerator;
     #endregion
 
@@ -38,6 +35,21 @@ public class ShurikenSkill : SkillBase
     #endregion
 
     #region unity methods
+
+    private void OnEnable()
+    {
+        _currentCoroutine = StartCoroutine(SkillActionCroutine());
+    }
+
+    private void OnDisable()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(SkillActionCroutine());
+            _currentCoroutine = null;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -48,11 +60,6 @@ public class ShurikenSkill : SkillBase
     {
         transform.position = _playerTransform.position;
         _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
-    }
-
-    private void Update()
-    {
-
     }
 
     private void OnTriggerEnter(Collider other)

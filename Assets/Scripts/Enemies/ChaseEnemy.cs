@@ -31,6 +31,16 @@ public class ChaseEnemy : EnemyBase
     {
         base.Start();
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
     #endregion
 
     #region public method

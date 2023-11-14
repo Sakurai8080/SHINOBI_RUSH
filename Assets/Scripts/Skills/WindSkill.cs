@@ -55,9 +55,9 @@ public class WindSkill : SkillBase
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(_enemies.Count());
         if (other.CompareTag(GameTag.Enemy))
         {
+            Debug.Log(_enemies.Count());
             _enemies.Add(other.GetComponent<Transform>());
         }
     }
