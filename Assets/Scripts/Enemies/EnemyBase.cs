@@ -73,19 +73,19 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
             });
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _actionCoroutine = StartCoroutine(OnActionCoroutine());
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         if (_actionCoroutine != null)
         {
             StopCoroutine(_actionCoroutine);
+            _actionCoroutine = null;
         }
         _inactiveSubject.OnNext(Unit.Default);
-        transform.position = _initialPosition;
     }
     #endregion
 

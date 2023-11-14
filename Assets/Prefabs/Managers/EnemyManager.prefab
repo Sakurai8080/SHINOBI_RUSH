@@ -150,33 +150,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f129099c4040b473fad8411a36826138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generateInterval: 1
-  _onceGenerateAmount: 10
+  _generateInterval: 3
+  _onceGenerateAmount: 1
   _startGenerateLimit: 10
   _enemies:
   - EnemyName: Ghost_1
     EnemyPrefab: {fileID: 1270809510, guid: e3e8e33af43da834294d5f9a02da77e7, type: 3}
-    ReserveAmount: 10
+    ReserveAmount: 1
     ActivationLimit: 10
     Parent: {fileID: 3945876765409624066}
   - EnemyName: Bat_1
     EnemyPrefab: {fileID: 3395744504563906173, guid: 67f0474ce7d8d344fa04ba561d36d761,
       type: 3}
-    ReserveAmount: 10
+    ReserveAmount: 1
     ActivationLimit: 10
     Parent: {fileID: 3945876765991931067}
   - EnemyName: Rabitte
-    EnemyPrefab: {fileID: 3395744504563906173, guid: 67f0474ce7d8d344fa04ba561d36d761,
+    EnemyPrefab: {fileID: 3963019521971264221, guid: 2a4adfdefdadd7048a18bb7e7cc5b23b,
       type: 3}
     ReserveAmount: 10
     ActivationLimit: 10
-    Parent: {fileID: 3945876765991931067}
+    Parent: {fileID: 791861209}
   - EnemyName: Slime
-    EnemyPrefab: {fileID: 3395744504563906173, guid: 67f0474ce7d8d344fa04ba561d36d761,
+    EnemyPrefab: {fileID: 6369198729290723943, guid: 9aad9de7cbca6d84b82891c3a1e63e34,
       type: 3}
     ReserveAmount: 10
     ActivationLimit: 10
-    Parent: {fileID: 3945876765991931067}
+    Parent: {fileID: 1741234972}
 --- !u!1 &3945876765991931060
 GameObject:
   m_ObjectHideFlags: 0
