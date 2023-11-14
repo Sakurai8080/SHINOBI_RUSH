@@ -75,11 +75,15 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
 
     private void OnEnable()
     {
-        
+        _actionCoroutine = StartCoroutine(OnActionCoroutine());
     }
 
     private void OnDisable()
     {
+        if (_actionCoroutine != null)
+        {
+            StopCoroutine(_actionCoroutine);
+        }
         _inactiveSubject.OnNext(Unit.Default);
         transform.position = _initialPosition;
     }
