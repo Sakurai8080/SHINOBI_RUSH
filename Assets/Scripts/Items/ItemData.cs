@@ -28,20 +28,6 @@ public class ItemData : ScriptableObject
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
@@ -54,7 +40,7 @@ public class ItemData : ScriptableObject
 public enum ItemType
 {
     None,
-    EXP,
+    Scroll,
     Heal,
     PowerUp
 }
