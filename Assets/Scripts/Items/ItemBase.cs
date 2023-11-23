@@ -7,6 +7,8 @@ using UniRx;
 public abstract class ItemBase : MonoBehaviour, IPoolable
 {
     #region property
+    public ItemType ItemType => _itemData.ItemType;
+
     public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
@@ -33,11 +35,6 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
     {
         _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
         _rd = GetComponent<Rigidbody>();
-    }
-
-    private void Start()
-    {
-
     }
 
     private void OnEnable()
