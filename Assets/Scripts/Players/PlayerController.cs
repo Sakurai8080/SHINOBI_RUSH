@@ -13,6 +13,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
 
     #region private
     private PlayerHealth _health;
+    private bool _isDead = false;
     #endregion
 
     #region Constant
@@ -41,10 +42,29 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     #region public method
     public void Damage(float amount)
     {
+        if (_isDead)
+        {
+            return;
+        }
         Debug.Log($"プレイヤーが{amount}ダメージを受けた");
         //ダメージを受けたあと、プレイヤーのHPがなくなったら
         if (_health.Damage(amount))
         {
+            if (!_isDead)
+            {
+                _isDead = true;
+            }
+        }
+    }
+
+    public void GetExp(uint value)
+    {
+        if (!_isDead)
+        {
+            if (!_isDead)
+            {
+                
+            }
         }
     }
     #endregion
