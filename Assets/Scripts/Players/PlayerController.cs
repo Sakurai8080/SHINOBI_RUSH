@@ -6,6 +6,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
 {
     #region property
     public PlayerHealth Health => _health;
+    public PlayerStatus Status => _status;
     #endregion
 
     #region serialize
@@ -13,6 +14,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
 
     #region private
     private PlayerHealth _health;
+    private PlayerStatus _status;
     private bool _isDead = false;
     #endregion
 
@@ -26,16 +28,6 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     private void Awake()
     {
         _health = GetComponent<PlayerHealth>();
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 
@@ -63,7 +55,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
         {
             if (!_isDead)
             {
-                
+                _status.AddExp(value);
             }
         }
     }

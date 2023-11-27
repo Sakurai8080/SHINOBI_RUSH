@@ -32,7 +32,6 @@ public class PlayerHealth : MonoBehaviour
     #region Event
     private Subject<float> _changeHPSubject = new Subject<float>();
     #endregion
-
     #region unity methods
     private void Awake()
     {
