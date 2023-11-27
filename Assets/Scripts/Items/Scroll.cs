@@ -46,6 +46,7 @@ public class Scroll : ItemBase
     public override void Use(PlayerController player)
     {
         Debug.Log($"{ItemType}を使用した");
+        player.GetExp(_expValue);
         gameObject.SetActive(false);
     }
 

@@ -37,10 +37,6 @@ public class PlayerMove : MonoBehaviour
         _firstRotate = transform.rotation.eulerAngles;
     }
 
-    private void Start()
-    {
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
