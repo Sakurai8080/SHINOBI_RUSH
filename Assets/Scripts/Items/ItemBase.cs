@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using UniRx.Triggers;
 
 public abstract class ItemBase : MonoBehaviour, IPoolable
 {
@@ -35,6 +36,11 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
     {
         _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
         _rd = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void OnEnable()

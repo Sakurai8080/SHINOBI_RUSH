@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillData: {fileID: 11400000, guid: 59c7313a91cdf41ca895943b44a08a51, type: 2}
-  _sord: {fileID: 6904613989882266605, guid: c110e09b98ff1834a84ea3f2ac8ba8f9, type: 3}
+  _sord: {fileID: 2035016770499253788, guid: c110e09b98ff1834a84ea3f2ac8ba8f9, type: 3}
   _sordParent: {fileID: 0}
   _player: {fileID: 0}
 --- !u!65 &2265627530984036909
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillData: {fileID: 11400000, guid: 63e61b52d65274445b6e0f4843b72fed, type: 2}
-  _shuriken: {fileID: 4342355057800776706, guid: 6ea57ebf6e1a64f32a8ba92c0839e284,
+  _shuriken: {fileID: -2259917011439287653, guid: 983d5d5edef234d289eae4729e457068,
     type: 3}
   _playerTransform: {fileID: 0}
 --- !u!65 &2265627531466770470
@@ -466,6 +466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c0272b2381244abadfbc515fcb207e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shurikenPrefab: {fileID: 4342355057800776706, guid: 6ea57ebf6e1a64f32a8ba92c0839e284,
+  _shurikenPrefab: {fileID: -2259917011439287653, guid: 983d5d5edef234d289eae4729e457068,
     type: 3}
   _parent: {fileID: 2265627531466770468}

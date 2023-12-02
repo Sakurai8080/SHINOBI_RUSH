@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439068722982086}
-  m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 4402747960763172}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33183870430742102
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 4417376213529652}
   - component: {fileID: 33116902831319660}
   - component: {fileID: 23986338383871658}
-  - component: {fileID: 7041652422926146300}
   m_Layer: 0
   m_Name: Plane.001
   m_TagString: Untagged
@@ -105,13 +104,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724017082318064}
-  m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 4402747960763172}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33116902831319660
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -159,19 +158,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7041652422926146300
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724017082318064}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.008148547, y: 0.09, z: 0.01}
-  m_Center: {x: -0.004666447, y: 0.02, z: 0.00007330252}
 --- !u!1 &1726887964968176
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +167,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4402747960763172}
-  - component: {fileID: 6904613989882266605}
+  - component: {fileID: 2035016770499253788}
+  - component: {fileID: -7148449964245418599}
   m_Layer: 0
   m_Name: NinjaFBX
   m_TagString: Untagged
@@ -196,16 +183,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726887964968176}
-  m_LocalRotation: {x: -0.17110477, y: 0.2801988, z: -0.8421659, w: 0.42774814}
-  m_LocalPosition: {x: 0.52, y: -2.77, z: -1.45}
+  m_LocalRotation: {x: -0.28160024, y: 0.055850215, z: 0.16813885, w: 0.9430331}
+  m_LocalPosition: {x: 0.23, y: -2, z: -2.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4417376213529652}
   - {fileID: 4535164954988900}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 161, y: 213.94, z: 59.7}
---- !u!114 &6904613989882266605
+  m_LocalEulerAnglesHint: {x: -33.36, y: 0.73, z: 20}
+--- !u!114 &2035016770499253788
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,3 +204,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1814595681554cf985c17ff250a68d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &-7148449964245418599
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726887964968176}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 8.0448}
+  m_Center: {x: 0, y: 0, z: -1.6341326}
