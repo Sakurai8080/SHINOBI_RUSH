@@ -21,6 +21,7 @@ public abstract class SkillBase : MonoBehaviour
     protected float _currentAttackAmount = 0;
     protected int _currentSkillLevel = 1;
     protected bool _isSkillActive = false;
+    protected Coroutine _currentCoroutine;
     #endregion
 
     #region private
@@ -42,7 +43,6 @@ public abstract class SkillBase : MonoBehaviour
 
     private void Start()
     {
-
     }
 
     private void Update()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ゲーム無いで使用するタグを管理するクラス
+/// ゲーム内で使用するタグを管理するクラス
 /// </summary>
 public class GameTag
 {

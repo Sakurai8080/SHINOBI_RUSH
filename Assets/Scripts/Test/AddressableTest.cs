@@ -7,14 +7,17 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class AddressableTest : MonoBehaviour
 {
     #region property
+    public GameObject FireObj => _fireObj;
+
+    public static AddressableTest Instance { get; private set; }
     #endregion
 
     #region serialize
     #endregion
 
     #region private
-    private AsyncOperationHandle<GameObject> _prefabHandle;
-    private GameObject testObj;
+    private AsyncOperationHandle<GameObject> _fire;
+    private GameObject _fireObj;
     #endregion
 
     #region Constant
@@ -26,7 +29,15 @@ public class AddressableTest : MonoBehaviour
     #region unity methods
     private void Awake()
     {
-
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private async void Start()
@@ -35,14 +46,14 @@ public class AddressableTest : MonoBehaviour
         //AsyncOperationHandle<GameObject> handle = Addressables.InstantiateAsync("Group1/shiho");
 
         //LoadAsyncで読み込み
-        _prefabHandle = Addressables.LoadAsset<GameObject>("Group1/shiho");
+        _fire = Addressables.LoadAsset<GameObject>("Fire");
 
         //読み込み完了までawait
-        GameObject prefab = await _prefabHandle.Task;
+        GameObject prefab = await _fire.Task;
 
         //読み込んだプレハブをインスタンス化
-        testObj = Instantiate(prefab);
-        testObj.name = "shiho";
+        _fireObj = Instantiate(prefab);
+        _fireObj.name = "Fire";
     }
 
     private void Update()
@@ -52,10 +63,10 @@ public class AddressableTest : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(testObj);
+        Destroy(_fireObj);
 
         //使い終わったらhandleをリリース。使い終わったら必ずリリース。0になったらアセットがアンロードになる。
-        Addressables.Release(_prefabHandle);
+        Addressables.Release(_fire);
     }
     #endregion
 

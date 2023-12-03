@@ -13,6 +13,8 @@ public class StageScroll : MonoBehaviour
     #endregion
 
     #region serialize
+    [SerializeField]
+    private GameObject _openingStage = default;
     #endregion
 
     #region private
@@ -45,6 +47,9 @@ public class StageScroll : MonoBehaviour
                 Scroling();
                 StageMove();
             });
+        GameManager.Instance.GameStartObserver
+                            .TakeUntilDestroy(this)
+                            .Subscribe(_ => Destroy(_openingStage));
     }
 
     private void Update()
