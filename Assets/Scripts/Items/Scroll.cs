@@ -17,6 +17,7 @@ public class Scroll : ItemBase
     #endregion
 
     #region private
+    private Coroutine _currentCoroutine;
     #endregion
 
     #region Constant
@@ -33,12 +34,20 @@ public class Scroll : ItemBase
 
     private void Start()
     {
+        _currentCoroutine = StartCoroutine(ScrollMoveCoroutine());
+    }
+
+    private void OnEnable()
+    {
+        if (_currentCoroutine != null)
+            StartCoroutine(ScrollMoveCoroutine());
 
     }
 
-    private void Update()
+    private void OnDisable()
     {
-
+        if (_currentCoroutine != null)
+            StopCoroutine(ScrollMoveCoroutine());
     }
     #endregion
 
@@ -61,5 +70,16 @@ public class Scroll : ItemBase
     #endregion
 
     #region private method
+    #endregion
+
+    #region private method
+    IEnumerator ScrollMoveCoroutine()
+    {
+        while (true)
+        {
+            transform.Translate(0, 0, -0.01f);
+            yield return null;
+        }
+    }
     #endregion
 }
