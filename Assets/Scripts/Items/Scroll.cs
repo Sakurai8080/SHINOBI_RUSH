@@ -27,13 +27,14 @@ public class Scroll : ItemBase
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
-
+        base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _currentCoroutine = StartCoroutine(ScrollMoveCoroutine());
     }
 
@@ -77,7 +78,7 @@ public class Scroll : ItemBase
     {
         while (true)
         {
-            transform.Translate(0, 0, -0.01f);
+            transform.Translate(0, 0, -0.05f);
             yield return null;
         }
     }

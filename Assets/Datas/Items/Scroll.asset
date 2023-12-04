@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c0d728d42be249718c3fe8820a7e21a, type: 3}
-  m_Name: Items
+  m_Name: Scroll
   m_EditorClassIdentifier: 
   _itemType: 1
   _reserveAmount: 5
