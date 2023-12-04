@@ -33,7 +33,6 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
                             .TakeUntilDestroy(this)
                             .Subscribe(_ =>
                             {
-                                _generator.ConstantGenerate(ItemType.Heal);
                                 _generator.ConstantGenerate(ItemType.Scroll);
                             });
     }

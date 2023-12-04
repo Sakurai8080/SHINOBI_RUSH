@@ -16,6 +16,10 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
     #region serialize
     [SerializeField]
     private ItemData _itemData = default;
+
+    [Tooltip("アイテムが非表示になるプレイヤーとの距離")]
+    [SerializeField]
+    protected float _hideDistance = -1f;
     #endregion
 
     #region private
@@ -32,15 +36,25 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected virtual void Awake()
     {
         _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
         _rd = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
-        
+        Observable.Interval(TimeSpan.FromSeconds(3f))
+                  .TakeUntilDestroy(this)
+                  .Where(_ => gameObject.activeSelf)
+                  .Subscribe(_ =>
+                  {
+                      if (transform.position.z - _playerTrans.position.z <= _hideDistance)
+                      {
+                          Return();
+                      }
+                  });
+
     }
 
     private void OnEnable()
