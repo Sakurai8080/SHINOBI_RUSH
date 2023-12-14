@@ -38,15 +38,17 @@ public class Scroll : ItemBase
         _currentCoroutine = StartCoroutine(ScrollMoveCoroutine());
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         if (_currentCoroutine != null)
             StartCoroutine(ScrollMoveCoroutine());
 
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         if (_currentCoroutine != null)
             StopCoroutine(ScrollMoveCoroutine());
     }

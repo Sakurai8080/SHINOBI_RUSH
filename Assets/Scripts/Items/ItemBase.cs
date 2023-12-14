@@ -57,13 +57,14 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
 
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _itemPosition = transform.position;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
+        Debug.Log("スクロールが非アクティブ");
         _inactiveSubject.OnNext(Unit.Default);
     }
 

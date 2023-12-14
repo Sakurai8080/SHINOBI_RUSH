@@ -18,6 +18,7 @@ public class ItemGenerator : MonoBehaviour
     #endregion
 
     #region private
+    private float _itemGenerateYPos = 0.3f;
     private Transform _playerTrans;
     private Dictionary<ItemType, Objectpool<ItemBase>> _itemPoolDic = new Dictionary<ItemType, Objectpool<ItemBase>>();
     #endregion
@@ -47,7 +48,10 @@ public class ItemGenerator : MonoBehaviour
         {
             item.gameObject.SetActive(true);
             item.transform.localPosition = pos;
+            Debug.Log($"{item}を生成");
         }
+        else
+            Debug.Log($"{item}がありません");
     }
 
     public void ConstantGenerate(ItemType type)
@@ -61,8 +65,7 @@ public class ItemGenerator : MonoBehaviour
     {
         _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
 
-        for (int i = 0; i < _items.Length; i++)
-        {
+        for (int i = 0; i < _items.Length; i++) {
             _itemPoolDic.Add(_items[i].ItemPrefab.ItemType, new Objectpool<ItemBase>(_items[i].ItemPrefab, _items[i].Parent));
         }
 
@@ -76,10 +79,10 @@ public class ItemGenerator : MonoBehaviour
         var interval = new WaitForSeconds(_items.FirstOrDefault(x => x.ItemPrefab.ItemType == type).GenerateInterval);
         while (true)
         {
-            float scrollYpos = Random.Range(-0.3f,0.3f) < 0 ? -0.3f:0.3f;
+            float generateYPos = Random.Range(-_itemGenerateYPos, _itemGenerateYPos) < 0 ? -_itemGenerateYPos : _itemGenerateYPos;
 
-            Vector3 generatePos = new Vector3(_playerTrans.position.x, scrollYpos, _playerTrans.position.z + 20);
-            Generate(type, generatePos, 3);
+            Vector3 generatePos = new Vector3(_playerTrans.position.x, generateYPos, _playerTrans.position.z + 20);
+            Generate(type, generatePos, 5);
 
             yield return interval;
         }
