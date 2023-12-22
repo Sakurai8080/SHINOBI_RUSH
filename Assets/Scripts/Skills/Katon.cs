@@ -35,9 +35,7 @@ public class Katon : MonoBehaviour , IPoolable
     private void Awake()
     {
         _initialScale = transform.localScale;
-
         _currentScale = _initialScale;
-        Debug.Log($"_initialScaleは{_initialScale}");
     }
 
     private void OnEnable()

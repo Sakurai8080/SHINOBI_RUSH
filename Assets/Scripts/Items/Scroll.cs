@@ -15,6 +15,7 @@ public class Scroll : ItemBase
     [SerializeField]
     private uint _expValue = 1;
     #endregion
+    
 
     #region private
     private Coroutine _currentCoroutine;
