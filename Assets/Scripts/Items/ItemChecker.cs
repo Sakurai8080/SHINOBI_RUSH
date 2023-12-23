@@ -35,7 +35,7 @@ public class ItemChecker : MonoBehaviour
             .Where(x => x.CompareTag(GameTag.Item))
             .Subscribe(x =>
             {
-                 _itembase.Use(PlayerController.Instance);
+                 //_itembase.Use(PlayerController.Instance);
             });
     }
 

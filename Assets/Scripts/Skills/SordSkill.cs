@@ -41,10 +41,6 @@ public class SordSkill : SkillBase
         transform.position = _player.position;
     }
 
-    private void Update()
-    {
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {

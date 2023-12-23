@@ -34,25 +34,21 @@ public class SkillUpSelect : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
+        GameManager.Instance.GameStartObserver
+                    .TakeUntilDestroy(this)
+                    .Subscribe(_ => ActiveRondomSkillUIs());
+        
+
         for (int i = 0; i < _skillSelectUIs.Count; i++){
             SkillType type = (SkillType)i;
 
             _skillSelectUIs[i].OnClickAsObservable()
-                              .Subscribe(_ => OnSkill(type));
+                              .Subscribe(_ => OnSkill(type))
+                              .AddTo(this);
         }
         CanvasGroupChange(false);
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 
