@@ -15,6 +15,7 @@ public class Scroll : ItemBase
     [SerializeField]
     private uint _expValue = 1;
     #endregion
+    
 
     #region private
     private Coroutine _currentCoroutine;
@@ -27,25 +28,28 @@ public class Scroll : ItemBase
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
-
+        base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _currentCoroutine = StartCoroutine(ScrollMoveCoroutine());
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         if (_currentCoroutine != null)
             StartCoroutine(ScrollMoveCoroutine());
 
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         if (_currentCoroutine != null)
             StopCoroutine(ScrollMoveCoroutine());
     }
@@ -77,7 +81,7 @@ public class Scroll : ItemBase
     {
         while (true)
         {
-            transform.Translate(0, 0, -0.01f);
+            transform.Translate(0, 0, -0.05f);
             yield return null;
         }
     }

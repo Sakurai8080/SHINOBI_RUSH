@@ -18,6 +18,7 @@ public class ItemGenerator : MonoBehaviour
     #endregion
 
     #region private
+    private float _itemGenerateYPos = 0.3f;
     private Transform _playerTrans;
     private Dictionary<ItemType, Objectpool<ItemBase>> _itemPoolDic = new Dictionary<ItemType, Objectpool<ItemBase>>();
     #endregion
@@ -29,15 +30,17 @@ public class ItemGenerator : MonoBehaviour
     #endregion
 
     #region unity methods
+    private void Awake()
+    {
+        Setup();
+    }
     #endregion
 
     #region public method
     public void Generate(ItemType type, Vector3 pos, uint limit = 50)
     {
         if (type == ItemType.None)
-        {
             return;
-        }
 
         var item = _itemPoolDic.FirstOrDefault(x => x.Key == type).Value.Rent(limit);
 
@@ -45,7 +48,10 @@ public class ItemGenerator : MonoBehaviour
         {
             item.gameObject.SetActive(true);
             item.transform.localPosition = pos;
+            Debug.Log($"{item}を生成");
         }
+        else
+            Debug.Log($"{item}がありません");
     }
 
     public void ConstantGenerate(ItemType type)
@@ -55,6 +61,15 @@ public class ItemGenerator : MonoBehaviour
     #endregion
 
     #region private method
+    private void Setup()
+    {
+        _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
+
+        for (int i = 0; i < _items.Length; i++) {
+            _itemPoolDic.Add(_items[i].ItemPrefab.ItemType, new Objectpool<ItemBase>(_items[i].ItemPrefab, _items[i].Parent));
+        }
+
+    }
     #endregion
 
 
@@ -64,13 +79,10 @@ public class ItemGenerator : MonoBehaviour
         var interval = new WaitForSeconds(_items.FirstOrDefault(x => x.ItemPrefab.ItemType == type).GenerateInterval);
         while (true)
         {
-            float randomY;
-            int randomYpos = Random.Range(-3, 3);
+            float generateYPos = Random.Range(-_itemGenerateYPos, _itemGenerateYPos) < 0 ? -_itemGenerateYPos : _itemGenerateYPos;
 
-            randomY = _playerTrans.position.y + randomYpos;
-
-            Vector3 generatePos = new Vector3(_playerTrans.position.x, randomY, _playerTrans.position.z + 20);
-            Generate(type, generatePos, 3);
+            Vector3 generatePos = new Vector3(_playerTrans.position.x, generateYPos, _playerTrans.position.z + 20);
+            Generate(type, generatePos, 5);
 
             yield return interval;
         }
