@@ -68,10 +68,6 @@ public class ShurikenSkill : SkillBase
         {
             _enemies.Add(other.GetComponent<Transform>());
             Debug.Log($"手裏剣スキルの射程圏内{_enemies.Count()}匹");
-            if (!_isSkillActive)
-            {
-                OnSkillAction();
-            }
         }
     }
 
