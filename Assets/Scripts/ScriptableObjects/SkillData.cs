@@ -64,9 +64,9 @@ public class SkillData : ScriptableObject
 /// </summary>
 public enum SkillType
 {
-    Shuriken,
-    Katon,
-    Suiton,
-    Windball,
-    Sord
+    Fire,
+    Water,
+    Wind,
+    Sord,
+    Shuriken
 }

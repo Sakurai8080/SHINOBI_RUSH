@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2265627530363810729}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2265627529670147587
 MonoBehaviour:
@@ -108,11 +108,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skills:
-  - {fileID: 2265627531466770471}
   - {fileID: 2265627531070463952}
+  - {fileID: 2265627529670147587}
   - {fileID: 2265627530705066772}
   - {fileID: 2265627530984036898}
-  - {fileID: 2265627529670147587}
+  - {fileID: 2265627531466770471}
 --- !u!1 &2265627530158743730
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,11 +183,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2265627531466770468}
   - {fileID: 2265627531070463953}
+  - {fileID: 2265627529670147584}
   - {fileID: 2265627530705066762}
   - {fileID: 2265627530984036899}
-  - {fileID: 2265627529670147584}
+  - {fileID: 2265627531466770468}
   m_Father: {fileID: 2265627529707017966}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -360,7 +360,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2265627530363810729}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2265627531070463952
 MonoBehaviour:
@@ -423,7 +423,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2265627530363810729}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2265627531466770471
 MonoBehaviour:

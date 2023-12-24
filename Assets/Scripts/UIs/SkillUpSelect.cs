@@ -43,6 +43,7 @@ public class SkillUpSelect : MonoBehaviour
 
         for (int i = 0; i < _skillSelectUIs.Count; i++){
             SkillType type = (SkillType)i;
+            Debug.Log(type);
 
             _skillSelectUIs[i].OnClickAsObservable()
                               .Subscribe(_ => OnSkill(type))
@@ -69,11 +70,14 @@ public class SkillUpSelect : MonoBehaviour
                                           .OrderBy(x => UnityEngine.Random.value)
                                           .Take(_activeAmount);
 
-            int gridLeftAmount = (randomIndices.Count() >= 3) ? -450 : (randomIndices.Count() == 2) ? -270 : -100;
+            int gridLeftAmount = (randomIndices.Count() >= 3) ? -131 : (randomIndices.Count() == 2) ? -0 : -0;
+            _skillUpSelectGrid.padding.left = gridLeftAmount;
 
             foreach (var index in randomIndices)
+            {
                 _skillSelectUIs[index].gameObject.SetActive(true);
-
+                Debug.Log($"獲得できるスキルは{index}");
+            }
             CanvasGroupChange(true);
 
             Time.timeScale = 0f;
