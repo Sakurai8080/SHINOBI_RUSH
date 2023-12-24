@@ -50,7 +50,6 @@ public class WindSkill : SkillBase
         transform.position = _playerTransform.position;
         _spawnPosition = _playerTransform.position + new Vector3(-0.2f, 0.3f, 0.1f);
         _windGenerator = GetComponent<WindGenerator>();
-        OnSkillAction();
     }
 
     private void OnTriggerEnter(Collider other)
