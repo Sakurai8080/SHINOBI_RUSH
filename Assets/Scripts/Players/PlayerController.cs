@@ -48,17 +48,6 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
             }
         }
     }
-
-    public void GetExp(uint value)
-    {
-        if (!_isDead)
-        {
-            if (!_isDead)
-            {
-                _status.AddExp(value);
-            }
-        }
-    }
     #endregion
 
     #region private method

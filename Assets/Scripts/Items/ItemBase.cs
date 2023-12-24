@@ -5,12 +5,13 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
-public abstract class ItemBase : MonoBehaviour, IPoolable
+public abstract class ItemBase : MonoBehaviour, IPoolable 
 {
     #region property
     public ItemType ItemType => _itemData.ItemType;
 
     public IObservable<Unit> InactiveObserver => _inactiveSubject;
+    //public IObservable<Unit> ItemUseObserver => _itemUseSubject;
     #endregion
 
     #region serialize
@@ -33,6 +34,7 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
 
     #region Event
     private Subject<Unit> _inactiveSubject = new Subject<Unit>();
+    //private Subject<Unit> _itemUseSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -50,11 +52,8 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
                   .Subscribe(_ =>
                   {
                       if (transform.position.z - _playerTrans.position.z <= _hideDistance)
-                      {
                           Return();
-                      }
                   });
-
     }
 
     protected virtual void OnEnable()
@@ -82,8 +81,13 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
     /// <summary>
     /// アイテム使用
     /// </summary>
-    /// <param name="player"></param>
-    public abstract void Use(PlayerController player);
+    protected virtual void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(GameTag.Player))
+        {
+            //_itemUseSubject.OnNext(Unit.Default);
+        }
+    }
 
     /// <summary>
     /// アイテムを戻す処理

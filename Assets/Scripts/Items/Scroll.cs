@@ -8,6 +8,7 @@ using UnityEngine;
 public class Scroll : ItemBase
 {
     #region property
+    
     #endregion
 
     #region serialize
@@ -56,13 +57,6 @@ public class Scroll : ItemBase
     #endregion
 
     #region public method
-    public override void Use(PlayerController player)
-    {
-        Debug.Log($"{ItemType}を使用した");
-        player.GetExp(_expValue);
-        gameObject.SetActive(false);
-    }
-
     public override void Return()
     {
         Debug.Log($"{ItemType}を非アクティブにした");
