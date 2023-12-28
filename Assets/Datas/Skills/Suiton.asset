@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b216f415ec5e42739d5790c1c712edd, type: 3}
   m_Name: Suiton
   m_EditorClassIdentifier: 
-  _skillType: 2
+  _skillType: 1
   _attackAmount: 1
   _correctionValue: 1
