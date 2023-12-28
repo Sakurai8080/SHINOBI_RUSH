@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UniRx;
 
 public class ShurikenSkill : SkillBase
 {
@@ -36,6 +37,34 @@ public class ShurikenSkill : SkillBase
 
     #region unity methods
 
+    protected override void Awake()
+    {
+        base.Awake();
+        _shurikenGenerator = GetComponent<ShurikenGenerator>();
+    }
+
+    private void Start()
+    {
+        transform.position = _playerTransform.position;
+        _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
+
+        EnemyManager.Instance.OnEnemyCreated
+                    .Subscribe(enemy =>
+                    {
+                        _enemies.Add(enemy.transform);
+                        Debug.Log($"新しい敵が生成されました{_enemies.Count}匹");
+                    })
+                    .AddTo(this);
+
+        EnemyManager.Instance.OnEnemyDeactivated
+                    .Subscribe(enemy =>
+                    {
+                        _enemies.Remove(enemy.transform);
+                        Debug.Log($"敵が非アクティブになった:{_enemies.Count}匹");
+                    })
+                    .AddTo(this);
+    }
+
     private void OnEnable()
     {
         _currentCoroutine = StartCoroutine(SkillActionCroutine());
@@ -47,36 +76,6 @@ public class ShurikenSkill : SkillBase
         {
             StopCoroutine(SkillActionCroutine());
             _currentCoroutine = null;
-        }
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _shurikenGenerator = GetComponent<ShurikenGenerator>();
-    }
-
-    private void Start()
-    {
-        transform.position = _playerTransform.position;
-        _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(GameTag.Enemy))
-        {
-            _enemies.Add(other.GetComponent<Transform>());
-            Debug.Log($"手裏剣スキルの射程圏内{_enemies.Count()}匹");
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(GameTag.Enemy))
-        {
-            _enemies.Remove(other.GetComponent<Transform>());
-            Debug.Log($"射程内残{_enemies.Count()}匹(手裏剣)");
         }
     }
     #endregion
@@ -98,7 +97,6 @@ public class ShurikenSkill : SkillBase
             Debug.Log($"{SkillType}はレベル上限");
             return;
         }
-
 
         Debug.Log($"{SkillType}レベルアップ");
         _currentSkillLevel++;
@@ -137,14 +135,17 @@ public class ShurikenSkill : SkillBase
         Vector3 targetDir = Vector3.zero;
         while (_isSkillActive)
         {
-            Shuriken srknObj = _shurikenGenerator.ShurikanPool.Rent();
-            if (_enemies?.Count > 0 && srknObj != null)
+            Vector3 currentTransform = SetTarget(targetDir);
+            if (_enemies?.Count > 0 && 5 >= currentTransform.z - _playerTransform.position.z)
             {
-                Vector3 currentTransform = SetTarget(targetDir);
-                srknObj.transform.position = transform.position;
-                srknObj.gameObject.SetActive(true);
-                srknObj.SetVelocity(currentTransform);
-                srknObj.SetAttackAmount(_currentAttackAmount);
+                Shuriken srknObj = _shurikenGenerator.ShurikanPool.Rent();
+                if (srknObj != null)
+                {
+                    srknObj.transform.position = transform.position;
+                    srknObj.gameObject.SetActive(true);
+                    srknObj.SetVelocity(currentTransform);
+                    srknObj.SetAttackAmount(_currentAttackAmount);
+                }
             }
             yield return new WaitForSeconds(_waitTime);
         }

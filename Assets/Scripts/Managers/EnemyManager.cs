@@ -15,6 +15,9 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     public ReactiveProperty<uint> DefeatAmount => _defeatAmountProperty;
     public IObservable<uint> DefeatedEnemyAmountViewObserver => _defeatedEnemyAmountViewSubject;
+
+    public IObservable<EnemyBase> OnEnemyCreated => _onEnemyCreatedSubject;
+    public IObservable<EnemyBase> OnEnemyDeactivated => _onEnemyDeactiveSubject;
     #endregion
 
     #region serialize
@@ -23,6 +26,9 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #region private
     private EnemyWaveType _currentEnemyWave = EnemyWaveType.Wave_1;
     private EnemyGenerator _enemyGenerator;
+
+    private Subject<EnemyBase> _onEnemyCreatedSubject = new Subject<EnemyBase>();
+    private Subject<EnemyBase> _onEnemyDeactiveSubject = new Subject<EnemyBase>();
     #endregion
 
     #region Constant
@@ -69,7 +75,21 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
         _currentEnemyWave = (EnemyWaveType)currentWave;
         OnGenerateEnemies(_currentEnemyWave);
     }
+
+    public void NotifyEnemyCreated(EnemyBase enemy)
+    {
+        _onEnemyCreatedSubject.OnNext(enemy);
+
+        enemy.InactiveObserver
+             .Subscribe(_ =>
+             {
+                 _onEnemyDeactiveSubject.OnNext(enemy);
+             })
+             .AddTo(this);
+    }
     #endregion
+
+   
 
     #region private method
     private void OnGenerateEnemies(EnemyWaveType type)
