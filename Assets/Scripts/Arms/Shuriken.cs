@@ -5,6 +5,9 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+/// <summary>
+/// 手裏剣を操作するコンポーネント
+/// </summary>
 public class Shuriken : MonoBehaviour , IPoolable
 {
     #region property
@@ -19,13 +22,13 @@ public class Shuriken : MonoBehaviour , IPoolable
     #endregion
 
     #region private
-    private Rigidbody _rb;
-
     private float _moveSpeed = 0.5f;
 
     private float _currentAttackAmount = 1.0f;
     private float _lifeTime = 5.0f;
-    private Coroutine _currentCoroutine;
+    private Coroutine _currentCoroutine = null;
+
+    private Rigidbody _rb;
     #endregion
 
     #region Constant
