@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
 /// <summary>
-/// ステージスクロール
+/// ステージを動かすためのクラス
 /// </summary>
 public class StageScroll : MonoBehaviour
 {
@@ -13,6 +11,7 @@ public class StageScroll : MonoBehaviour
     #endregion
 
     #region serialize
+    [Tooltip("ステージ")]
     [SerializeField]
     private GameObject _openingStage = default;
     #endregion
@@ -32,11 +31,6 @@ public class StageScroll : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         _initialPosition = transform.position;
@@ -50,11 +44,6 @@ public class StageScroll : MonoBehaviour
         GameManager.Instance.GameStartObserver
                             .TakeUntilDestroy(this)
                             .Subscribe(_ => Destroy(_openingStage));
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 
@@ -70,9 +59,7 @@ public class StageScroll : MonoBehaviour
     private void Scroling()
     {
         if (_scrollPosition < _initialPosition.z - transform.position.z)
-        {
             transform.position = _initialPosition;
-        }
     }
     #endregion
 }
