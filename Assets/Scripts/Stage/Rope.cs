@@ -4,6 +4,9 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+/// <summary>
+/// ロープに機能をもたせるクラス
+/// </summary>
 public class Rope : MonoBehaviour
 {
     #region property
@@ -23,11 +26,6 @@ public class Rope : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         this.UpdateAsObservable()
@@ -36,11 +34,6 @@ public class Rope : MonoBehaviour
             {
                 transform.Rotate(-_rotateSpeed, 0, 0);
             });
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 
