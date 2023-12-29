@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 手裏剣を生成する機能
+/// </summary>
 public class ShurikenGenerator : MonoBehaviour
 {
     #region property
@@ -9,8 +12,12 @@ public class ShurikenGenerator : MonoBehaviour
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("生成する手裏剣プレハブ")]
     [SerializeField]
     private Shuriken _shurikenPrefab = default;
+
+    [Tooltip("手裏剣を格納する親オブジェクト")]
     [SerializeField]
     private Transform _parent = default;
     #endregion

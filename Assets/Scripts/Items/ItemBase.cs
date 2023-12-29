@@ -11,7 +11,7 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
     public ItemType ItemType => _itemData.ItemType;
 
     public IObservable<Unit> InactiveObserver => _inactiveSubject;
-    //public IObservable<Unit> ItemUseObserver => _itemUseSubject;
+    public IObservable<Unit> ItemUseObserver => _itemUseSubject;
     #endregion
 
     #region serialize
@@ -34,7 +34,7 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
 
     #region Event
     private Subject<Unit> _inactiveSubject = new Subject<Unit>();
-    //private Subject<Unit> _itemUseSubject = new Subject<Unit>();
+    private Subject<Unit> _itemUseSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -85,7 +85,7 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
     {
         if (other.CompareTag(GameTag.Player))
         {
-            //_itemUseSubject.OnNext(Unit.Default);
+            _itemUseSubject.OnNext(Unit.Default);
         }
     }
 
