@@ -10,6 +10,9 @@ public class ChaseEnemy : EnemyBase
     #region serialize
     [SerializeField]
     private float _moveSpeed = 1.0f;
+
+    [SerializeField]
+    private float _doLookAtPos = 1.0f;
     #endregion
 
     #region private
@@ -54,8 +57,10 @@ public class ChaseEnemy : EnemyBase
     {
         while (true)
         {
-            transform.LookAt(_playerTransform);
             float distance = Vector3.Distance(transform.localPosition, _playerTransform.localPosition);
+
+            if (distance > _doLookAtPos)
+                transform.LookAt(_playerTransform);
 
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, _playerTransform.position, _moveSpeed*Time.deltaTime);
             yield return null;
