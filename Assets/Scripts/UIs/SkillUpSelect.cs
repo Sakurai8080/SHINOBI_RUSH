@@ -39,6 +39,10 @@ public class SkillUpSelect : MonoBehaviour
         GameManager.Instance.GameStartObserver
                     .TakeUntilDestroy(this)
                     .Subscribe(_ => ActiveRondomSkillUIs());
+
+        ItemManager.Instance.ItemGetObserver
+                   .TakeUntilDestroy(this)
+                   .Subscribe(_ => ActiveRondomSkillUIs());
         
 
         for (int i = 0; i < _skillSelectUIs.Count; i++){

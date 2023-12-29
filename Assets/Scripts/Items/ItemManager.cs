@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using System;
 
 public class ItemManager : SingletonMonoBehaviour<ItemManager>
 {
     #region property
+    public IObservable <Unit> ItemGetObserver => _itemGetSubject;
     #endregion
 
     #region serialize
@@ -19,6 +21,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     #endregion
 
     #region Event
+    Subject<Unit> _itemGetSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -39,6 +42,13 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     #endregion
 
     #region public method
+    public void RedisterItem(ItemBase item)
+    {
+        item.ItemUseObserver
+            .Subscribe(_ => _itemGetSubject.OnNext(Unit.Default))
+            .AddTo(this);
+    }
+
     public void GenerateItem(ItemType type,Vector3 pos)
     {
         _generator.Generate(type, pos, 300);

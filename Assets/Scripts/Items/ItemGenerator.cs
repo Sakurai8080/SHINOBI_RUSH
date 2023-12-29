@@ -48,10 +48,10 @@ public class ItemGenerator : MonoBehaviour
         {
             item.gameObject.SetActive(true);
             item.transform.localPosition = pos;
-            Debug.Log($"{item}を生成");
+            ItemManager.Instance.RedisterItem(item);
         }
         else
-            Debug.Log($"{item}がありません");
+            Debug.LogError($"{item}がありません");
     }
 
     public void ConstantGenerate(ItemType type)
@@ -83,7 +83,6 @@ public class ItemGenerator : MonoBehaviour
 
             Vector3 generatePos = new Vector3(_playerTrans.position.x, generateYPos, _playerTrans.position.z + 20);
             Generate(type, generatePos, 5);
-
             yield return interval;
         }
     }
