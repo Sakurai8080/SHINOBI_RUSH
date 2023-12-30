@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// スキルを管理するクラス
+/// </summary>
 public class SkillManager : SingletonMonoBehaviour<SkillManager>
 {
     #region property
@@ -10,6 +13,8 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("各スキル")]
     [SerializeField]
     private SkillBase[] _skills = default;
     #endregion
@@ -24,20 +29,6 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
@@ -47,13 +38,9 @@ public class SkillManager : SingletonMonoBehaviour<SkillManager>
         SkillBase skill = _skills.FirstOrDefault(x => x.SkillType == type);
 
         if (!skill.IsSkillActived)
-        {
             skill.OnSkillAction();
-        }
         else
-        {
             skill.SkillUp();
-        }
     }
     #endregion
 

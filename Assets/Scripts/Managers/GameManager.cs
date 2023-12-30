@@ -5,6 +5,9 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+/// <summary>
+/// ゲーム全体を管理するクラス
+/// </summary>
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     #region property
@@ -25,20 +28,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-        
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method

@@ -5,7 +5,9 @@ using UnityEngine;
 using DG.Tweening;
 using UniRx;
 
-
+/// <summary>
+/// UI周りをまとめるコンポーネント
+/// </summary>
 [RequireComponent(typeof(PlayerStatusUI))]
 [RequireComponent(typeof(GameStatusUI))]
 public class HUDManager : MonoBehaviour
@@ -14,13 +16,11 @@ public class HUDManager : MonoBehaviour
     #endregion
 
     #region serialize
-    private CanvasGroup _playerStatusGroup = default;
     #endregion
 
     #region private
     private PlayerStatusUI _playerStatus;
     private GameStatusUI _gameStatus;
-    private List<CanvasGroup> _canvasGroups;
     #endregion
 
     #region Constant
@@ -52,6 +52,5 @@ public class HUDManager : MonoBehaviour
     #endregion
 
     #region private method
-    
     #endregion
 }
