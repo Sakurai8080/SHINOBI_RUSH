@@ -26,38 +26,6 @@ public class SkillData : ScriptableObject
     [SerializeField]
     private float _correctionValue = 1.0f;
     #endregion
-
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
-    #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
-    #endregion
 }
 /// <summary>
 /// 各スキルタイプ

@@ -93,7 +93,6 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
 
     private async UniTaskVoid OnLimitTimerAsync()
     {
-        Debug.Log("タイムカウント開始");
         await UniTask.Delay(TimeSpan.FromSeconds(TIME_SECOND));
 
         while (_currentLimitTime.Value > 0)

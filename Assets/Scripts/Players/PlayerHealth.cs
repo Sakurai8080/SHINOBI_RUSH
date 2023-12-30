@@ -5,7 +5,7 @@ using UnityEngine;
 using UniRx;
 
 /// <summary>
-/// プレイヤーのHP、ステータスを管理するコンポーネント
+/// プレイヤーのステータスを管理するコンポーネント
 /// </summary>
 public class PlayerHealth : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     #endregion
 
     #region serialize
+    [Header("Variable")]
     [Tooltip("ゲーム開始時の最大HP")]
     [SerializeField]
     private float _startMaxHP = 50f;
@@ -32,20 +33,11 @@ public class PlayerHealth : MonoBehaviour
     #region Event
     private Subject<float> _changeHPSubject = new Subject<float>();
     #endregion
+
     #region unity methods
     private void Awake()
     {
         Setup();
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 
@@ -56,9 +48,8 @@ public class PlayerHealth : MonoBehaviour
         _changeHPSubject.OnNext(_currenHP / _currentMaxHp);
 
         if (_currenHP <= 0)
-        {
             return true;
-        }
+
         return false;
     }
     #endregion
