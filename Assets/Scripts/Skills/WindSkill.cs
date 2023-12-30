@@ -33,6 +33,7 @@ public class WindSkill : SkillBase
     private float _attackCoefficient = 5.0f;
     private Wind currentWind = default;
     private WindGenerator _windGenerator;
+    private Vector3 _spwnPositionOffset = new Vector3(-0.2f, 0.3f, 0.1f);
     #endregion
 
     #region Constant
@@ -50,26 +51,21 @@ public class WindSkill : SkillBase
     private void Start()
     {
         transform.position = _playerTransform.position;
-        _spawnPosition = _playerTransform.position + new Vector3(-0.2f, 0.3f, 0.1f);
+        _spawnPosition = transform.position + _spwnPositionOffset;
         _windGenerator = GetComponent<WindGenerator>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(GameTag.Enemy))
-        {
-            Debug.Log(_enemies.Count());
             _enemies.Add(other.GetComponent<Transform>());
-        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         Debug.Log(_enemies.Count());
         if (other.CompareTag(GameTag.Enemy))
-        {
             _enemies.Remove(other.GetComponent<Transform>());
-        }
     }
     #endregion
 
@@ -92,10 +88,7 @@ public class WindSkill : SkillBase
         }
         Debug.Log($"{SkillType}は{_currentSkillLevel}");
         _currentSkillLevel++;
-
         currentWind = (_currentSkillLevel >= 5) ? _maxWind : _wind; 
-
-        Debug.Log($"{SkillType}レベルアップ");
         AttackUpAmount(_attackCoefficient);
     }
 
