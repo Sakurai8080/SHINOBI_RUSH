@@ -25,20 +25,6 @@ public class SignalManager : SingletonMonoBehaviour<SignalManager>
     #endregion
 
     #region unity methods
-    private void Awake()
-    { 
-
-    }
-
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method

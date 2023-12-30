@@ -7,6 +7,9 @@ using UniRx;
 using TMPro;
 using Cysharp.Threading.Tasks;
 
+/// <summary>
+/// 時間に伴って処理するマネージャー
+/// </summary>
 public class TimeManager : SingletonMonoBehaviour<TimeManager>
 {
     #region property
@@ -14,7 +17,7 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
     #endregion
     
     #region serialize
-    [Header("Variacles")]
+    [Header("Variables")]
     [Tooltip("制限時間(分)")]
     [SerializeField]
     private uint _limit = 6;
@@ -23,6 +26,7 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
     [SerializeField]
     private TextMeshProUGUI _limitTimeTMP = default;
 
+    [Tooltip("エネミーウェーブと時間を紐付けるイベント")]
     [SerializeField]
     private EnemyChangeEvent[] _enemyEvents;
     #endregion

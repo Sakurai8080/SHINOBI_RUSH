@@ -6,17 +6,19 @@ using Cinemachine;
 using UniRx;
 using UniRx.Triggers;
 
+/// <summary>
+/// カメラ全体を操作するマネージャー
+/// </summary>
 public class CameraManager : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("各シネマシーンカメラ")]
     [SerializeField]
     private ActivationCamera[] _virtualCamera;
-
-    [SerializeField]
-    private CameraType _type;
     #endregion
     
     #region private
@@ -39,9 +41,7 @@ public class CameraManager : MonoBehaviour
     private void Awake()
     {
         for (int i = 0; i < _virtualCamera.Length; i++)
-        {
             _cameraDic.Add((CameraType)i, _virtualCamera[i].Camera);
-        }
     }
 
     private void Start()
@@ -75,9 +75,8 @@ public class CameraManager : MonoBehaviour
         int _initialPriority = 10;
 
         foreach (var camera in _cameraDic)
-        {
             camera.Value.Priority = _initialPriority;
-        }
+
         _cameraDic[cameraType].Priority = PriorityAmount;
     }
     #endregion
@@ -94,14 +93,10 @@ public class CameraManager : MonoBehaviour
     private void SecondCameraChange()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
             CameraChange(CameraType.CvCamera2);
-            
-        }
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
             CameraChange(CameraType.CvCamera1);
-        }
     }
     #endregion
 
