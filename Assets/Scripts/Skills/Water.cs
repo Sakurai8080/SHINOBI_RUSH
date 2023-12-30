@@ -5,6 +5,9 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+/// <summary>
+/// 水遁用の水機能
+/// </summary>
 public class Water : MonoBehaviour , IPoolable
 {
     #region property
@@ -12,6 +15,8 @@ public class Water : MonoBehaviour , IPoolable
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("水のスピード")]
     [SerializeField]
     private float _moveSpeed = 0.3f;
     #endregion
@@ -59,11 +64,6 @@ public class Water : MonoBehaviour , IPoolable
         }
         transform.localPosition = Vector3.zero;
         _inactiveSubject.OnNext(Unit.Default);
-    }
-
-    private void Update()
-    {
-
     }
 
     private void OnTriggerEnter(Collider other)

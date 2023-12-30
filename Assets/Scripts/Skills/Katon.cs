@@ -5,6 +5,9 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+/// <summary>
+/// 火遁用の炎機能
+/// </summary>
 public class Katon : MonoBehaviour , IPoolable
 {
     #region property
@@ -12,6 +15,8 @@ public class Katon : MonoBehaviour , IPoolable
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("炎のスピード")]
     [SerializeField]
     private float _moveSpeed = 0.5f;
     #endregion
@@ -69,12 +74,10 @@ public class Katon : MonoBehaviour , IPoolable
     {
         if (other.CompareTag(GameTag.Enemy))
         {
-            Debug.Log("火遁があたった");
             IDamagable target = other.GetComponent<IDamagable>();
             target.Damage(_currentAttackAmount);
         }
     }
-
     #endregion
 
     #region public method
@@ -86,7 +89,6 @@ public class Katon : MonoBehaviour , IPoolable
     public void SizeChange(float amount)
     {
          _currentScale *= amount;
-         Debug.Log($"Size変更は{_currentScale}");
          transform.localScale = _currentScale;
     }
 

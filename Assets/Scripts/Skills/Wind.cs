@@ -5,6 +5,9 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+/// <summary>
+/// 風遁用の風の機能
+/// </summary>
 public class Wind : MonoBehaviour , IPoolable
 {
     #region property

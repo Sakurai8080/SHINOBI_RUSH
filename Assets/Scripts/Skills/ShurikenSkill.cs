@@ -4,6 +4,9 @@ using UnityEngine;
 using System.Linq;
 using UniRx;
 
+/// <summary>
+/// 手裏剣スキルを操作するコンポーネント
+/// </summary>
 public class ShurikenSkill : SkillBase
 {
     #region property
@@ -141,7 +144,7 @@ public class ShurikenSkill : SkillBase
                 Shuriken srknObj = _shurikenGenerator.ShurikanPool.Rent();
                 if (srknObj != null)
                 {
-                    srknObj.transform.position = transform.position;
+                    srknObj.transform.position = _playerTransform.position;
                     srknObj.gameObject.SetActive(true);
                     srknObj.SetVelocity(currentTransform);
                     srknObj.SetAttackAmount(_currentAttackAmount);

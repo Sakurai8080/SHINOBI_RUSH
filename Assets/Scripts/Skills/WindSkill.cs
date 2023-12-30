@@ -3,33 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// 風遁を操作するコンポーネント
+/// </summary>
 public class WindSkill : SkillBase
 {
     #region property
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("風エフェクト")]
     [SerializeField]
     private Wind _wind = default;
 
+    [Tooltip("強化した風エフェクト")]
     [SerializeField]
     private Wind _maxWind = default;
 
+    [Tooltip("プレイヤーのポジション")]
     [SerializeField]
     private Transform _playerTransform = default;
     #endregion
 
     #region private
     private List<Transform> _enemies = new List<Transform>();
-
     private Vector3 _spawnPosition;
-
     private float _waitTime = 5.0f;
-
     private float _attackCoefficient = 5.0f;
-
     private Wind currentWind = default;
-
     private WindGenerator _windGenerator;
     #endregion
 
@@ -66,7 +68,6 @@ public class WindSkill : SkillBase
         Debug.Log(_enemies.Count());
         if (other.CompareTag(GameTag.Enemy))
         {
-            Debug.Log("出た");
             _enemies.Remove(other.GetComponent<Transform>());
         }
     }
