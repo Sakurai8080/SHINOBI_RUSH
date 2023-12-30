@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 水遁を操作するコンポーネント
+/// </summary>
 public class WaterSkill : SkillBase
 {
     #region property
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("水エフェクト")]
     [SerializeField]
     private Water _water = default;
 
+    [Tooltip("プレイヤーのポジション")]
     [SerializeField]
     private Transform _playerTransform = default;
     #endregion
 
     #region private
     private Vector3 _randomPosition;
-
     private float _waitTime = 3.0f;
-
     private float _attackCoefficient = 2.0f;
-
-    private Water _waterball = default;
     private WaterGenerator _waterGenerator;
     #endregion
 
@@ -36,7 +38,6 @@ public class WaterSkill : SkillBase
     protected override void Awake()
     {
         base.Awake();
-
         _waterGenerator = GetComponent<WaterGenerator>();
     }
 
@@ -84,7 +85,6 @@ public class WaterSkill : SkillBase
         while (_isSkillActive)
         {
             Water waterObj = _waterGenerator.WaterPool.Rent();
-
             if (waterObj != null)
             {
                 float randomPosX = Random.Range(-3f, 3f);

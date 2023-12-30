@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 全スキルに共通する基底クラス
+/// </summary>
 public abstract class SkillBase : MonoBehaviour
 {
     #region property
@@ -11,7 +14,7 @@ public abstract class SkillBase : MonoBehaviour
     #endregion
 
     #region serialize
-    [Header("変数")]
+    [Header("Variable")]
     [Tooltip("スキルの種類")]
     [SerializeField]
     private SkillData _skillData = default;
@@ -40,15 +43,6 @@ public abstract class SkillBase : MonoBehaviour
     {
         AttackSet();
     }
-
-    private void Start()
-    {
-    }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
@@ -75,7 +69,7 @@ public abstract class SkillBase : MonoBehaviour
     /// <summary>
     /// スキルアップ時の攻撃力アップ
     /// </summary>
-    /// <param name="coefficient"></param>
+    /// <param name="coefficient">攻撃力に対する係数</param>
     public abstract void AttackUpAmount(float coefficient);
     #endregion
 

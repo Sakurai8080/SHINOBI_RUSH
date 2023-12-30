@@ -1685,6 +1685,36 @@ PrefabInstance:
       propertyPath: _sordParent
       value: 
       objectReference: {fileID: 63278954}
+    - target: {fileID: 2265627530984036909, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.47400522
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530984036909, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.6330973
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530984036909, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.0716648
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530984036909, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.15690225
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530984036909, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.15143937
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530984036909, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.16419736
+      objectReference: {fileID: 0}
     - target: {fileID: 2265627531070463952, guid: 62e3637b8de48463bb5f775a40c3bda2,
         type: 3}
       propertyPath: _playerTransform

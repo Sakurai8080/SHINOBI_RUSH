@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ソードスキルを操作するコンポーネント
+/// </summary>
 public class SordSkill : SkillBase
 {
     #region property
@@ -72,7 +75,6 @@ public class SordSkill : SkillBase
 
         _currentSkillLevel++;
         Debug.Log($"{SkillType}は{_currentSkillLevel}");
-
         AttackUpAmount(_attackCoefficient);
     }
 

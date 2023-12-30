@@ -3,30 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// 火遁を操作するコンポーネント
+/// </summary>
 public class KatonSkill : SkillBase
 {
     #region property
     #endregion
 
     #region serialize
-    [SerializeField]
-    private Katon _katon = default;
 
+    [Header("Variable")]
+    [Tooltip("プレイヤーのポジション")]
     [SerializeField]
     private Transform _playerTransform = default;
     #endregion
 
     #region private
     private Vector3 _spawnPosition;
-
     private float _waitTime = 3.0f;
-
     private float _attackCoefficient = 2.0f;
-
-    private float _sizeChangeAmount = 2.0f;
     private float _scaleCoefficient = 1.0f;
-    private Katon _fire = default;
-
     private KatonGenerator _katonGenerator;
     #endregion
 
@@ -40,7 +37,6 @@ public class KatonSkill : SkillBase
     protected override void Awake()
     {
         base.Awake();
-
         _katonGenerator = GetComponent<KatonGenerator>();
     }
 
@@ -89,10 +85,9 @@ public class KatonSkill : SkillBase
         while (_isSkillActive)
         {
             Katon ktnObj = _katonGenerator.KatonPool.Rent();
-
             if (ktnObj != null)
             {
-                ktnObj.transform.position = transform.position;
+                ktnObj.transform.position = _spawnPosition;
                 ktnObj.gameObject.SetActive(true);
                 ktnObj.SetAttackAmount(_currentAttackAmount);
                 ktnObj.SizeChange(_scaleCoefficient);
