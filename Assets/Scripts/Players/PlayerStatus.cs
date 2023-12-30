@@ -17,6 +17,7 @@ public class PlayerStatus : MonoBehaviour
     #endregion
 
     #region serialize
+    [Header("Variable")]
     [Tooltip("スタート時に必要な経験値")]
     [SerializeField]
     private uint _startRequireExp = 100;

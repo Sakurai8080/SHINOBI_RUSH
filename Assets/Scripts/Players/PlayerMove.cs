@@ -6,6 +6,9 @@ using Cinemachine;
 using UniRx;
 using UniRx.Triggers;
 
+/// <summary>
+/// プレイヤーの動作を処理するクラス
+/// </summary>
 public class PlayerMove : MonoBehaviour
 {
     #region property
@@ -20,8 +23,6 @@ public class PlayerMove : MonoBehaviour
 
     private Vector3 _secondPosition = new Vector3(0,-0.05f,0);
     private Vector3 _secondRotate = new Vector3(0, 0, 180);
-
-    private Coroutine _currentCoroutine;
     #endregion
 
     #region Constant
@@ -58,10 +59,4 @@ public class PlayerMove : MonoBehaviour
 
     #region private method
     #endregion
-
-    //IEnumerator Activation()
-    //{
-    //    yield return new WaitForSeconds(2.0f);
-    //    Debug.Log("プレイヤーtrue");
-    //}
 }
