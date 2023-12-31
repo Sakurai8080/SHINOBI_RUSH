@@ -3,7 +3,7 @@ using UniRx;
 using UniRx.Triggers;
 
 /// <summary>
-/// ステージを動かすためのクラス
+/// ステージを動かすコンポーネント
 /// </summary>
 public class StageScroll : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class StageScroll : MonoBehaviour
     #endregion
 
     #region serialize
+    [Header("Variable")]
     [Tooltip("ステージ")]
     [SerializeField]
     private GameObject _openingStage = default;
@@ -20,7 +21,7 @@ public class StageScroll : MonoBehaviour
     /// <summary>ステージの初期位置</summary>
     private Vector3 _initialPosition;
 
-    /// <summary>スクロールするz軸の数値</summary>
+    /// <summary>スクロールするz軸のsタイミング</summary>
     private float _scrollPosition = 340.0f;
     #endregion
 
@@ -53,7 +54,7 @@ public class StageScroll : MonoBehaviour
     #region private method
     private void StageMove()
     {
-        transform.position = transform.position - transform.forward;
+        transform.position -= transform.forward * 50 * Time.deltaTime;
     }
 
     private void Scroling()

@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
 /// <summary>
-/// ロープに機能をもたせるクラス
+/// ロープに機能に関わるコンポーネント
 /// </summary>
 public class Rope : MonoBehaviour
 {
@@ -13,10 +12,15 @@ public class Rope : MonoBehaviour
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("ロープの回転スピード")]
+    [SerializeField]
+    private float _ropeRotationSpeed = 5.0f;
     #endregion
 
     #region private
-    private float _rotateSpeed = 5.0f;
+
+    private float _rotationMultiplier = 50f;
     #endregion
 
     #region Constant
@@ -32,7 +36,7 @@ public class Rope : MonoBehaviour
             .TakeUntilDestroy(this)
             .Subscribe(_ =>
             {
-                transform.Rotate(-_rotateSpeed, 0, 0);
+                RopeRotate();
             });
     }
     #endregion
@@ -41,5 +45,9 @@ public class Rope : MonoBehaviour
     #endregion
 
     #region private method
+    private void RopeRotate()
+    {
+        transform.Rotate(-_ropeRotationSpeed * _rotationMultiplier * Time.deltaTime, 0, 0);
+    }
     #endregion
 }
