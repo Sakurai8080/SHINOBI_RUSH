@@ -6,18 +6,25 @@ using UnityEngine.UI;
 using UniRx;
 using System.Linq;
 
+/// <summary>
+/// スキル選択用UI
+/// </summary>
 public class SkillUpSelect : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("各スキルUI")]
     [SerializeField]
     List<Button> _skillSelectUIs = default;
 
+    [Tooltip("全スキルUIグループ")]
     [SerializeField]
     private CanvasGroup _SkillUpSelectGroup = default;
 
+    [Tooltip("スキルUI表示を調整するグリッド")]
     [SerializeField]
     private GridLayoutGroup _skillUpSelectGrid = default;
     #endregion
@@ -74,13 +81,12 @@ public class SkillUpSelect : MonoBehaviour
                                           .OrderBy(x => UnityEngine.Random.value)
                                           .Take(_activeAmount);
 
-            int gridLeftAmount = (randomIndices.Count() >= 3) ? -131 : (randomIndices.Count() == 2) ? -0 : -0;
+            int gridLeftAmount = (randomIndices.Count() >= 3) ? -131 : (randomIndices.Count() == 2) ? -75 : -20;
             _skillUpSelectGrid.padding.left = gridLeftAmount;
 
             foreach (var index in randomIndices)
             {
                 _skillSelectUIs[index].gameObject.SetActive(true);
-                Debug.Log($"獲得できるスキルは{index}");
             }
             CanvasGroupChange(true);
 
