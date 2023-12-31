@@ -2801,6 +2801,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5519747466940455767, guid: 69bfeca7de8414052b673e47136ea3cc,
+        type: 3}
+      propertyPath: _ropeRotationSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5519747468589003993, guid: 69bfeca7de8414052b673e47136ea3cc,
         type: 3}
       propertyPath: m_Name
