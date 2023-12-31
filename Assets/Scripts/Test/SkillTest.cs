@@ -4,6 +4,10 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+
+/// <summary>
+/// スキル発動テスト用
+/// </summary>
 public class SkillTest : MonoBehaviour
 {
     #region property
@@ -54,11 +58,6 @@ public class SkillTest : MonoBehaviour
                     SkillManager.Instance.SetSkill(SkillType.Water);
                 }
             });
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 

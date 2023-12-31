@@ -19,7 +19,6 @@ public class Rope : MonoBehaviour
     #endregion
 
     #region private
-
     private float _rotationMultiplier = 50f;
     #endregion
 
