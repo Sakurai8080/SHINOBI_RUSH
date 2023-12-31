@@ -56,11 +56,6 @@ public class AddressableTest : MonoBehaviour
         _fireObj.name = "Fire";
     }
 
-    private void Update()
-    {
-
-    }
-
     private void OnDestroy()
     {
         Destroy(_fireObj);
