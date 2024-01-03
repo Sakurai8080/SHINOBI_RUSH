@@ -6,12 +6,16 @@ using UniRx;
 using TMPro;
 using DG.Tweening;
 
+/// <summary>
+/// ゲーム全体の状況を明示するUI
+/// </summary>
 public class GameStatusUI : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
+    [Header("Variable")]
     [Tooltip("討伐数を表示するTMP")]
     [SerializeField]
     private TextMeshProUGUI _defeatTMP = default;
@@ -30,28 +34,18 @@ public class GameStatusUI : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         EnemyManager.Instance.DefeatedEnemyAmountViewObserver
                              .TakeUntilDestroy(this)
                              .Subscribe(value => ViewDefeatedAmount(value));
     }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
     public void ChangeActivePanelView(bool value)
     {
-        _gameStatusGroup.alpha = Convert.ToInt32(value);
+       _gameStatusGroup.alpha = Convert.ToInt32(value);
     }
 
     public void GameStatusUIAnimation()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveTest : MonoBehaviour
+public class ResultUI : MonoBehaviour
 {
     #region property
     #endregion

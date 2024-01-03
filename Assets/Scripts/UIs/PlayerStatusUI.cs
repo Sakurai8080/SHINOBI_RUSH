@@ -6,16 +6,21 @@ using System;
 using DG.Tweening;
 using UniRx;
 
+/// <summary>
+/// プレイヤーの情報を表示するためのUI
+/// </summary>
 public class PlayerStatusUI : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
+    [Header("Variable")]
     [Tooltip("プレイヤーステータスのCanvasGroup")]
     [SerializeField]
     private CanvasGroup _playerStatusGroup = default;
 
+    [Tooltip("現在のHPの明示")]
     [SerializeField]
     private Image _currentHPFillArea = default;
     #endregion
@@ -31,11 +36,6 @@ public class PlayerStatusUI : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         //プレイヤーのHPの値が変化した時の処理を登録
@@ -43,17 +43,6 @@ public class PlayerStatusUI : MonoBehaviour
                                         .TakeUntilDestroy(this)
                                         .Subscribe(amount => CurrentHPView(amount));
     }
-
-    private void OnEnable()
-    {
-        
-    }
-
-    private void OnDisable()
-    {
-        
-    }
-
     #endregion
 
     #region public method

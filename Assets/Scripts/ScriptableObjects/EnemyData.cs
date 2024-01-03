@@ -25,38 +25,6 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private float _attackAmount = 1;
     #endregion
-
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
-    #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
-    #endregion
 }
 
 public enum EnemyType

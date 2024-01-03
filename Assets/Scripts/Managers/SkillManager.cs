@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SkillManager : MonoBehaviour
+/// <summary>
+/// スキルを管理するクラス
+/// </summary>
+public class SkillManager : SingletonMonoBehaviour<SkillManager>
 {
     #region property
-    public static SkillManager Instance { get; private set; }
     public SkillBase[] Skills => _skills;
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("各スキル")]
     [SerializeField]
     private SkillBase[] _skills = default;
     #endregion
@@ -25,35 +29,18 @@ public class SkillManager : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
     public void SetSkill(SkillType type)
     {
+        Debug.Log($"発動スキル{type}");
         SkillBase skill = _skills.FirstOrDefault(x => x.SkillType == type);
 
         if (!skill.IsSkillActived)
-        {
             skill.OnSkillAction();
-        }
         else
-        {
             skill.SkillUp();
-        }
     }
     #endregion
 

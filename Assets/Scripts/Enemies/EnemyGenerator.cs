@@ -49,11 +49,6 @@ public class EnemyGenerator : MonoBehaviour
 
         _isInGame = true;
     }
-
-    private void Start()
-    {
-        
-    }
     #endregion
 
     #region public method
@@ -65,7 +60,6 @@ public class EnemyGenerator : MonoBehaviour
             _generateCoroutineDic.Add(type, c);
         else
             _generateCoroutineDic[type] = c;
-
     }
     #endregion
 
@@ -107,6 +101,7 @@ public class EnemyGenerator : MonoBehaviour
 
                     Vector3 generatePos = new Vector3(randomX,randomY, _playerTrans.transform.position.z+20);
                     enemy.transform.position = generatePos;
+                    EnemyManager.Instance.NotifyEnemyCreated(enemy);
                 }
             }
             yield return interval;

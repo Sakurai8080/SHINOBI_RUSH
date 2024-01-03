@@ -4,6 +4,10 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+
+/// <summary>
+/// スキル発動テスト用
+/// </summary>
 public class SkillTest : MonoBehaviour
 {
     #region property
@@ -39,11 +43,11 @@ public class SkillTest : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.G))
                 {
-                    SkillManager.Instance.SetSkill(SkillType.Katon);
+                    SkillManager.Instance.SetSkill(SkillType.Fire);
                 }
                 if (Input.GetKeyDown(KeyCode.H))
                 {
-                    SkillManager.Instance.SetSkill(SkillType.Windball);
+                    SkillManager.Instance.SetSkill(SkillType.Wind);
                 }
                 if (Input.GetKeyDown(KeyCode.J))
                 {
@@ -51,14 +55,9 @@ public class SkillTest : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.K))
                 {
-                    SkillManager.Instance.SetSkill(SkillType.Suiton);
+                    SkillManager.Instance.SetSkill(SkillType.Water);
                 }
             });
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 

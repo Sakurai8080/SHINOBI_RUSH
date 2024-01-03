@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーに関わる情報を操作するクラス
+/// </summary>
 public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamagable
 {
     #region property
@@ -35,28 +38,12 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     public void Damage(float amount)
     {
         if (_isDead)
-        {
             return;
-        }
-        Debug.Log($"プレイヤーが{amount}ダメージを受けた");
-        //ダメージを受けたあと、プレイヤーのHPがなくなったら
+
         if (_health.Damage(amount))
         {
             if (!_isDead)
-            {
                 _isDead = true;
-            }
-        }
-    }
-
-    public void GetExp(uint value)
-    {
-        if (!_isDead)
-        {
-            if (!_isDead)
-            {
-                _status.AddExp(value);
-            }
         }
     }
     #endregion

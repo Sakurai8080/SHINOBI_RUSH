@@ -6,18 +6,25 @@ using UnityEngine.UI;
 using UniRx;
 using System.Linq;
 
+/// <summary>
+/// スキル選択用UI
+/// </summary>
 public class SkillUpSelect : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("各スキルUI")]
     [SerializeField]
     List<Button> _skillSelectUIs = default;
 
+    [Tooltip("全スキルUIグループ")]
     [SerializeField]
     private CanvasGroup _SkillUpSelectGroup = default;
 
+    [Tooltip("スキルUI表示を調整するグリッド")]
     [SerializeField]
     private GridLayoutGroup _skillUpSelectGrid = default;
     #endregion
@@ -34,25 +41,26 @@ public class SkillUpSelect : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
+        GameManager.Instance.GameStartObserver
+                    .TakeUntilDestroy(this)
+                    .Subscribe(_ => ActiveRondomSkillUIs());
+
+        ItemManager.Instance.ItemGetObserver
+                   .TakeUntilDestroy(this)
+                   .Subscribe(_ => ActiveRondomSkillUIs());
+        
+
         for (int i = 0; i < _skillSelectUIs.Count; i++){
             SkillType type = (SkillType)i;
+            Debug.Log(type);
 
             _skillSelectUIs[i].OnClickAsObservable()
-                              .Subscribe(_ => OnSkill(type));
+                              .Subscribe(_ => OnSkill(type))
+                              .AddTo(this);
         }
         CanvasGroupChange(false);
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 
@@ -73,11 +81,13 @@ public class SkillUpSelect : MonoBehaviour
                                           .OrderBy(x => UnityEngine.Random.value)
                                           .Take(_activeAmount);
 
-            int gridLeftAmount = (randomIndices.Count() >= 3) ? -450 : (randomIndices.Count() == 2) ? -270 : -100;
+            int gridLeftAmount = (randomIndices.Count() >= 3) ? -131 : (randomIndices.Count() == 2) ? -75 : -20;
+            _skillUpSelectGrid.padding.left = gridLeftAmount;
 
             foreach (var index in randomIndices)
+            {
                 _skillSelectUIs[index].gameObject.SetActive(true);
-
+            }
             CanvasGroupChange(true);
 
             Time.timeScale = 0f;

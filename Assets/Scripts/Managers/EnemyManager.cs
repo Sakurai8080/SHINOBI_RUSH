@@ -7,14 +7,14 @@ using UniRx;
 /// <summary>
 /// 敵を管理するManagerクラス
 /// </summary>
-//[RequireComponent(typeof))]
 public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 {
     #region property
-    public static EnemyManager Instance { get; private set; }
-
     public ReactiveProperty<uint> DefeatAmount => _defeatAmountProperty;
     public IObservable<uint> DefeatedEnemyAmountViewObserver => _defeatedEnemyAmountViewSubject;
+
+    public IObservable<EnemyBase> OnEnemyCreated => _onEnemyCreatedSubject;
+    public IObservable<EnemyBase> OnEnemyDeactivated => _onEnemyDeactiveSubject;
     #endregion
 
     #region serialize
@@ -23,6 +23,12 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #region private
     private EnemyWaveType _currentEnemyWave = EnemyWaveType.Wave_1;
     private EnemyGenerator _enemyGenerator;
+
+    /// <summary>エネミーがアクティブになったときのサブジェクト</summary>
+    private Subject<EnemyBase> _onEnemyCreatedSubject = new Subject<EnemyBase>();
+
+    /// <summary>エネミーが非アクティブになったときのサブジェクト</summary>
+    private Subject<EnemyBase> _onEnemyDeactiveSubject = new Subject<EnemyBase>();
     #endregion
 
     #region Constant
@@ -36,7 +42,6 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #region unity methods
     private void Awake()
     {
-        Instance = this;
         _enemyGenerator = GetComponent<EnemyGenerator>();
     }
 
@@ -68,6 +73,18 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
         uint currentWave = enemyTypeAmount;
         _currentEnemyWave = (EnemyWaveType)currentWave;
         OnGenerateEnemies(_currentEnemyWave);
+    }
+
+    public void NotifyEnemyCreated(EnemyBase enemy)
+    {
+        _onEnemyCreatedSubject.OnNext(enemy);
+
+        enemy.InactiveObserver
+             .Subscribe(_ =>
+             {
+                 _onEnemyDeactiveSubject.OnNext(enemy);
+             })
+             .AddTo(this);
     }
     #endregion
 

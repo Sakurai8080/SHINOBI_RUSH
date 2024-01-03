@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ソードの機能
+/// </summary>
 public class Sord : MonoBehaviour
 {
     #region property
@@ -21,21 +24,6 @@ public class Sord : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(GameTag.Enemy))
