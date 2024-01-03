@@ -14,8 +14,9 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
 {
     #region property
     public IObservable<uint> EnemyEventObserver => _enemyEventSubject;
+    public ReactiveProperty<uint> _currentLimitTime = new ReactiveProperty<uint>();
     #endregion
-    
+
     #region serialize
     [Header("Variables")]
     [Tooltip("制限時間(分)")]
@@ -32,7 +33,6 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
     #endregion
 
     #region private
-    private ReactiveProperty<uint> _currentLimitTime = new ReactiveProperty<uint>();
     #endregion
 
     #region Constant
@@ -55,6 +55,14 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
         GameManager.Instance.GameStartObserver
                             .TakeUntilDestroy(this)
                             .Subscribe(_ => OnLimitAndEventTimer());
+
+        GameManager.Instance.IsGameEndObsever
+                            .TakeUntilDestroy(this)
+                            .Subscribe(gameEnded =>
+                            {
+                                if (gameEnded)
+                                    RemainTimeSave();
+                            });
 
         _currentLimitTime.TakeUntilDestroy(this)
                          .Where(value => value >= 0)
@@ -100,6 +108,11 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
             _currentLimitTime.Value -= TIME_SECOND;
             await UniTask.Delay(TimeSpan.FromSeconds(TIME_SECOND));
         }
+    }
+
+    private void RemainTimeSave()
+    {
+        PersistentDataManager.Instance.CurrentLimitTime = _currentLimitTime.Value;
     }
     #endregion
 }

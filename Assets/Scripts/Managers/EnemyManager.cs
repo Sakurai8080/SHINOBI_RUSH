@@ -53,6 +53,14 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
                                  _defeatedEnemyAmountViewSubject.OnNext(value);
                              });
 
+        GameManager.Instance.IsGameEndObsever
+                            .TakeUntilDestroy(this)
+                            .Subscribe(gameEnded =>
+                            {
+                                if (gameEnded)
+                                    DefeatEnemyAmountSave();
+                            });
+
         GameManager.Instance.GameStartObserver
                    .TakeUntilDestroy(this)
                    .Subscribe(_enemyGenerator=>
@@ -111,6 +119,11 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
             default:
                 break;
         }
+    }
+
+    private void DefeatEnemyAmountSave()
+    {
+        PersistentDataManager.Instance.FinalDefeatAmount = _defeatAmountProperty.Value;
     }
     #endregion
 }
