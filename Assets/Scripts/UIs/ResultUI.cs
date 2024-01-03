@@ -89,11 +89,10 @@ public class ResultUI : MonoBehaviour
     {
         try
         {
-            Debug.Log("Try");
             _finalDefeatAmount = PersistentDataManager.Instance.FinalDefeatAmount;
             _remainingTime = PersistentDataManager.Instance.CurrentLimitTime;
             _remainingTimeTMP.text = $"{_remainingTime / 60:00}:{(_remainingTime % 60):00}";
-            await UniTask.Delay(TimeSpan.FromSeconds(1));
+            _remainingTimeTMP.transform.localScale = Vector3.zero;
 
             await DOTween.To(() =>
                           _currentDefeatAmount,
@@ -107,12 +106,12 @@ public class ResultUI : MonoBehaviour
                           .AsyncWaitForCompletion();
 
             await _remainingTimeTMP.transform.DOScale(Vector3.one, 1f)
-                                             .SetEase(Ease.InOutQuad)
+                                             .SetEase(Ease.OutBounce)
                                              .SetUpdate(true)
                                              .AsyncWaitForCompletion();
 
-            _replayButton.gameObject.SetActive(true);
-            _titleTransitionButton.gameObject.SetActive(true);
+            ButtonAnimation(_replayButton);
+            ButtonAnimation(_titleTransitionButton);
         }
         catch (Exception e)
         {
@@ -131,6 +130,24 @@ public class ResultUI : MonoBehaviour
                        OnResultAsync(this.GetCancellationTokenOnDestroy()).Preserve().Forget());
     }
 
+    private void ButtonAnimation(Button button)
+    {
+        CanvasGroup buttonGroup = button.gameObject.GetComponent<CanvasGroup>();
+        if (buttonGroup == null)
+            buttonGroup = button.gameObject.AddComponent<CanvasGroup>();
+
+        buttonGroup.alpha = 0;
+        button.gameObject.SetActive(true);
+        Tween currenTween = buttonGroup.DOFade(1, 0.7f)
+                                       .OnComplete(async () =>
+                                       {
+                                            await UniTask.Delay(TimeSpan.FromMilliseconds(300));
+                                            button.transform.DOScale(0.95f, 1f)
+                                            .SetEase(Ease.InQuint)
+                                            .SetLoops(-1,LoopType.Yoyo);
+                                       });
+    }
+
     private void GameReplay()
     {
         SceneManager.LoadScene("InGame");
@@ -140,5 +157,6 @@ public class ResultUI : MonoBehaviour
     {
         SceneManager.LoadScene("Title");
     }
+
     #endregion
 }

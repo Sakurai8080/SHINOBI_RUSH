@@ -269,7 +269,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cf25c9bc465274dffada228993c2221c, type: 2}
   m_sharedMaterial: {fileID: -312665987304557828, guid: cf25c9bc465274dffada228993c2221c,
@@ -398,7 +398,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184412731}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 619965442}
   - component: {fileID: 619965441}
   m_Layer: 5
-  m_Name: Text_DefeatAmount
+  m_Name: Text_RemainTimeAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,7 +746,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cf25c9bc465274dffada228993c2221c, type: 2}
   m_sharedMaterial: {fileID: -312665987304557828, guid: cf25c9bc465274dffada228993c2221c,
@@ -836,7 +836,7 @@ GameObject:
   - component: {fileID: 711284046}
   - component: {fileID: 711284045}
   m_Layer: 5
-  m_Name: Text_DefeatAmountItem
+  m_Name: Text_RemainTimeItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1161,7 +1161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 989622379}
   m_Layer: 5
-  m_Name: TextSet_TimeAmount
+  m_Name: TextSet_DefeatAmoun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1198,7 +1198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1005886296}
   m_Layer: 5
-  m_Name: TextSet_DefeatAmount (1)
+  m_Name: TextSet_RemainTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
