@@ -31,11 +31,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     #endregion
 
     #region unity methods
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-            OnGameEnd();
-    }
     #endregion
 
     #region public method
