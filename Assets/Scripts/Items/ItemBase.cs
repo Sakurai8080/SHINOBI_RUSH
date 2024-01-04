@@ -63,7 +63,6 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
 
     protected virtual void OnDisable()
     {
-        Debug.Log("スクロールが非アクティブ");
         _inactiveSubject.OnNext(Unit.Default);
     }
 
@@ -85,6 +84,7 @@ public abstract class ItemBase : MonoBehaviour, IPoolable
     {
         if (other.CompareTag(GameTag.Player))
         {
+            this.gameObject.SetActive(false);
             _itemUseSubject.OnNext(Unit.Default);
         }
     }

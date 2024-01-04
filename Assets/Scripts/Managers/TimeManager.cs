@@ -108,6 +108,9 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
             _currentLimitTime.Value -= TIME_SECOND;
             await UniTask.Delay(TimeSpan.FromSeconds(TIME_SECOND));
         }
+
+        if (_currentLimitTime.Value <= 0)
+            GameManager.Instance.OnGameEnd();
     }
 
     private void RemainTimeSave()

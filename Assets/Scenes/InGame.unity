@@ -609,6 +609,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2142203448, guid: f20d3c5234fe04dd79afa33e2fd09971, type: 3}
+      propertyPath: _startMaxHP
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 270132007172992179, guid: f20d3c5234fe04dd79afa33e2fd09971,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1929,6 +1933,10 @@ PrefabInstance:
     - target: {fileID: 533144161, guid: 8df60323012ed46aa8d401ed1f32b0d8, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1253670103, guid: 8df60323012ed46aa8d401ed1f32b0d8, type: 3}
+      propertyPath: _limit
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1284764872, guid: 8df60323012ed46aa8d401ed1f32b0d8, type: 3}
       propertyPath: m_AnchoredPosition.y
