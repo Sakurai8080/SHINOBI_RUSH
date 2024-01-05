@@ -42,7 +42,7 @@ public class Scroll : ItemBase
             .TakeUntilDestroy(this)
             .Subscribe(_ =>
             {
-                ScrollMoveCoroutine();
+                ScrollMove();
             });
     }
 
@@ -70,7 +70,7 @@ public class Scroll : ItemBase
     #endregion
 
     #region private method
-    private void ScrollMoveCoroutine()
+    private void ScrollMove()
     {
         transform.Translate(0,0,-_zPositionSpeed * _transitionMulti * Time.deltaTime);
     }
