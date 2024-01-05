@@ -48,8 +48,10 @@ public class PlayerHealth : MonoBehaviour
         _changeHPSubject.OnNext(_currenHP / _currentMaxHp);
 
         if (_currenHP <= 0)
+        {
+            GameManager.Instance.OnGameEnd();
             return true;
-
+        }
         return false;
     }
     #endregion

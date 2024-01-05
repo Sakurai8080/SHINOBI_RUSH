@@ -41,7 +41,7 @@ public class TitleUI : MonoBehaviour
                              InGameLoader();
                          });
 
-        _currentTween = _inGameLoadButton.transform.DOScale(0.8f, 1f).SetEase(Ease.OutQuad).SetLoops(-1, LoopType.Yoyo);
+        _currentTween = _inGameLoadButton.transform.DOScale(0.9f, 1f).SetEase(Ease.OutQuad).SetLoops(-1, LoopType.Yoyo);
     }
     #endregion
 

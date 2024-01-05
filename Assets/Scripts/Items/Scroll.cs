@@ -59,8 +59,6 @@ public class Scroll : ItemBase
     #region public method
     public override void Return()
     {
-        Debug.Log($"{ItemType}を非アクティブにした");
-
         //座標をリセットして非表示にする。
         gameObject.transform.localPosition = Vector2.zero;
         gameObject.SetActive(false);
