@@ -67,6 +67,7 @@ public class SkillUpSelect : MonoBehaviour
     #region public method
     public void ActiveRondomSkillUIs()
     {
+        _skillUpSelectGrid.gameObject.SetActive(true);
         int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index })
                                                             .Where(x => x.Item.CurrentSkillLevel >=5)
                                                             .Select(c => c.Index)
@@ -105,6 +106,8 @@ public class SkillUpSelect : MonoBehaviour
             skillUI.gameObject.SetActive(false);
 
         CanvasGroupChange(false);
+        _skillUpSelectGrid.gameObject.SetActive(false);
+
         Time.timeScale = 1;
     }
 
