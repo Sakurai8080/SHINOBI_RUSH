@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 /// <summary>
 /// 巻物で経験値アップ
@@ -8,18 +10,17 @@ using UnityEngine;
 public class Scroll : ItemBase
 {
     #region property
-    
+
     #endregion
 
     #region serialize
-    [Tooltip("経験値")]
+    [Tooltip("スピードを操作する係数")]
     [SerializeField]
-    private uint _expValue = 1;
+    private float _transitionMulti = 1;
     #endregion
-    
 
     #region private
-    private Coroutine _currentCoroutine;
+    private float _zPositionSpeed = 2f;
     #endregion
 
     #region Constant
@@ -37,22 +38,22 @@ public class Scroll : ItemBase
     protected override void Start()
     {
         base.Start();
-        _currentCoroutine = StartCoroutine(ScrollMoveCoroutine());
+        this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
+            .Subscribe(_ =>
+            {
+                ScrollMove();
+            });
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        if (_currentCoroutine != null)
-            StartCoroutine(ScrollMoveCoroutine());
-
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        if (_currentCoroutine != null)
-            StopCoroutine(ScrollMoveCoroutine());
     }
     #endregion
 
@@ -69,13 +70,9 @@ public class Scroll : ItemBase
     #endregion
 
     #region private method
-    IEnumerator ScrollMoveCoroutine()
+    private void ScrollMove()
     {
-        while (true)
-        {
-            transform.Translate(0, 0, -0.05f);
-            yield return null;
-        }
+        transform.Translate(0,0,-_zPositionSpeed * _transitionMulti * Time.deltaTime);
     }
     #endregion
 }

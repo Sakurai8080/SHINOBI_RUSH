@@ -11,10 +11,13 @@ public class Sord : MonoBehaviour
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("剣の攻撃力")]
+    [SerializeField]
+    private float _currentAttackAmount = 10.0f;
     #endregion
 
     #region private
-    private float _currentAttackAmount = 2.0f;
     #endregion
 
     #region Constant
