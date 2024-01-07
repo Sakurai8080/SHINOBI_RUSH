@@ -55,14 +55,14 @@ public class ChaseEnemy : EnemyBase
     #region coroutine method
     protected override IEnumerator OnActionCoroutine()
     {
+        Vector3 targetPosition = new Vector3(_playerTransform.position.x, _playerTransform.position.y, _playerTransform.position.z + 1);
+        float distance = Vector3.Distance(transform.localPosition, _playerTransform.localPosition);
         while (true)
         {
-            float distance = Vector3.Distance(transform.localPosition, _playerTransform.localPosition);
-
             if (distance > _doLookAtPos)
                 transform.LookAt(_playerTransform);
 
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, _playerTransform.position, _moveSpeed*Time.deltaTime);
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, _moveSpeed*Time.deltaTime);
             yield return null;
         }
     }
