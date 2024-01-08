@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemData: {fileID: 11400000, guid: 5e66836ec11cd4e6db7a56b0dbdc8300, type: 2}
   _hideDistance: -1
-  _expValue: 1
+  _transitionMulti: 1
 --- !u!65 &1145776422145657900
 BoxCollider:
   m_ObjectHideFlags: 0

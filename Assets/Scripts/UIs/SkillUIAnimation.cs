@@ -46,7 +46,7 @@ public class SkillUIAnimation : MonoBehaviour
     private void SkillActiveAnimation(Image image)
     {
         image.transform.DOScale(1, 0.5f)
-                       .SetEase(Ease.OutElastic)
+                       .SetEase(Ease.OutExpo)
                        .SetUpdate(true);
     }
     #endregion
