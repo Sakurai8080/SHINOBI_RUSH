@@ -24,6 +24,10 @@ public class WindSkill : SkillBase
     [Tooltip("プレイヤーのポジション")]
     [SerializeField]
     private Transform _playerTransform = default;
+
+    [Tooltip("アクティブ時の親オブジェクト")]
+    [SerializeField]
+    private Transform _activedParent = default;
     #endregion
 
     #region private
@@ -33,7 +37,10 @@ public class WindSkill : SkillBase
     private float _attackCoefficient = 5.0f;
     private Wind currentWind = default;
     private WindGenerator _windGenerator;
-    private Vector3 _spwnPositionOffset = new Vector3(-0.2f, 0.3f, 0.1f);
+    private Vector3 _spwnUpPositionOffset = new Vector3(-0.2f, 0.3f, 0.1f);
+    private Vector3 _spwnDownPositionOffset = new Vector3(0.2f, -0.3f, 0.1f);
+    private Vector3 _initialPlayerPos;
+    private bool _isPlayerDown = false;
     #endregion
 
     #region Constant
@@ -50,8 +57,8 @@ public class WindSkill : SkillBase
 
     private void Start()
     {
-        transform.position = _playerTransform.position;
-        _spawnPosition = transform.position + _spwnPositionOffset;
+        _initialPlayerPos = _playerTransform.position;
+        _spawnPosition = _playerTransform.position + _spwnUpPositionOffset;
         _windGenerator = GetComponent<WindGenerator>();
     }
 
@@ -125,15 +132,18 @@ public class WindSkill : SkillBase
             Vector3 targetDir = Vector3.zero;
             Wind windObj = _windGenerator.WindPool.Rent();
 
+            _isPlayerDown = _initialPlayerPos != _playerTransform.position ? true : false;
+            Vector3 currentSpawnPos = (_isPlayerDown) ? _playerTransform.position + _spwnDownPositionOffset : _spawnPosition;
             if (windObj != null)
             {
-                windObj.transform.position = _spawnPosition;
+                windObj.transform.position = currentSpawnPos;
                 yield return new WaitForSeconds(_waitTime);
                 windObj.gameObject.SetActive(true);
                 yield return new WaitUntil(() => _enemies?.Count() >= 1);
                 Vector3 currentTransform = SetTarget(targetDir);
                 windObj.SetAttackAmount(_currentAttackAmount);
                 windObj.SetVelocity(currentTransform);
+                windObj.transform.SetParent(_activedParent);
             }
         }
     }
