@@ -13,23 +13,30 @@ public class ShurikenSkill : SkillBase
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("手裏剣オブジェクト")]
     [SerializeField]
     private Shuriken _shuriken = default;
 
+    [Tooltip("プレイヤーのポジション")]
     [SerializeField]
     private Transform _playerTransform = default;
 
+    [Tooltip("手裏剣が飛んだあとの親オブジェクト")]
+    [SerializeField]
+    private Transform _shurikenParent = default;
     #endregion
 
     #region private
     private List<Transform> _enemies = new List<Transform>();
-
-    private Vector3 _spawnPosition;
-    private Vector3 _playerV3 = default;
+    private Vector3 _spawnUpPosition;
+    private Vector3 _spawnDownPosition;
+    private Vector3 _initialPlayerPos;
     private float _waitTime = 3.0f;
     private float attackCoefficient = 2.0f;
     private Coroutine _currentCoroutine;
     private ShurikenGenerator _shurikenGenerator;
+    private bool _isPlayerDown = false;
     #endregion
 
     #region Constant
@@ -39,7 +46,6 @@ public class ShurikenSkill : SkillBase
     #endregion
 
     #region unity methods
-
     protected override void Awake()
     {
         base.Awake();
@@ -49,13 +55,15 @@ public class ShurikenSkill : SkillBase
     private void Start()
     {
         transform.position = _playerTransform.position;
-        _spawnPosition = _playerTransform.position + new Vector3(0f, 0.1f, 0.1f);
+        _initialPlayerPos = _playerTransform.position;
+        _spawnUpPosition = _playerTransform.localPosition + new Vector3(0f, 0.2f, 0.1f);
+        _spawnDownPosition = _playerTransform.localPosition + new Vector3(0f, -0.2f, 0.1f);
+
 
         EnemyManager.Instance.OnEnemyCreated
                     .Subscribe(enemy =>
                     {
                         _enemies.Add(enemy.transform);
-                        Debug.Log($"新しい敵が生成されました{_enemies.Count}匹");
                     })
                     .AddTo(this);
 
@@ -63,7 +71,6 @@ public class ShurikenSkill : SkillBase
                     .Subscribe(enemy =>
                     {
                         _enemies.Remove(enemy.transform);
-                        Debug.Log($"敵が非アクティブになった:{_enemies.Count}匹");
                     })
                     .AddTo(this);
     }
@@ -135,19 +142,21 @@ public class ShurikenSkill : SkillBase
     #region coroutine method
     protected override IEnumerator SkillActionCroutine()
     {
-        Vector3 targetDir = Vector3.zero;
         while (_isSkillActive)
         {
-            Vector3 currentTransform = SetTarget(targetDir);
-            if (_enemies?.Count > 0 && 5 >= currentTransform.z - _playerTransform.position.z)
+            Vector3 targetDir = Vector3.zero;
+            _isPlayerDown = _initialPlayerPos != _playerTransform.position ? true : false;
+            targetDir = SetTarget(targetDir);
+            if (_enemies?.Count > 0 && 5 >= targetDir.z - _playerTransform.position.z)
             {
                 Shuriken srknObj = _shurikenGenerator.ShurikanPool.Rent();
                 if (srknObj != null)
                 {
-                    srknObj.transform.position = _playerTransform.position;
+                    srknObj.transform.position = (_isPlayerDown) ? _spawnDownPosition : _spawnUpPosition;
                     srknObj.gameObject.SetActive(true);
-                    srknObj.SetVelocity(currentTransform);
+                    srknObj.SetVelocity(targetDir);
                     srknObj.SetAttackAmount(_currentAttackAmount);
+                    srknObj.transform.SetParent(_shurikenParent);
                 }
             }
             yield return new WaitForSeconds(_waitTime);

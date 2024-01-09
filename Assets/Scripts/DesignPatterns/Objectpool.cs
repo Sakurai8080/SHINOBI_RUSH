@@ -41,14 +41,12 @@ public class Objectpool<T> where T : Object
     {
         if (_pool.Count >0)
         {
-            Debug.Log("Queueから取り出し");
             return _pool.Dequeue();
         }
         else
         {
             if (_parent.childCount >= limit)
             {
-                Debug.Log("生成上限");
                 return null;
             }
 
