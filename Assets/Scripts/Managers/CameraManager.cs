@@ -92,10 +92,10 @@ public class CameraManager : MonoBehaviour
 
     private void SecondCameraChange()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) && PlayerController.Instance.onAvaterd)
             CameraChange(CameraType.CvCamera2);
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && PlayerController.Instance.onAvaterd)
             CameraChange(CameraType.CvCamera1);
     }
     #endregion

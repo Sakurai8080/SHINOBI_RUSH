@@ -12,17 +12,28 @@ using UniRx.Triggers;
 public class PlayerMove : MonoBehaviour
 {
     #region property
+    public IReactiveProperty<bool> OnAvaterd => _onAvatered;
+    private ReactiveProperty<bool> _onAvatered = new ReactiveProperty<bool>();
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("移動中のエフェクト")]
+    [SerializeField]
+    private ParticleSystem _avaterEffect;
+
+    [Tooltip("プレイヤーのメッシュ")]
+    [SerializeField]
+    private GameObject _playerMeshies;
     #endregion
 
     #region private
     private Vector3 _firstPosition = default;
     private Vector3 _firstRotate = default;
-
     private Vector3 _secondPosition = new Vector3(0,-0.05f,0);
     private Vector3 _secondRotate = new Vector3(0, 0, 180);
+    private Vector3 _avaterEffectRotation = new Vector3(0, 0, 270);
+    private BoxCollider _col = default;
     #endregion
 
     #region Constant
@@ -36,20 +47,18 @@ public class PlayerMove : MonoBehaviour
     {
         _firstPosition = transform.position;
         _firstRotate = transform.rotation.eulerAngles;
+        _col = GetComponent<BoxCollider>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            transform.localPosition = _secondPosition;
-            transform.localEulerAngles = _secondRotate;
-            
+            StartCoroutine(OnAvaterCroutine(_secondPosition,_secondRotate));
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            transform.localPosition = _firstPosition;
-            transform.localEulerAngles = _firstRotate;
+            StartCoroutine(OnAvaterCroutine(_firstPosition, _firstRotate));
         }
     }
     #endregion
@@ -58,5 +67,30 @@ public class PlayerMove : MonoBehaviour
     #endregion
 
     #region private method
+    private void GameObjectActivator(GameObject go,bool activeSwitch)
+    {
+        go.SetActive(activeSwitch);
+    }
+    #endregion
+
+    #region coroutine method
+    private IEnumerator OnAvaterCroutine(Vector3 playerPos, Vector3 playerAngles)
+    {
+        if (!_onAvatered.Value) {
+            _onAvatered.Value = true;
+            _col.enabled = false;
+            transform.localPosition = playerPos;
+            transform.localEulerAngles = playerAngles;
+            GameObjectActivator(_avaterEffect.gameObject, true);
+            _avaterEffect.Play();
+            GameObjectActivator(_playerMeshies.gameObject, false);
+            yield return new WaitForSeconds(2);
+            _avaterEffect.Stop();
+            GameObjectActivator(_avaterEffect.gameObject, false);
+            GameObjectActivator(_playerMeshies.gameObject, true);
+            _col.enabled = true;
+        }
+        _onAvatered.Value = false;
+    }
     #endregion
 }
