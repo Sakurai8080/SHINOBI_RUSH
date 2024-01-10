@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// プレイヤーに関わる情報を操作するクラス
@@ -10,6 +11,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     #region property
     public PlayerHealth Health => _health;
     public PlayerStatus Status => _status;
+    public bool onAvaterd { get; private set; }
     #endregion
 
     #region serialize
@@ -18,6 +20,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     #region private
     private PlayerHealth _health;
     private PlayerStatus _status;
+    private PlayerMove _move;
     private bool _isDead = false;
     #endregion
 
@@ -31,6 +34,17 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     private void Awake()
     {
         _health = GetComponent<PlayerHealth>();
+        _move = GetComponent<PlayerMove>();
+    }
+
+    private void Start()
+    {
+        _move.OnAvaterd
+             .TakeUntilDestroy(this)
+             .Subscribe(onAvaterdValue =>
+             {
+                 onAvaterd = onAvaterdValue;
+             });
     }
     #endregion
 

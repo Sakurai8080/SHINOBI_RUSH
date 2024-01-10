@@ -12,6 +12,8 @@ using UniRx.Triggers;
 public class PlayerMove : MonoBehaviour
 {
     #region property
+    public IReactiveProperty<bool> OnAvaterd => _onAvatered;
+    private ReactiveProperty<bool> _onAvatered = new ReactiveProperty<bool>();
     #endregion
 
     #region serialize
@@ -25,12 +27,10 @@ public class PlayerMove : MonoBehaviour
     #region private
     private Vector3 _firstPosition = default;
     private Vector3 _firstRotate = default;
-
     private Vector3 _secondPosition = new Vector3(0,-0.05f,0);
     private Vector3 _secondRotate = new Vector3(0, 0, 180);
     private Vector3 _avaterEffectRotation = new Vector3(0, 0, 270);
     private BoxCollider _col = default;
-    private bool _onAvatered = false;
     #endregion
 
     #region Constant
@@ -73,8 +73,8 @@ public class PlayerMove : MonoBehaviour
     #region coroutine method
     private IEnumerator OnAvaterCroutine(Vector3 playerPos, Vector3 playerAngles)
     {
-        if (!_onAvatered) {
-            _onAvatered = true;
+        if (!_onAvatered.Value) {
+            _onAvatered.Value = true;
             _col.enabled = false;
             transform.localPosition = playerPos;
             transform.localEulerAngles = playerAngles;
@@ -87,7 +87,7 @@ public class PlayerMove : MonoBehaviour
             GameObjectActivator(_playerMeshies.gameObject, true);
             _col.enabled = true;
         }
-        _onAvatered = false;
+        _onAvatered.Value = false;
     }
     #endregion
 }

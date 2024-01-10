@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013131689767489864}
   m_Layer: 0
-  m_Name: Armature
+  m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
