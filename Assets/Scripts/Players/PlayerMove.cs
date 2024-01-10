@@ -17,9 +17,12 @@ public class PlayerMove : MonoBehaviour
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("移動中のエフェクト")]
     [SerializeField]
     private ParticleSystem _avaterEffect;
 
+    [Tooltip("プレイヤーのメッシュ")]
     [SerializeField]
     private GameObject _playerMeshies;
     #endregion
@@ -64,9 +67,9 @@ public class PlayerMove : MonoBehaviour
     #endregion
 
     #region private method
-    private void GameObjectActivator(GameObject g,bool b)
+    private void GameObjectActivator(GameObject go,bool activeSwitch)
     {
-        g.SetActive(b);
+        go.SetActive(activeSwitch);
     }
     #endregion
 
