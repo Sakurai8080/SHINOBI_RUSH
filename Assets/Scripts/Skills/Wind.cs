@@ -15,8 +15,10 @@ public class Wind : MonoBehaviour , IPoolable
     #endregion
 
     #region serialize
+    [Header("Variavle")]
+    [Tooltip("爆発するスピード")]
     [SerializeField]
-    private float _scaleChangeAmount = 1.0f;
+    private float _scaleChangeAmount = 30.0f;
     #endregion
 
     #region private
@@ -25,6 +27,7 @@ public class Wind : MonoBehaviour , IPoolable
     private float _currentAttackAmount = 1.0f;
     private Coroutine _currentCoroutine = default;
     private Vector3 _initialScale;
+    private float _scaleCoeficient = 5;
     #endregion
 
     #region Constant
@@ -97,14 +100,14 @@ public class Wind : MonoBehaviour , IPoolable
     private IEnumerator ExplosionCoroutine()
     {
         Vector3 currentScale = _initialScale;
-        float targetScaleMagnitude = _initialScale.magnitude * 10; 
+        float targetScaleMagnitude = _initialScale.magnitude * _scaleCoeficient; 
 
         while(currentScale.magnitude <= targetScaleMagnitude)
         {
             currentScale += _initialScale * _scaleChangeAmount * Time.deltaTime;
             transform.localScale = currentScale;
+            yield return null;
         }
-        yield return null;
         gameObject.SetActive(false);
         transform.localScale = _initialScale;
     }
