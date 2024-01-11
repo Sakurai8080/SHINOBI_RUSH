@@ -83,7 +83,6 @@ public class WindSkill : SkillBase
         _isSkillActive = true;
         transform.SetParent(_playerTransform);
         _currentCoroutine = StartCoroutine(SkillActionCroutine());
-        currentWind = _wind;
     }
 
     public override void SkillUp()
@@ -95,8 +94,9 @@ public class WindSkill : SkillBase
         }
         Debug.Log($"{SkillType}は{_currentSkillLevel}");
         _currentSkillLevel++;
-        currentWind = (_currentSkillLevel >= 5) ? _maxWind : _wind; 
         AttackUpAmount(_attackCoefficient);
+        if (CurrentSkillLevel >= 5)
+            _windGenerator.WindPool.ObjectPrefab = _maxWind;
     }
 
     public override void AttackUpAmount(float coefficient)
@@ -131,7 +131,6 @@ public class WindSkill : SkillBase
         {
             Vector3 targetDir = Vector3.zero;
             Wind windObj = _windGenerator.WindPool.Rent();
-
             _isPlayerDown = _initialPlayerPos != _playerTransform.position ? true : false;
             Vector3 currentSpawnPos = (_isPlayerDown) ? _playerTransform.position + _spwnDownPositionOffset : _spawnPosition;
             if (windObj != null)

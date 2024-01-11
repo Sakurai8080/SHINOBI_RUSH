@@ -8,6 +8,11 @@ using UniRx.Triggers;
 public class Objectpool<T> where T : Object
 {
     #region property
+    public T ObjectPrefab
+    {
+        get => _object;
+        set => _object = value;
+    }
     #endregion
 
     #region serialize
@@ -69,10 +74,6 @@ public class Objectpool<T> where T : Object
             catch
             {
                 Debug.LogError($"インターフェースが継承されていません。オブジェクト名:{obj.name}");
-            }
-            finally
-            {
-                //Debug.LogError($"インターフェースが継承されていません。オブジェクト名:{obj.name}");
             }
             return obj;
         }
