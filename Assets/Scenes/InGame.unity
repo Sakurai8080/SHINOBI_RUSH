@@ -807,6 +807,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1197390168, guid: f20d3c5234fe04dd79afa33e2fd09971, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 103546274272975618, guid: f20d3c5234fe04dd79afa33e2fd09971,
         type: 3}
       propertyPath: m_Name
@@ -1526,9 +1530,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2265627530705066772, guid: 62e3637b8de48463bb5f775a40c3bda2,
         type: 3}
+      propertyPath: _wind
+      value: 
+      objectReference: {fileID: 5567194345345491094, guid: c66bda32596994b6eb47e10c3d77ed0c,
+        type: 3}
+    - target: {fileID: 2265627530705066772, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: _maxWind
+      value: 
+      objectReference: {fileID: 8786969622580153227, guid: ce210b250fed64162a80b7a0f7b1fe5c,
+        type: 3}
+    - target: {fileID: 2265627530705066772, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
       propertyPath: _playerTransform
       value: 
       objectReference: {fileID: 2142203450}
+    - target: {fileID: 2265627530705066773, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.685205
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530705066773, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.7621623
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530705066773, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.11041349
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530705066773, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.45108104
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265627530705066775, guid: 62e3637b8de48463bb5f775a40c3bda2,
+        type: 3}
+      propertyPath: _windPrefab
+      value: 
+      objectReference: {fileID: 5567194345345491094, guid: c66bda32596994b6eb47e10c3d77ed0c,
+        type: 3}
     - target: {fileID: 2265627530984036898, guid: 62e3637b8de48463bb5f775a40c3bda2,
         type: 3}
       propertyPath: _player
