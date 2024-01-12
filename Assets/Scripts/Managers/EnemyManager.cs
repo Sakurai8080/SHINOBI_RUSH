@@ -15,6 +15,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     public IObservable<EnemyBase> OnEnemyCreated => _onEnemyCreatedSubject;
     public IObservable<EnemyBase> OnEnemyDeactivated => _onEnemyDeactiveSubject;
+
+    public IObservable<Unit> EnemySwitchObserver => _onEnemyWaveSwitchSubject;
     #endregion
 
     #region serialize
@@ -29,6 +31,8 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     /// <summary>エネミーが非アクティブになったときのサブジェクト</summary>
     private Subject<EnemyBase> _onEnemyDeactiveSubject = new Subject<EnemyBase>();
+
+    private Subject<Unit> _onEnemyWaveSwitchSubject = new Subject<Unit>();
     #endregion
 
     #region Constant
@@ -99,22 +103,20 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
     #region private method
     private void OnGenerateEnemies(EnemyWaveType type)
     {
+        _onEnemyWaveSwitchSubject.OnNext(default); 
         switch(type)
         {
             case EnemyWaveType.Wave_1:
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave1_Enemy1);
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave1_Enemy2);
-                Debug.Log("Wave1開始");
                 break;
             case EnemyWaveType.Wave_2:
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave2_Enemy1);
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave2_Enemy2);
-                Debug.Log("Wave2開始");
                 break;
             case EnemyWaveType.Wave_3:
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave3_Enemy1);
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave3_Enemy2);
-                Debug.Log("Wave3開始");
                 break;
             default:
                 break;
