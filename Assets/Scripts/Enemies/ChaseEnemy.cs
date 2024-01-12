@@ -8,14 +8,15 @@ public class ChaseEnemy : EnemyBase
     #endregion
 
     #region serialize
+    [Header("Variable")]
+    [Tooltip("追うスピード")]
     [SerializeField]
-    private float _moveSpeed = 2f;
+    private float _moveSpeed = 1f;
     #endregion
 
     #region private
     private Vector3 _targetPosition;
     private Vector3 _initialTargetPosition;
-    private Vector3 _playerUnderPosOffset = new Vector3(0,-0.5f,0);
     #endregion
 
     #region Constant
@@ -63,17 +64,19 @@ public class ChaseEnemy : EnemyBase
     #region coroutine method
     protected override IEnumerator OnActionCoroutine()
     {
+        Vector3 playerUnderPosOffset = new Vector3(0, -0.5f, 0);
+        Vector3 enemyLastPosition = new Vector3(0, 0, -3);
         while (true)
         {
             float distance = Vector3.Distance(transform.localPosition, _playerTransform.localPosition);
             Vector3 tempPos;
             if (gameObject.transform.position.z >= 0.6f)
             {
-                tempPos = (_playerTransform.position != _initialPlayerPos) ? (_targetPosition + _playerUnderPosOffset) : _initialTargetPosition;
+                tempPos = (_playerTransform.position != _initialPlayerPos) ? (_targetPosition + playerUnderPosOffset) : _initialTargetPosition;
                 MoveTowardsTarget(tempPos);
             }
             else
-                MoveTowardsTarget(new Vector3(transform.position.x,transform.position.y,-3));
+                MoveTowardsTarget(enemyLastPosition);
 
             if (gameObject.transform.position.z <= -1)
                 gameObject.SetActive(false);
