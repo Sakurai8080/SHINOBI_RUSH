@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class EnemyGenerator : MonoBehaviour
 {
@@ -9,14 +10,14 @@ public class EnemyGenerator : MonoBehaviour
     #endregion
 
     #region serialize
-    [Header("変数")]
+    [Header("Variable")]
     [Tooltip("生成する間隔")]
     [SerializeField]
-    private float _generateInterval = 1.0f;
+    private float _generateInterval = 6.0f;
 
     [Tooltip("一度に生成する数")]
     [SerializeField]
-    private uint _onceGenerateAmount = 10;
+    private uint _onceGenerateAmount = 1;
 
     [Tooltip("生成する敵の限度")]
     [SerializeField]
@@ -49,10 +50,21 @@ public class EnemyGenerator : MonoBehaviour
 
         _isInGame = true;
     }
+
+    private void Start()
+    {
+        EnemyManager.Instance.EnemySwitchObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ =>
+                             {
+                                 _generateInterval *= 0.5f;
+                                 _onceGenerateAmount *= 2;
+                             });
+    }
     #endregion
 
     #region public method
-     public void OnEnemyGenerate(EnemyType type)
+    public void OnEnemyGenerate(EnemyType type)
     {
         Coroutine c = StartCoroutine(GenerateCoroutine(type));
 
@@ -80,7 +92,6 @@ public class EnemyGenerator : MonoBehaviour
     #region coroutine method
     private IEnumerator GenerateCoroutine(EnemyType type)
     {
-        Debug.Log($"{type}ジェネレート開始");
         WaitForSeconds interval = new WaitForSeconds(_generateInterval);
         int count = 0;
 
@@ -90,14 +101,12 @@ public class EnemyGenerator : MonoBehaviour
             for (int i = 0; i < _currentGenerateAmount; i++)
             {
                 EnemyBase enemy = _enemyPoolDic[type].Rent(_currentGenerateLimit);
-                Debug.Log($"現在の生成カウント{count}");
-
                 if (enemy != null)
                 {
                     enemy.gameObject.SetActive(true);
 
-                    float randomX = UnityEngine.Random.Range(-3, 3);
-                    float randomY = UnityEngine.Random.Range(2, 5);
+                    float randomX = UnityEngine.Random.Range(-6,6);
+                    float randomY = UnityEngine.Random.Range(-1,8);
 
                     Vector3 generatePos = new Vector3(randomX,randomY, _playerTrans.transform.position.z+20);
                     enemy.transform.position = generatePos;
