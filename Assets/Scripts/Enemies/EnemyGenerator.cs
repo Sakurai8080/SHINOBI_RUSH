@@ -17,7 +17,7 @@ public class EnemyGenerator : MonoBehaviour
 
     [Tooltip("一度に生成する数")]
     [SerializeField]
-    private uint _onceGenerateAmount = 10;
+    private uint _onceGenerateAmount = 1;
 
     [Tooltip("生成する敵の限度")]
     [SerializeField]
@@ -58,6 +58,7 @@ public class EnemyGenerator : MonoBehaviour
                              .Subscribe(_ =>
                              {
                                  _generateInterval *= 0.5f;
+                                 _onceGenerateAmount *= 2;
                              });
     }
     #endregion
@@ -104,8 +105,8 @@ public class EnemyGenerator : MonoBehaviour
                 {
                     enemy.gameObject.SetActive(true);
 
-                    float randomX = UnityEngine.Random.Range(-3, 3);
-                    float randomY = UnityEngine.Random.Range(2, 5);
+                    float randomX = UnityEngine.Random.Range(-6,6);
+                    float randomY = UnityEngine.Random.Range(-1,8);
 
                     Vector3 generatePos = new Vector3(randomX,randomY, _playerTrans.transform.position.z+20);
                     enemy.transform.position = generatePos;

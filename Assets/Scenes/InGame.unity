@@ -1605,6 +1605,11 @@ PrefabInstance:
       propertyPath: _generateInterval
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _onceGenerateAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3945876765833741451, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
         type: 3}
       propertyPath: m_RootOrder
