@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: a0fb0738546124dddaa22afd46a71f2c, type: 2}
-  _moveSpeed: 0.8
+  _moveSpeed: 1
 --- !u!65 &6197342348350256285
 BoxCollider:
   m_ObjectHideFlags: 0

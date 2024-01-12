@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013131689767489864}
   m_Layer: 0
-  m_Name: Root
+  m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f946295a008441687cdd5b17b22c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startMaxHP: 1
+  _startMaxHP: 50
 --- !u!114 &2142203447
 MonoBehaviour:
   m_ObjectHideFlags: 0
