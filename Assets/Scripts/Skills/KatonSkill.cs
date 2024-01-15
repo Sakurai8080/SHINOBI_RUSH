@@ -66,7 +66,7 @@ public class KatonSkill : SkillBase
 
         Debug.Log($"{SkillType}レベルアップ");
         _currentSkillLevel++;
-        _scaleCoefficient++;
+        _scaleCoefficient += 2.5f;
         AttackUpAmount(_attackCoefficient);
     }
 

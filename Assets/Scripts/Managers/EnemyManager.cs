@@ -15,7 +15,6 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
 
     public IObservable<EnemyBase> OnEnemyCreated => _onEnemyCreatedSubject;
     public IObservable<EnemyBase> OnEnemyDeactivated => _onEnemyDeactiveSubject;
-
     public IObservable<Unit> EnemySwitchObserver => _onEnemyWaveSwitchSubject;
     #endregion
 
