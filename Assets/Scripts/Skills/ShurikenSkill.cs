@@ -148,7 +148,6 @@ public class ShurikenSkill : SkillBase
             _isPlayerDown = _initialPlayerPos != _playerTransform.position ? true : false;
             targetDir = SetTarget(targetDir);
             float targetZDistance = targetDir.z - _playerTransform.position.z;
-            Debug.Log($"<color=yellow>{targetZDistance}</color>");
             if (_enemies?.Count > 0 && 5 >= targetZDistance)
             {
                 Shuriken srknObj = _shurikenGenerator.ShurikanPool.Rent();
