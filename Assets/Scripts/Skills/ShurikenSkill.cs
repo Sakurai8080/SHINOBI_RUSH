@@ -129,13 +129,13 @@ public class ShurikenSkill : SkillBase
         foreach (Transform enemyTransform in _enemies)
         {
             float currentDistance = Vector3.Distance(transform.position, enemyTransform.position);
-            if (currentDistance < distance)
+            if (currentDistance < distance && enemyTransform.position.z >= 1)
             {
                 nearestEnemy = enemyTransform;
                 distance = currentDistance;
             }
         }
-        return targetDir = (nearestEnemy.position - transform.position);
+        return nearestEnemy.position - transform.position;
     }
     #endregion
 
@@ -147,7 +147,9 @@ public class ShurikenSkill : SkillBase
             Vector3 targetDir = Vector3.zero;
             _isPlayerDown = _initialPlayerPos != _playerTransform.position ? true : false;
             targetDir = SetTarget(targetDir);
-            if (_enemies?.Count > 0 && 5 >= targetDir.z - _playerTransform.position.z)
+            float targetZDistance = targetDir.z - _playerTransform.position.z;
+            Debug.Log($"<color=yellow>{targetZDistance}</color>");
+            if (_enemies?.Count > 0 && 5 >= targetZDistance)
             {
                 Shuriken srknObj = _shurikenGenerator.ShurikanPool.Rent();
                 if (srknObj != null)
