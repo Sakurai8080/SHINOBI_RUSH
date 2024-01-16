@@ -86,6 +86,7 @@ public class Shuriken : MonoBehaviour , IPoolable
 
     public void SetVelocity(Vector3 enemyDir)
     {
+        Vector3 normarizeDir = enemyDir.normalized;
         _rb.velocity = enemyDir * _moveSpeed;
     }
 
