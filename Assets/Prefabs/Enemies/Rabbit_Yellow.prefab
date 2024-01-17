@@ -260,9 +260,10 @@ GameObject:
   - component: {fileID: 4000013669607808}
   - component: {fileID: 95000010169133924}
   - component: {fileID: 3963019521971264221}
+  - component: {fileID: 8209425992450495923}
   m_Layer: 0
   m_Name: Rabbit_Yellow
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -276,7 +277,7 @@ Transform:
   m_GameObject: {fileID: 1000011046516534}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children:
   - {fileID: 4000013233463086}
   - {fileID: 4000012026326314}
@@ -293,7 +294,7 @@ Animator:
   m_GameObject: {fileID: 1000011046516534}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 05b0336cad2ece64b99ce054ed619f4c, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a036ff9b62adb470fb9d99c2e773280a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -315,7 +316,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: adcb29d01b2634013a62707c313d67e8, type: 2}
-  _moveSpeed: 1.1
+  _moveSpeed: 1.2
+--- !u!65 &8209425992450495923
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011046516534}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.02, y: 0.03, z: 0.02}
+  m_Center: {x: 0, y: 0.008, z: 0}
 --- !u!1 &1000011275169694
 GameObject:
   m_ObjectHideFlags: 0

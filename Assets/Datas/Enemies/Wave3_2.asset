@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Wave3_2
   m_EditorClassIdentifier: 
   _enemyType: 5
-  _hp: 10
+  _hp: 20000
   _attackAmount: 1
