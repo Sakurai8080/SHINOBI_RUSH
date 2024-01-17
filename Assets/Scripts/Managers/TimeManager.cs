@@ -21,7 +21,7 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
     [Header("Variables")]
     [Tooltip("制限時間(分)")]
     [SerializeField]
-    private uint _limit = 6;
+    private uint _limit = 5;
 
     [Tooltip("制限時間を表示するTMP")]
     [SerializeField]
@@ -87,13 +87,13 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
         _currentTimeEvent = _enemyEvents.Select(e => Observable.Timer(TimeSpan.FromSeconds(e.InvokeTime)))
                                         .Merge();
 
-        uint currentEnemyEventIndex = 1;
+        uint currentEnemyEventIndex = 0;
 
         _currentTimeEvent.TakeUntilDestroy(this)
                          .Subscribe(_ =>
                          {
-                             _enemyEventSubject.OnNext(currentEnemyEventIndex);
                              currentEnemyEventIndex++;
+                             _enemyEventSubject.OnNext(currentEnemyEventIndex);
                          });
 
         OnLimitTimerAsync().Forget();
