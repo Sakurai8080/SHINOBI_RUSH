@@ -110,7 +110,7 @@ public class CameraManager : MonoBehaviour
         Tweener tweener = DOTween.To(() => dolly.m_PathPosition,
                                   value => dolly.m_PathPosition = value,
                                   PathPositionMax, duration)
-                                 .SetEase(Ease.OutCirc);
+                                 .SetEase(Ease.Linear);
 
         yield return tweener.WaitForCompletion();
         GameManager.Instance.OnGameStart();
