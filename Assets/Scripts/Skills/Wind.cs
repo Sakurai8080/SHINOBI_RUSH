@@ -15,19 +15,10 @@ public class Wind : MonoBehaviour , IPoolable
     #endregion
 
     #region serialize
-    [Header("Variavle")]
-    [Tooltip("爆発するスピード")]
-    [SerializeField]
-    private float _scaleChangeAmount = 30.0f;
     #endregion
 
     #region private
-    private Rigidbody _rb;
-    private float _moveSpeed = 0.5f;
     private float _currentAttackAmount = 1.0f;
-    private Coroutine _currentCoroutine = default;
-    private Vector3 _initialScale;
-    private float _scaleCoeficient = 5;
     #endregion
 
     #region Constant
@@ -38,40 +29,12 @@ public class Wind : MonoBehaviour , IPoolable
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody>();
-    }
-
-    private void Start()
-    {
-        _initialScale = transform.localScale;
-    }
-
-    private void OnEnable()
-    {
-        _currentCoroutine = StartCoroutine(InActiveCoroutine());
-    }
-
-    private void OnDisable()
-    {
-        if (_currentCoroutine != null)
-        {
-            StopCoroutine(_currentCoroutine);
-            _currentCoroutine = null;
-        }
-        transform.localPosition = Vector3.zero;
-        _inactiveSubject.OnNext(Unit.Default);
-    }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag(GameTag.Enemy))
         {
             IDamagable target = other.GetComponent<IDamagable>();
             target.Damage(_currentAttackAmount);
-            _currentCoroutine = StartCoroutine(ExplosionCoroutine());
-            StartCoroutine(InActiveCoroutine());
         }
     }
     #endregion
@@ -82,9 +45,9 @@ public class Wind : MonoBehaviour , IPoolable
         _currentAttackAmount += amount;
     }
 
-    public void SetVelocity(Vector3 enemyDir)
+    public void SizeUp(float scaleFactor)
     {
-        _rb.velocity = enemyDir * _moveSpeed;
+        transform.localScale *= scaleFactor;
     }
 
     public void ReturnPool()
@@ -97,20 +60,6 @@ public class Wind : MonoBehaviour , IPoolable
     #endregion
 
     #region coroutine method
-    private IEnumerator ExplosionCoroutine()
-    {
-        Vector3 currentScale = _initialScale;
-        float targetScaleMagnitude = _initialScale.magnitude * _scaleCoeficient; 
-
-        while(currentScale.magnitude <= targetScaleMagnitude)
-        {
-            currentScale += _initialScale * _scaleChangeAmount * Time.deltaTime;
-            transform.localScale = currentScale;
-            yield return null;
-        }
-        gameObject.SetActive(false);
-        transform.localScale = _initialScale;
-    }
 
     private IEnumerator InActiveCoroutine()
     {

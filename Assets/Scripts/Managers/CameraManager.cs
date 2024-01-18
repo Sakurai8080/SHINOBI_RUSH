@@ -5,6 +5,7 @@ using UnityEngine;
 using Cinemachine;
 using UniRx;
 using UniRx.Triggers;
+using DG.Tweening;
 
 /// <summary>
 /// カメラ全体を操作するマネージャー
@@ -27,11 +28,11 @@ public class CameraManager : MonoBehaviour
     private float PathPositionMax;
     private float PathPositionMin;
     private Coroutine _currentCoroutine;
-
     #endregion
 
     #region Constant
     private const int PriorityAmount = 11;
+    private const int InitialPriority = 10;
     #endregion
 
     #region Event
@@ -72,10 +73,8 @@ public class CameraManager : MonoBehaviour
     #region public method
     public void CameraChange(CameraType cameraType)
     {
-        int _initialPriority = 10;
-
         foreach (var camera in _cameraDic)
-            camera.Value.Priority = _initialPriority;
+            camera.Value.Priority = InitialPriority;
 
         _cameraDic[cameraType].Priority = PriorityAmount;
     }
@@ -92,27 +91,28 @@ public class CameraManager : MonoBehaviour
 
     private void SecondCameraChange()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow) && PlayerController.Instance.onAvaterd)
-            CameraChange(CameraType.CvCamera2);
+        if (PlayerController.Instance.onAvaterd)
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+                CameraChange(CameraType.CvCamera2);
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && PlayerController.Instance.onAvaterd)
-            CameraChange(CameraType.CvCamera1);
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+                CameraChange(CameraType.CvCamera1);
+        }
     }
     #endregion
 
     #region coroutine method
     IEnumerator DollyChangeCoroutin(CinemachineTrackedDolly dolly)
     {
-        float elapsedTime = 0f;
-        float duration = 1.0f;
+        float duration = 1.5f;
 
-        while (elapsedTime < duration)
-        {
-            float time = elapsedTime / duration;
-            dolly.m_PathPosition = Mathf.Lerp(PathPositionMin, PathPositionMax, time);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        Tweener tweener = DOTween.To(() => dolly.m_PathPosition,
+                                  value => dolly.m_PathPosition = value,
+                                  PathPositionMax, duration)
+                                 .SetEase(Ease.Linear);
+
+        yield return tweener.WaitForCompletion();
         GameManager.Instance.OnGameStart();
     }
     #endregion
