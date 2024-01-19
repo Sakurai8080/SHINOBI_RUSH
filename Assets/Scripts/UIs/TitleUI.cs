@@ -38,7 +38,7 @@ public class TitleUI : MonoBehaviour
                          .TakeUntilDestroy(this)
                          .Subscribe(_ =>
                          {
-                             InGameLoader();
+                             InGameSwitch();
                          });
 
         _currentTween = _inGameLoadButton.transform.DOScale(0.9f, 1f).SetEase(Ease.OutQuad).SetLoops(-1, LoopType.Yoyo);
@@ -49,10 +49,10 @@ public class TitleUI : MonoBehaviour
     #endregion
 
     #region private method
-    private void InGameLoader()
+    private void InGameSwitch()
     {
         _currentTween.Kill();
-        SceneManager.LoadScene("InGame");
+        GameManager.Instance.SceneLoader("InGame");
     }
     #endregion
 
