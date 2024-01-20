@@ -69,14 +69,14 @@ public class ResultUI : MonoBehaviour
                      .TakeUntilDestroy(this)
                      .Subscribe(_ =>
                      {
-                         GameReplay();
+                         SceneSwicher("InGame");
                      });
 
         _titleTransitionButton.OnClickAsObservable()
                               .TakeUntilDestroy(this)
                               .Subscribe(_ =>
                               {
-                                  TitleTransition();
+                                  SceneSwicher("Title");
                               });
     }
     #endregion
@@ -148,15 +148,9 @@ public class ResultUI : MonoBehaviour
                                        });
     }
 
-    private void GameReplay()
+    private void SceneSwicher(string sceneName)
     {
-        SceneManager.LoadScene("InGame");
+        GameManager.Instance.SceneLoader(sceneName);
     }
-
-    private void TitleTransition()
-    {
-        SceneManager.LoadScene("Title");
-    }
-
     #endregion
 }

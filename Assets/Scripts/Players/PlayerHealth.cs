@@ -49,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (_currenHP <= 0)
         {
-            GameManager.Instance.OnGameEnd();
+            GameManager.Instance.SceneLoader("Result");
             return true;
         }
         return false;
