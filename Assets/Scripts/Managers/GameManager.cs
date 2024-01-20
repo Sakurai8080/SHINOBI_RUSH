@@ -39,11 +39,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _gameStartSubject.OnNext(Unit.Default);
     }
 
-    public void OnGameEnd()
+    public void SceneLoader(string sceneName)
     {
-        _isGameEnd.OnNext(true);
-        SceneManager.LoadScene("Result");
+        SceneManager.LoadSceneAsync(sceneName);
     }
+
     #endregion
 
     #region private method
