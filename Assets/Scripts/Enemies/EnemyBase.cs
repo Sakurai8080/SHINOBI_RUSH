@@ -94,9 +94,9 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
     public virtual void Damage(float amount)
     {
         _currentHP -= amount;
-        EnemyManager.Instance.DefeatAmount.Value++;
         if (_currentHP <= 0)
         {
+            EnemyManager.Instance.DefeatAmount.Value++;
             gameObject.SetActive(false);
         }
     }

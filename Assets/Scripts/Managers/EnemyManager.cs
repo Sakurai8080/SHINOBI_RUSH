@@ -114,6 +114,7 @@ public class EnemyManager : SingletonMonoBehaviour<EnemyManager>
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave2_Enemy2);
                 break;
             case EnemyWaveType.Wave_3:
+                AudioManager.PlayBGM(BGMType.InGame2);
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave3_Enemy1);
                 _enemyGenerator.OnEnemyGenerate(EnemyType.Wave3_Enemy2);
                 break;
