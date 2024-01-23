@@ -81,7 +81,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
     private void Start()
     {
-        PlayBGM(BGMType.InGame);
+        DontDestroyOnLoad(this);
     }
     #endregion
 

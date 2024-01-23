@@ -31,6 +31,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     #endregion
 
     #region unity methods
+    private void Start()
+    {
+        DontDestroyOnLoad(this);
+        SceneManager.sceneLoaded += SceneLoaded;
+    }
     #endregion
 
     #region public method
@@ -44,8 +49,30 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         SceneManager.LoadSceneAsync(sceneName);
     }
 
+    private void BGMChange(BGMType type)
+    {
+        AudioManager.PlayBGM(type);
+    }
     #endregion
 
     #region private method
+    private void SceneLoaded(Scene nextScene, LoadSceneMode mode)
+    {
+        switch (nextScene.name)
+        {
+            case "InGame":
+                BGMChange(BGMType.InGame);
+                break;
+            case "Title":
+                BGMChange(BGMType.Title);
+                break;
+            case "Result":
+                BGMChange(BGMType.Result);
+                break;
+            default:
+                Debug.LogError($"<color=red>切り替えられたシーン{nextScene.name}は不明です</color>");
+                break;
+        }
+    }
     #endregion
 }
