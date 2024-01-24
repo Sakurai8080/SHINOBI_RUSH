@@ -41,15 +41,15 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += SceneLoaded;
+
+        Scene initScene = SceneManager.GetActiveScene();
+        InitBGM(initScene);
     }
     #endregion
 
@@ -59,9 +59,14 @@ public class GameManager : MonoBehaviour
         _gameStartSubject.OnNext(Unit.Default);
     }
 
+    public void OnGameEnd()
+    {
+        _isGameEnd.OnNext(true);
+    }
+
     public void SceneLoader(string sceneName)
     {
-        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     private void BGMChange(BGMType type)
@@ -71,6 +76,26 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region private method
+
+    private void InitBGM(Scene currentScene)
+    {
+        switch (currentScene.name)
+        {
+            case "InGame":
+                BGMChange(BGMType.InGame);
+                break;
+            case "Title":
+                BGMChange(BGMType.Title);
+                break;
+            case "Result":
+                BGMChange(BGMType.Result);
+                break;
+            default:
+                Debug.LogError($"<color=red>切り替えられたシーン{currentScene.name}は不明です</color>");
+                break;
+        }
+    }
+
     private void SceneLoaded(Scene nextScene, LoadSceneMode mode)
     {
         switch (nextScene.name)

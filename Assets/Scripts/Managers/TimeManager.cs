@@ -110,7 +110,10 @@ public class TimeManager : SingletonMonoBehaviour<TimeManager>
         }
 
         if (_currentLimitTime.Value <= 0)
+        {
+            GameManager.Instance.OnGameEnd();
             GameManager.Instance.SceneLoader("Result");
+        }
     }
 
     private void RemainTimeSave()
