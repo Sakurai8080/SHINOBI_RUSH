@@ -6,9 +6,11 @@ using System.Linq;
 using UnityEngine.Audio;
 using UniRx;
 
-public class AudioManager : SingletonMonoBehaviour<AudioManager>
+public class AudioManager : MonoBehaviour
 {
     #region property
+    public static AudioManager Instance { get; private set; }
+
     public int CurrentBGMVolume { get; set; } = 5;
     public int CurrentSEVolume { get; set; } = 5;
     #endregion
@@ -69,6 +71,17 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     #region unity methods
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+
         for (int i = 0; i < _seAudioSourceAmount; i++)
         {
             GameObject obj = new GameObject($"SESource{i + 1}");
@@ -77,11 +90,6 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
             AudioSource source = obj.AddComponent<AudioSource>();
             _seAudioSouceList.Add(source);
         }
-    }
-
-    private void Start()
-    {
-        DontDestroyOnLoad(this);
     }
     #endregion
 

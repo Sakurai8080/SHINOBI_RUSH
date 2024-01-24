@@ -9,9 +9,11 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// ゲーム全体を管理するクラス
 /// </summary>
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public class GameManager : MonoBehaviour
 {
     #region property
+    public static GameManager Instance { get; private set; }
+
     public IObservable<bool> IsGameEndObsever => _isGameEnd;
     public IObservable<Unit> GameStartObserver => _gameStartSubject;
     #endregion
@@ -31,9 +33,22 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     #endregion
 
     #region unity methods
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += SceneLoaded;
     }
     #endregion
