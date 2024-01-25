@@ -1068,12 +1068,67 @@ PrefabInstance:
     - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
         type: 3}
       propertyPath: _generateInterval
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
         type: 3}
       propertyPath: _onceGenerateAmount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _startGenerateLimit
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[2].ReserveAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[3].ReserveAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[4].ReserveAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[5].ReserveAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[0].ActivationLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[1].ActivationLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[2].ActivationLimit
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[3].ActivationLimit
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[4].ActivationLimit
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945876765833741450, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
+        type: 3}
+      propertyPath: _enemies.Array.data[5].ActivationLimit
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3945876765833741451, guid: 3d4a119cbf5084c2f9f12e9dc74f1df2,
         type: 3}
@@ -1170,11 +1225,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 1253670103, guid: 8df60323012ed46aa8d401ed1f32b0d8, type: 3}
       propertyPath: _enemyEvents.Array.data[0].InvokeTime
-      value: 5
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1253670103, guid: 8df60323012ed46aa8d401ed1f32b0d8, type: 3}
       propertyPath: _enemyEvents.Array.data[1].InvokeTime
-      value: 10
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 1284764872, guid: 8df60323012ed46aa8d401ed1f32b0d8, type: 3}
       propertyPath: m_SizeDelta.x
