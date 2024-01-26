@@ -9,9 +9,11 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// ゲーム全体を管理するクラス
 /// </summary>
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public class GameManager : MonoBehaviour
 {
     #region property
+    public static GameManager Instance { get; private set; }
+
     public IObservable<bool> IsGameEndObsever => _isGameEnd;
     public IObservable<Unit> GameStartObserver => _gameStartSubject;
     #endregion
@@ -31,6 +33,24 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     #endregion
 
     #region unity methods
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += SceneLoaded;
+
+        Scene initScene = SceneManager.GetActiveScene();
+        InitBGM(initScene);
+    }
     #endregion
 
     #region public method
@@ -39,13 +59,60 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _gameStartSubject.OnNext(Unit.Default);
     }
 
-    public void SceneLoader(string sceneName)
+    public void OnGameEnd()
     {
-        SceneManager.LoadSceneAsync(sceneName);
+        _isGameEnd.OnNext(true);
     }
 
+    public void SceneLoader(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void BGMChange(BGMType type)
+    {
+        AudioManager.PlayBGM(type);
+    }
     #endregion
 
     #region private method
+
+    private void InitBGM(Scene currentScene)
+    {
+        switch (currentScene.name)
+        {
+            case "InGame":
+                BGMChange(BGMType.InGame);
+                break;
+            case "Title":
+                BGMChange(BGMType.Title);
+                break;
+            case "Result":
+                BGMChange(BGMType.Result);
+                break;
+            default:
+                Debug.LogError($"<color=red>切り替えられたシーン{currentScene.name}は不明です</color>");
+                break;
+        }
+    }
+
+    private void SceneLoaded(Scene nextScene, LoadSceneMode mode)
+    {
+        switch (nextScene.name)
+        {
+            case "InGame":
+                BGMChange(BGMType.InGame);
+                break;
+            case "Title":
+                BGMChange(BGMType.Title);
+                break;
+            case "Result":
+                BGMChange(BGMType.Result);
+                break;
+            default:
+                Debug.LogError($"<color=red>切り替えられたシーン{nextScene.name}は不明です</color>");
+                break;
+        }
+    }
     #endregion
 }
