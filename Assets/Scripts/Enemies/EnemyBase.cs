@@ -26,13 +26,11 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
     private float _currentMaxHP;
     private float _currentAttackAmount;
     private Coroutine _actionCoroutine;
-    private Vector3 _initialPosition = default;
     private IDamagable _target;
     #endregion
 
     #region protected
     protected Transform _playerTransform;
-    protected Vector3 _initialPlayerPos;
     protected float _currentHP;
     #endregion
 
@@ -52,8 +50,6 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
         _currentHP = _currentMaxHP;
         _currentAttackAmount = _enemyData.AttackAmount;
         _playerTransform = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
-        _initialPlayerPos = _playerTransform.position;
-        _initialPosition = transform.position;
     }
 
     protected virtual void Start()
