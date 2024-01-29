@@ -12,6 +12,8 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     public PlayerHealth Health => _health;
     public PlayerStatus Status => _status;
     public bool onAvaterd { get; private set; }
+    public bool OnDown { get; private set; }
+    public Vector3 InitPlayerPos => _initPlayerPos;
     #endregion
 
     #region serialize
@@ -22,6 +24,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     private PlayerStatus _status;
     private PlayerMove _move;
     private bool _isDead = false;
+    private Vector3 _initPlayerPos = new Vector3();
     #endregion
 
     #region Constant
@@ -39,11 +42,20 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
 
     private void Start()
     {
+        _initPlayerPos = transform.position;
+
         _move.OnAvaterd
              .TakeUntilDestroy(this)
              .Subscribe(onAvaterdValue =>
              {
                  onAvaterd = onAvaterdValue;
+             });
+
+        _move.OnDown
+             .TakeUntilDestroy(this)
+             .Subscribe(onDownValue =>
+             {
+                 OnDown = onDownValue;
              });
     }
     #endregion
