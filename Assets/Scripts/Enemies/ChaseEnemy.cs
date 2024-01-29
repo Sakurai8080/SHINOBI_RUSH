@@ -16,7 +16,6 @@ public class ChaseEnemy : EnemyBase
 
     #region private
     private Vector3 _targetPosition;
-    private Vector3 _initialTargetPosition;
     #endregion
 
     #region Constant
@@ -36,7 +35,6 @@ public class ChaseEnemy : EnemyBase
     {
         base.Start();
         _targetPosition = new Vector3(_playerTransform.position.x, _playerTransform.position.y, _playerTransform.position.z);
-        _initialTargetPosition = _targetPosition;
     }
 
     protected override void OnEnable()
@@ -64,23 +62,26 @@ public class ChaseEnemy : EnemyBase
     #region coroutine method
     protected override IEnumerator OnActionCoroutine()
     {
-        Vector3 playerUnderPosOffset = new Vector3(0, -0.5f, 0);
-        Vector3 enemyLastPosition = new Vector3(0, 0, -3);
+        Vector3 playerUnderPosOffset = new Vector3(0, -0.5f, 0) , enemyLastChasePos = new Vector3(0, 0, -3);
+        float chaseStopPos = 0.6f , inActiveZpos = -1;
+        Vector3 initPlayerPos = PlayerController.Instance.InitPlayerPos;
+        Vector3 currentPlayerPos = Vector3.zero;
         while (true)
         {
-            float distance = Vector3.Distance(transform.localPosition, _playerTransform.localPosition);
-            Vector3 tempPos;
-            if (gameObject.transform.position.z >= 0.6f)
+            if (gameObject.transform.position.z >= chaseStopPos)
             {
-                tempPos = (_playerTransform.position != _initialPlayerPos) ? (_targetPosition + playerUnderPosOffset) : _initialTargetPosition;
-                MoveTowardsTarget(tempPos);
+                currentPlayerPos = (PlayerController.Instance.OnDown) ? playerUnderPosOffset : initPlayerPos;
+                MoveTowardsTarget(currentPlayerPos);
+                Debug.Log($"<color=yellow>{currentPlayerPos}</color>");
             }
             else
-                MoveTowardsTarget(enemyLastPosition);
+                MoveTowardsTarget(enemyLastChasePos);
 
-            if (gameObject.transform.position.z <= -1)
+            if (gameObject.transform.position.z <= inActiveZpos)
+            {
                 gameObject.SetActive(false);
-
+                yield break;
+            }
             yield return null;
         }
     }
