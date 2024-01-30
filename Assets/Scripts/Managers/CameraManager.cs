@@ -113,7 +113,6 @@ public class CameraManager : MonoBehaviour
                                  .SetEase(Ease.Linear);
 
         yield return tweener.WaitForCompletion();
-        GameManager.Instance.OnGameStart();
     }
     #endregion
 }
