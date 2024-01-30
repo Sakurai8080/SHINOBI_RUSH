@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
                 BGMChange(BGMType.Result);
                 break;
             default:
-                Debug.LogError($"<color=red>切り替えられたシーン{currentScene.name}は不明です</color>");
+                Debug.LogError($"<color=red>切り替えられたシーン{currentScene.name}はありません</color>");
                 break;
         }
     }
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
                 BGMChange(BGMType.Result);
                 break;
             default:
-                Debug.LogError($"<color=red>切り替えられたシーン{nextScene.name}は不明です</color>");
+                Debug.LogError($"<color=red>切り替えられたシーン{nextScene.name}はありません</color>");
                 break;
         }
     }
