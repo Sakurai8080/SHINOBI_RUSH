@@ -27,10 +27,8 @@ public class WindSkill : SkillBase
     #endregion
 
     #region private
-    private Transform _spawnPosition;
     private float _attackCoefficient = 5.0f;
     private Wind _currentWind = default;
-    private Vector3 _spawnPositionOffset = new Vector3(0f, 0f, 1f);
     private float _sizechangeCoefficient = 1.5f;
     #endregion
 
