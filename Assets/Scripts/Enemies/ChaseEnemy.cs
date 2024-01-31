@@ -72,7 +72,6 @@ public class ChaseEnemy : EnemyBase
             {
                 currentPlayerPos = (PlayerController.Instance.OnDown) ? playerUnderPosOffset : initPlayerPos;
                 MoveTowardsTarget(currentPlayerPos);
-                Debug.Log($"<color=yellow>{currentPlayerPos}</color>");
             }
             else
                 MoveTowardsTarget(enemyLastChasePos);

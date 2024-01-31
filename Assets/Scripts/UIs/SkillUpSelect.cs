@@ -54,7 +54,6 @@ public class SkillUpSelect : MonoBehaviour
 
         for (int i = 0; i < _skillSelectUIs.Count; i++){
             SkillType type = (SkillType)i;
-            Debug.Log(type);
 
             _skillSelectUIs[i].OnClickAsObservable()
                               .Subscribe(_ => OnSkill(type))

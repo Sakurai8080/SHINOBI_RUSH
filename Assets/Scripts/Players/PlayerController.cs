@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 /// <summary>
 /// プレイヤーに関わる情報を操作するクラス
@@ -17,6 +18,9 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     #endregion
 
     #region serialize
+    
+    [SerializeField]
+    private SkinnedMeshRenderer _playerRenderer;
     #endregion
 
     #region private
@@ -25,6 +29,7 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     private PlayerMove _move;
     private bool _isDead = false;
     private Vector3 _initPlayerPos = new Vector3();
+    private Tween _currentTween;
     #endregion
 
     #region Constant
@@ -65,6 +70,19 @@ public class PlayerController : SingletonMonoBehaviour<PlayerController>, IDamag
     {
         if (_isDead)
             return;
+
+        if (_currentTween == null)
+        {
+            _currentTween = _playerRenderer.material.DOColor(Color.red, 0.05f)
+                                                    .SetEase(Ease.InOutSine)
+                                                    .SetLoops(7, LoopType.Yoyo)
+                                                    .OnComplete(() =>
+                                                    {
+                                                        _playerRenderer.material.color = Color.white;
+                                                        _currentTween = null;
+                                                    });
+                                     
+        }
 
         if (_health.Damage(amount))
         {
