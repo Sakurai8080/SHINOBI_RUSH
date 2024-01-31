@@ -488,6 +488,10 @@ PrefabInstance:
       propertyPath: _startMaxHP
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 2142203449, guid: f20d3c5234fe04dd79afa33e2fd09971, type: 3}
+      propertyPath: _playerRenderer
+      value: 
+      objectReference: {fileID: 2096007852}
     - target: {fileID: 7440159657207235030, guid: f20d3c5234fe04dd79afa33e2fd09971,
         type: 3}
       propertyPath: m_RootOrder
@@ -778,6 +782,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &2096007852 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2307543529783330791, guid: f20d3c5234fe04dd79afa33e2fd09971,
+    type: 3}
+  m_PrefabInstance: {fileID: 980467029}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2142203450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7440159657207235030, guid: f20d3c5234fe04dd79afa33e2fd09971,

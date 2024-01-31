@@ -47,6 +47,7 @@ public class PlayerHealth : MonoBehaviour
         _currenHP -= amount;
         _changeHPSubject.OnNext(_currenHP / _currentMaxHp);
 
+
         if (_currenHP <= 0)
         {
             GameManager.Instance.OnGameEnd();
