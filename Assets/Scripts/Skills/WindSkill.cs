@@ -52,10 +52,13 @@ public class WindSkill : SkillBase
         _isSkillActive = true;
         transform.SetParent(_playerTransform);
         CreateWind(_wind);
+        AudioManager.PlaySE(SEType.Wind);
+
     }
 
     public override void SkillUp()
     {
+        AudioManager.PlaySE(SEType.Wind);
         if (_currentSkillLevel >= MAX_LEVEL)
         {
             Debug.Log($"{SkillType}はレベル上限");

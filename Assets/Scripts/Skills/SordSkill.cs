@@ -51,6 +51,10 @@ public class SordSkill : SkillBase
         {
             _anim = _player.GetComponent<Animator>();
             _anim.SetTrigger("Attack");
+            if (IsSkillActived)
+            {
+                AudioManager.PlaySE(SEType.Sord);
+            }
         }
     }
     #endregion

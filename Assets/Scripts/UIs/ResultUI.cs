@@ -150,6 +150,7 @@ public class ResultUI : MonoBehaviour
 
     private void SceneSwicher(string sceneName)
     {
+        AudioManager.PlaySE(SEType.Selected);
         GameManager.Instance.SceneLoader(sceneName);
     }
     #endregion

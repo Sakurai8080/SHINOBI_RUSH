@@ -87,6 +87,7 @@ public class PlayerMove : MonoBehaviour
             transform.localEulerAngles = playerAngles;
             GameObjectActivator(_avaterEffect.gameObject, true);
             _avaterEffect.Play();
+            AudioManager.PlaySE(SEType.Avater);
             GameObjectActivator(_playerMeshies.gameObject, false);
             yield return new WaitForSeconds(2);
             _avaterEffect.Stop();
