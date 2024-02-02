@@ -80,12 +80,23 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
 
 
+        //指定した数のSE用AudioSourceを生成
         for (int i = 0; i < _seAudioSourceAmount; i++)
         {
-            GameObject obj = new GameObject($"SESource{i + 1}");
+            //SEAudioSourceのオブジェクトを生成し親オブジェクトにセット
+            var obj = new GameObject($"SESource{i + 1}");
             obj.transform.SetParent(_seSourcesParent);
 
-            AudioSource source = obj.AddComponent<AudioSource>();
+            //生成したオブジェクトにAudioSourceを追加
+            var source = obj.AddComponent<AudioSource>();
+
+            //オーディオ管理するグループは今回は使用していない。
+            if (_mixer != null)
+            {
+                source.outputAudioMixerGroup = _mixer.FindMatchingGroups("Master")[2];
+            }
+
+            //ListにSEのオーディオソースを追加
             _seAudioSouceList.Add(source);
         }
     }
@@ -121,9 +132,12 @@ public class AudioManager : MonoBehaviour
     {
         var se = GetSE(type);
 
-        try {
-            if (se != null) {
-                foreach (var s in Instance._seAudioSouceList) {
+        try
+        {
+            if (se != null)
+            {
+                foreach (var s in Instance._seAudioSouceList)
+                {
                     if (!s.isPlaying) {
                         s.PlayOneShot(se.Clip, Instance._seVolume * Instance._masterVolume);
                         return;

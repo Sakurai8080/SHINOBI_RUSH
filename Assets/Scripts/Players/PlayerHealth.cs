@@ -50,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (_currenHP <= 0)
         {
+            AudioManager.PlaySE(SEType.PlayerDied);
             GameManager.Instance.OnGameEnd();
             GameManager.Instance.SceneLoader("Result");
             return true;

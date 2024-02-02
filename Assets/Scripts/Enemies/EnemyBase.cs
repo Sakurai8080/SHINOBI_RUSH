@@ -90,6 +90,7 @@ public abstract class EnemyBase : MonoBehaviour , IDamagable , IPoolable
     public virtual void Damage(float amount)
     {
         _currentHP -= amount;
+        AudioManager.PlaySE(SEType.EnemyDied);
         if (_currentHP <= 0)
         {
             EnemyManager.Instance.DefeatAmount.Value++;

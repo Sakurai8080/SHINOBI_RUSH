@@ -52,6 +52,7 @@ public class TitleUI : MonoBehaviour
     private void InGameSwitch()
     {
         _currentTween.Kill();
+        AudioManager.PlaySE(SEType.Selected);
         GameManager.Instance.SceneLoader("InGame");
     }
     #endregion

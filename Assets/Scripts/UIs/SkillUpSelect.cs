@@ -67,6 +67,7 @@ public class SkillUpSelect : MonoBehaviour
     public void ActiveRondomSkillUIs()
     {
         _skillUpSelectGrid.gameObject.SetActive(true);
+        AudioManager.PlaySE(SEType.ScrollGet);
         int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index })
                                                             .Where(x => x.Item.CurrentSkillLevel >=5)
                                                             .Select(c => c.Index)
@@ -99,6 +100,7 @@ public class SkillUpSelect : MonoBehaviour
     #region private method
     private void OnSkill(SkillType type)
     {
+        AudioManager.PlaySE(SEType.ScrollSelected);
         SkillManager.Instance.SetSkill(type);
 
         foreach (var skillUI in _skillSelectUIs)

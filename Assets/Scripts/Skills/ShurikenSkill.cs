@@ -155,6 +155,7 @@ public class ShurikenSkill : SkillBase
                 {
                     srknObj.transform.position = (_isPlayerDown) ? _spawnDownPosition : _spawnUpPosition;
                     srknObj.gameObject.SetActive(true);
+                    AudioManager.PlaySE(SEType.Shuriken);
                     srknObj.SetVelocity(targetDir);
                     srknObj.SetAttackAmount(_currentAttackAmount);
                     srknObj.transform.SetParent(_shurikenParent);
