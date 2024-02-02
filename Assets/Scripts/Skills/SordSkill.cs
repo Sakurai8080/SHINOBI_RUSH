@@ -34,7 +34,7 @@ public class SordSkill : SkillBase
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
