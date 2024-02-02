@@ -13,5 +13,15 @@ public class SE
 
 public enum SEType
 {
-    Test
+    Avater,
+    EnemyDied,
+    Fire,
+    PlayerDied,
+    ScrollGet,
+    ScrollSelected,
+    Selected,
+    Shuriken,
+    Sord,
+    Water,
+    Wind
 }

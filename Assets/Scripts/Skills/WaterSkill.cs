@@ -92,6 +92,7 @@ public class WaterSkill : SkillBase
                 _randomPosition = new Vector3(randomPosX, randomPosY, 0);
                 waterObj.transform.position = _randomPosition;
                 waterObj.gameObject.SetActive(true);
+                AudioManager.PlaySE(SEType.Water);
                 waterObj.SetAttackAmount(_currentAttackAmount);
                 yield return new WaitForSeconds(_waitTime);
             }

@@ -34,7 +34,7 @@ public class SordSkill : SkillBase
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
@@ -51,6 +51,10 @@ public class SordSkill : SkillBase
         {
             _anim = _player.GetComponent<Animator>();
             _anim.SetTrigger("Attack");
+            if (IsSkillActived)
+            {
+                AudioManager.PlaySE(SEType.Sord);
+            }
         }
     }
     #endregion

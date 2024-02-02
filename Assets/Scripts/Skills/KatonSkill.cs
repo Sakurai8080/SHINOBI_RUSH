@@ -89,6 +89,7 @@ public class KatonSkill : SkillBase
             {
                 ktnObj.transform.position = _spawnPosition;
                 ktnObj.gameObject.SetActive(true);
+                AudioManager.PlaySE(SEType.Fire);
                 ktnObj.SetAttackAmount(_currentAttackAmount);
                 ktnObj.SizeChange(_scaleCoefficient);
                 yield return new WaitForSeconds(_waitTime);
