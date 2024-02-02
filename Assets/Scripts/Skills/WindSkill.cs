@@ -29,7 +29,7 @@ public class WindSkill : SkillBase
     #region private
     private float _attackCoefficient = 5.0f;
     private Wind _currentWind = default;
-    private float _sizechangeCoefficient = 1.5f;
+    private float _sizechangeCoefficient = 2.0f;
     #endregion
 
     #region Constant
@@ -82,8 +82,11 @@ public class WindSkill : SkillBase
     #region private method
     private void CreateWind(Wind wind)
     {
+        Vector3 spwnPos = (PlayerController.Instance.OnDown) ? new Vector3(0, -0.2f, 0.5f) : new Vector3(0, 0.2f, 0.5f);
+        Debug.Log(PlayerController.Instance.OnDown);
         _currentWind?.gameObject?.SetActive(false);
         _currentWind = Instantiate(wind,transform);
+        _currentWind.transform.position = spwnPos;
     }
     #endregion
 
